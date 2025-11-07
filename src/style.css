@@ -1,0 +1,31 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.loadcontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    display: none;
+}
+
+.battleplayerbutton {
+    width: 200px;
+    height: 25px;
+    margin-bottom: 25px;
+}
+
+.battlecomputerbutton {
+    width: 200px;
+    height: 25px;
+}
+
+.easycomputerbutton, .mediumcomputerbutton, .hardcomputerbutton {
+    width: 60px;
+    height: 25px;
+}
