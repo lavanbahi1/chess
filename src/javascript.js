@@ -70,17 +70,29 @@ class Player {
 
     move(grid, piece, newIndex) {
         let pieceString = piece.color + piece.name + piece.num;
+        let pieceCurrentIndex = grid.indexOf(pieceString);
 
         if (piece.name == "P") {
-            let pieceCurrentIndex = grid.indexOf(pieceString);
+            if (piece.color == "W") {
+                if (pieceCurrentIndex - newIndex == 7 || pieceCurrentIndex - newIndex == 14) {
+                    grid[pieceCurrentIndex] = " ";
+                    grid[newIndex] = pieceString;
+                }
 
-            if (pieceCurrentIndex - newIndex == 7 || pieceCurrentIndex - newIndex == 14) {
-                grid[pieceCurrentIndex] = " ";
-                grid[newIndex] = pieceString;
+                else {
+
+                }
             }
 
-            else {
-                
+            else if (piece.color == "B") {
+                if (newIndex - pieceCurrentIndex == 8 || newIndex - pieceCurrentIndex == 16) {
+                    grid[pieceCurrentIndex] = " ";
+                    grid[newIndex] = pieceString;
+                }
+
+                else {
+                    
+                }
             }
         }
 
