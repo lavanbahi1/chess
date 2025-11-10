@@ -9,6 +9,7 @@ class Piece {
 class Gameboard {
     constructor() {
         this.grid = this.createGrid();
+        this.pieces = [];
     }
 
     createGrid() {
@@ -57,7 +58,7 @@ class Gameboard {
         grid[62] = "WK2";
         grid[63] = "WR2";
 
-        console.log(grid);
+        //console.log(grid);
 
         return grid;
     }
@@ -66,37 +67,109 @@ class Gameboard {
 class Player {
     constructor(color) {
         this.color = color;
+        this.currentTurn = false;
+        this.enPassant = false;
     }
 
-    move(grid, piece, newIndex) {
+    move(grid, piece, newIndex, enemyPlayer) {
         let pieceString = piece.color + piece.name + piece.num;
         let pieceCurrentIndex = grid.indexOf(pieceString);
 
         if (piece.name == "P") {
             if (piece.color == "W") {
-                if (pieceCurrentIndex - newIndex == 7 || pieceCurrentIndex - newIndex == 14) {
-                    grid[pieceCurrentIndex] = " ";
-                    grid[newIndex] = pieceString;
+                // Moving 1 or 2 spaces forward 
+                if (pieceCurrentIndex - newIndex == 8 || pieceCurrentIndex - newIndex == 16) {
+                    if (grid[newIndex] != " ") {
+
+                    }
+
+                    else {
+                        grid[pieceCurrentIndex] = " ";
+                        grid[newIndex] = pieceString;
+                    }
+                }
+
+                // Capturing piece diagonally in front of it
+                else if (pieceCurrentIndex - newIndex == 9 || pieceCurrentIndex - newIndex == 7) {
+                    
+                    if (this.enPassant == true) {
+                        grid[pieceCurrentIndex] = " ";
+                        grid[newIndex] = pieceString;
+                        grid[newIndex + 8] = " "; // Capture enemy pawn
+                        this.enPassant = false;
+                    }
+
+                    else if (grid[newIndex] == " " || grid[newIndex] == "BK") { // Can not capture king
+
+                    }
+
+                    else {
+                        grid[pieceCurrentIndex] = " ";
+                        grid[newIndex] = pieceString;
+                    }
                 }
 
                 else {
 
+                }
+
+                // Check if enemy pawn can en passant
+                if (grid[newIndex - 1].startsWith("BP")) {
+                    enemyPlayer.enPassant = true;
+                }
+
+                else if (grid[newIndex + 1].startsWith("BP")) {
+                    enemyPlayer.enPassant = true;
                 }
             }
 
             else if (piece.color == "B") {
+                // Moving 1 or 2 spaces forward 
                 if (newIndex - pieceCurrentIndex == 8 || newIndex - pieceCurrentIndex == 16) {
-                    grid[pieceCurrentIndex] = " ";
-                    grid[newIndex] = pieceString;
+                    if (grid[newIndex] != " ") {
+
+                    }
+
+                    else {
+                        grid[pieceCurrentIndex] = " ";
+                        grid[newIndex] = pieceString;
+                    }
+                }
+
+                else if (newIndex - pieceCurrentIndex == 9 || newIndex - pieceCurrentIndex == 7) {
+                    if (this.enPassant == true) {
+                        grid[pieceCurrentIndex] = " ";
+                        grid[newIndex] = pieceString;
+                        grid[newIndex - 8] = " "; // Capture enemy pawn
+                        this.enPassant = false;
+                    }
+
+                    else if (grid[newIndex] == " " || grid[newIndex] == "WK") { // Can not capture king
+
+                    }
+
+                    else {
+                        grid[pieceCurrentIndex] = " ";
+                        grid[newIndex] = pieceString;
+                    }
                 }
 
                 else {
-                    
+
+                }
+
+                // Check if enemy pawn can en passant
+                if (grid[newIndex - 1].startsWith("WP")) {
+                    enemyPlayer.enPassant = true;
+                }
+
+                else if (grid[newIndex + 1].startsWith("WP")) {
+                    enemyPlayer.enPassant = true;
                 }
             }
         }
 
-        console.log(grid);
+        //console.log(grid);
     }
 }
 

@@ -23,30 +23,149 @@ describe('Player', () => {
     test('move function works for white pawn with valid move', () => {
         const gameboard = new Gameboard();
         const player = new Player("White");
-        const pawn = new Piece("W", "P", 1)
+        const pawn = new Piece("W", "P", 1);
         
-        player.move(gameboard.grid, pawn, 41);
+        player.move(gameboard.grid, pawn, 40);
 
-        expect(gameboard.grid[41]).toBe("WP1");
+        expect(gameboard.grid[40]).toBe("WP1");
     })
 
     test('move function works for black pawn with valid move', () => {
         const gameboard = new Gameboard();
         const player = new Player("Black");
-        const pawn = new Piece("B", "P", 1)
+        const pawn = new Piece("B", "P", 1);
         
         player.move(gameboard.grid, pawn, 16);
 
         expect(gameboard.grid[16]).toBe("BP1");
     })
 
-    test('move function does not work for white pawn with invalid move when trying to move to the left', () => {
+    test('move function does not work for white pawn with invalid move', () => {
         const gameboard = new Gameboard();
         const player = new Player("White");
-        const pawn = new Piece("W", "P", 1)
+        const pawn = new Piece("W", "P", 1);
         
         player.move(gameboard.grid, pawn, 47);
 
         expect(gameboard.grid[47]).toBe(" ");
+    })
+
+    test('move function does not work for black pawn with invalid move', () => {
+        const gameboard = new Gameboard();
+        const player = new Player("Black");
+        const pawn = new Piece("B", "P", 1);
+        
+        player.move(gameboard.grid, pawn, 17);
+
+        expect(gameboard.grid[17]).toBe(" ");
+    })
+
+    test('move function does not work for white pawn with invalid move when trying to move an occupied square', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW1 = new Piece("W", "P", 1);
+        const pawnB1 = new Piece("B", "P", 1);
+        
+        player1.move(gameboard.grid, pawnW1, 32);
+        player2.move(gameboard.grid, pawnB1, 24);
+        
+        player1.move(gameboard.grid, pawnW1, 24);
+
+        expect(gameboard.grid[24]).toBe("BP1");
+    })
+
+    test('move function does not work for black pawn with invalid move when trying to move an occupied square', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW1 = new Piece("W", "P", 1);
+        const pawnB1 = new Piece("B", "P", 1);
+        
+        player2.move(gameboard.grid, pawnB1, 24);
+        player1.move(gameboard.grid, pawnW1, 32);
+        
+        player1.move(gameboard.grid, pawnB1, 32);
+
+        expect(gameboard.grid[32]).toBe("WP1");
+    })
+
+    test('move function works for white pawn when trying to capture enemy piece diagonally in front of it', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW2 = new Piece("W", "P", 2);
+        const pawnB1 = new Piece("B", "P", 1);
+        
+        player1.move(gameboard.grid, pawnW2, 33);
+        player2.move(gameboard.grid, pawnB1, 24);
+        
+        player1.move(gameboard.grid, pawnW2, 24);
+
+        expect(gameboard.grid[24]).toBe("WP2");
+    })
+
+    test('move function works for black pawn when trying to capture enemy piece diagonally in front of it', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW2 = new Piece("W", "P", 2);
+        const pawnB1 = new Piece("B", "P", 1);
+        
+        player2.move(gameboard.grid, pawnB1, 24);
+        player1.move(gameboard.grid, pawnW2, 33);
+        
+        player1.move(gameboard.grid, pawnB1, 33);
+
+        expect(gameboard.grid[33]).toBe("BP1");
+    }) 
+
+    test('move function works for white pawn when trying to capture enemy piece en passant', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW1 = new Piece("W", "P", 4);
+        const pawnW2 = new Piece("W", "P", 1);
+        const pawnB = new Piece("B", "P", 5);
+        
+        player1.move(gameboard.grid, pawnW1, 35, player2);
+        player2.move(gameboard.grid, pawnB, 20, player1);
+    
+        player1.move(gameboard.grid, pawnW2, 40, player2);
+        player2.move(gameboard.grid, pawnB, 36, player1);
+        
+        player1.move(gameboard.grid, pawnW1, 28, player2);
+
+        expect(gameboard.grid[28]).toBe("WP4");
+        expect(gameboard.grid[36]).toBe(" "); // Where pawnB was
+    })
+
+    test('move function works for black pawn when trying to capture enemy piece en passant', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW = new Piece("W", "P", 4);
+        const pawnB = new Piece("B", "P", 5);
+        
+        player1.move(gameboard.grid, pawnW, 43, player2);
+        player2.move(gameboard.grid, pawnB, 28, player1);
+    
+        player1.move(gameboard.grid, pawnW, 27, player2);
+        player2.move(gameboard.grid, pawnB, 35, player1);
+
+        expect(gameboard.grid[35]).toBe("BP5");
+        expect(gameboard.grid[27]).toBe(" "); // Where pawnB was
     })
 })
