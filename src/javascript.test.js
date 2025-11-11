@@ -23,6 +23,7 @@ describe('Player', () => {
     test('move function works for white pawn with valid move', () => {
         const gameboard = new Gameboard();
         const player = new Player("White");
+
         const pawn = new Piece("W", "P", 1);
         
         player.move(gameboard.grid, pawn, 40);
@@ -33,6 +34,7 @@ describe('Player', () => {
     test('move function works for black pawn with valid move', () => {
         const gameboard = new Gameboard();
         const player = new Player("Black");
+
         const pawn = new Piece("B", "P", 1);
         
         player.move(gameboard.grid, pawn, 16);
@@ -43,6 +45,7 @@ describe('Player', () => {
     test('move function does not work for white pawn with invalid move', () => {
         const gameboard = new Gameboard();
         const player = new Player("White");
+
         const pawn = new Piece("W", "P", 1);
         
         player.move(gameboard.grid, pawn, 47);
@@ -53,6 +56,7 @@ describe('Player', () => {
     test('move function does not work for black pawn with invalid move', () => {
         const gameboard = new Gameboard();
         const player = new Player("Black");
+
         const pawn = new Piece("B", "P", 1);
         
         player.move(gameboard.grid, pawn, 17);
@@ -167,5 +171,199 @@ describe('Player', () => {
 
         expect(gameboard.grid[35]).toBe("BP5");
         expect(gameboard.grid[27]).toBe(" "); // Where pawnB was
+    })
+
+    test('move function does not work for white pawn when trying to move two squares forward after first move', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW = new Piece("W", "P", 4);
+        const pawnB = new Piece("B", "P", 5);
+        
+        player1.move(gameboard.grid, pawnW, 35, player2);
+        player2.move(gameboard.grid, pawnB, 20, player1);
+    
+        player1.move(gameboard.grid, pawnW, 19, player2);
+
+        expect(gameboard.grid[19]).toBe(" ");
+    })
+
+    test('move function does not work for black pawn when trying to move two squares forward after first move', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW = new Piece("W", "P", 4);
+        const pawnB = new Piece("B", "P", 5);
+        
+        player1.move(gameboard.grid, pawnW, 43, player2);
+        player2.move(gameboard.grid, pawnB, 28, player1);
+    
+        player1.move(gameboard.grid, pawnW, 35, player2);
+        player2.move(gameboard.grid, pawnB, 44, player1);
+
+        expect(gameboard.grid[44]).toBe(" ");
+    })
+
+    test('move function works for white rook when moving up', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW = new Piece("W", "P", 1);
+        const pawnB = new Piece("B", "P", 1);
+        const rookW = new Piece("W", "R", 1);
+        
+        player1.move(gameboard.grid, pawnW, 32, player2);
+        player2.move(gameboard.grid, pawnB, 24, player1);
+        player1.move(gameboard.grid, rookW, 40, player2);
+
+        expect(gameboard.grid[40]).toBe("WR1");
+    })
+
+    test('move function works for white rook when moving down', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW = new Piece("W", "P", 1);
+        const pawnB1 = new Piece("B", "P", 1);
+        const pawnB2 = new Piece("B", "P", 2);
+        const rookW = new Piece("W", "R", 1);
+        
+        player1.move(gameboard.grid, pawnW, 32, player2);
+        player2.move(gameboard.grid, pawnB1, 24, player1);
+        player1.move(gameboard.grid, rookW, 40, player2);
+        player2.move(gameboard.grid, pawnB2, 17, player1);
+        player1.move(gameboard.grid, rookW, 48, player2);
+
+        expect(gameboard.grid[48]).toBe("WR1");
+    })
+
+    test('move function works for white rook when moving right', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW = new Piece("W", "P", 1);
+        const pawnB1 = new Piece("B", "P", 1);
+        const pawnB2 = new Piece("B", "P", 2);
+        const rookW = new Piece("W", "R", 1);
+        
+        player1.move(gameboard.grid, pawnW, 32, player2);
+        player2.move(gameboard.grid, pawnB1, 24, player1);
+        player1.move(gameboard.grid, rookW, 40, player2);
+        player2.move(gameboard.grid, pawnB2, 17, player1);
+        player1.move(gameboard.grid, rookW, 43, player2);
+
+        expect(gameboard.grid[43]).toBe("WR1");
+    })
+
+    test('move function works for white rook when moving left', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW = new Piece("W", "P", 1);
+        const pawnB1 = new Piece("B", "P", 1);
+        const pawnB2 = new Piece("B", "P", 2);
+        const rookW = new Piece("W", "R", 1);
+        
+        player1.move(gameboard.grid, pawnW, 32, player2);
+        player2.move(gameboard.grid, pawnB1, 24, player1);
+        player1.move(gameboard.grid, rookW, 40, player2);
+        player2.move(gameboard.grid, pawnB2, 17, player1);
+        player1.move(gameboard.grid, rookW, 43, player2);
+        player2.move(gameboard.grid, pawnB2, 25, player1);
+        player1.move(gameboard.grid, rookW, 41, player2);
+
+        expect(gameboard.grid[41]).toBe("WR1");
+    })
+
+    test('move function works for black rook when moving up', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW1 = new Piece("W", "P", 1);
+        const pawnW2 = new Piece("W", "P", 2);
+        const pawnB = new Piece("B", "P", 1);
+        const rookB = new Piece("B", "R", 1);
+        
+        player2.move(gameboard.grid, pawnB, 24, player1);
+        player1.move(gameboard.grid, pawnW1, 32, player2);
+        player2.move(gameboard.grid, rookB, 16, player1);
+        player1.move(gameboard.grid, pawnW2, 41, player2);
+        player2.move(gameboard.grid, rookB, 8, player1);
+
+        expect(gameboard.grid[8]).toBe("BR1");
+    })
+
+    test('move function works for black rook when moving down', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW1 = new Piece("W", "P", 1);
+        const pawnW2 = new Piece("W", "P", 2);
+        const pawnB = new Piece("B", "P", 1);
+        const rookB = new Piece("B", "R", 1);
+        
+        player2.move(gameboard.grid, pawnB, 24, player1);
+        player1.move(gameboard.grid, pawnW1, 32, player2);
+        player2.move(gameboard.grid, rookB, 16, player1);
+
+        expect(gameboard.grid[16]).toBe("BR1");
+    })
+
+    test('move function works for black rook when moving right', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW1 = new Piece("W", "P", 1);
+        const pawnW2 = new Piece("W", "P", 2);
+        const pawnB = new Piece("B", "P", 1);
+        const rookB = new Piece("B", "R", 1);
+        
+        player2.move(gameboard.grid, pawnB, 24, player1);
+        player1.move(gameboard.grid, pawnW1, 32, player2);
+        player2.move(gameboard.grid, rookB, 16, player1);
+        player1.move(gameboard.grid, pawnW2, 41, player2);
+        player2.move(gameboard.grid, rookB, 19, player1);
+
+        expect(gameboard.grid[19]).toBe("BR1");
+    })
+
+    test('move function works for black rook when moving left', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW1 = new Piece("W", "P", 1);
+        const pawnW2 = new Piece("W", "P", 2);
+        const pawnB = new Piece("B", "P", 1);
+        const rookB = new Piece("B", "R", 1);
+        
+        player2.move(gameboard.grid, pawnB, 24, player1);
+        player1.move(gameboard.grid, pawnW1, 32, player2);
+        player2.move(gameboard.grid, rookB, 16, player1);
+        player1.move(gameboard.grid, pawnW2, 41, player2);
+        player2.move(gameboard.grid, rookB, 19, player1);
+        player1.move(gameboard.grid, pawnW2, 33, player2);
+        player2.move(gameboard.grid, rookB, 18, player1);
+
+        expect(gameboard.grid[18]).toBe("BR1");
     })
 })
