@@ -18,7 +18,7 @@ class Gameboard {
 
         for (let i = 0; i < 8; i++) {
             for (let j = 0; j < 8; j++) {
-                let square = ' ';
+                let square = '|||';
                 grid.push(square);
             }
         }
@@ -63,6 +63,94 @@ class Gameboard {
 
         return grid;
     }
+
+    printGrid() {
+        let arr = [];
+        let row1 = [];
+        let row2 = [];
+        let row3 = [];
+        let row4 = [];
+        let row5 = [];
+        let row6 = [];
+        let row7 = [];
+        let row8 = [];
+
+        row1.push("0   ");
+
+        for (let i = 0; i < 8; i++) {
+            row1.push(this.grid[i]);
+        }
+
+        row1.push("    7");
+
+        row2.push("8   ");
+
+        for (let i = 8; i < 16; i++) {
+            row2.push(this.grid[i]);
+        }
+        
+        row2.push("  15");
+
+        row3.push("16  ");
+
+        for (let i = 16; i < 24; i++) {
+            row3.push(this.grid[i]);
+        }
+
+        row3.push("  23");
+
+        row4.push("24  ");
+
+        for (let i = 24; i < 32; i++) {
+            row4.push(this.grid[i]);
+        }
+
+        row4.push("  31")
+
+        row5.push("32  ");
+
+        for (let i = 32; i < 40; i++) {
+            row5.push(this.grid[i]);
+        }
+
+        row5.push("  39");
+
+        row6.push("40  ");
+
+        for (let i = 40; i < 48; i++) {
+            row6.push(this.grid[i]);
+        }
+
+        row6.push("  47");
+
+        row7.push("48  ");
+
+        for (let i = 48; i < 56; i++) {
+            row7.push(this.grid[i]);
+        }
+
+        row7.push("  55");
+
+        row8.push("56  ");
+
+        for (let i = 56; i < 64; i++) {
+            row8.push(this.grid[i]);
+        }
+
+        row8.push("    63");
+
+        arr.push(row1.join(" "));
+        arr.push(row2.join(" "));
+        arr.push(row3.join(" "));
+        arr.push(row4.join(" "));
+        arr.push(row5.join(" "));
+        arr.push(row6.join(" "));
+        arr.push(row7.join(" "));
+        arr.push(row8.join(" "));
+
+        console.log(arr);
+
+    }
 }
 
 class Player {
@@ -70,6 +158,7 @@ class Player {
         this.color = color;
         this.currentTurn = false;
         this.enPassant = false;
+        this.hasMoved = false;
     }
 
     move(grid, piece, newIndex, enemyPlayer) {
@@ -81,30 +170,33 @@ class Player {
                 
                 // Moving 1 space forward 
                 if (pieceCurrentIndex - newIndex == 8) {
-                    if (grid[newIndex] != " ") {
+                    if (grid[newIndex] != "|||") {
 
                     }
 
                     else {
-                        grid[pieceCurrentIndex] = " ";
+                        grid[pieceCurrentIndex] = "|||";
                         grid[newIndex] = pieceString;
+                        piece.firstTurn = false;
+                        this.hasMoved = true;
                     }
                 }
 
                 // Moving 2 spaces forward only during first turn
                 else if ((pieceCurrentIndex - newIndex == 16) && piece.firstTurn == true) {
-                    if (grid[newIndex] != " ") {
+                    if (grid[newIndex] != "|||") {
 
                     }
 
-                    else if (grid[newIndex + 8] != " ") {
+                    else if (grid[newIndex + 8] != "|||") {
 
                     }
 
                     else {
-                        grid[pieceCurrentIndex] = " ";
+                        grid[pieceCurrentIndex] = "|||";
                         grid[newIndex] = pieceString;
                         piece.firstTurn = false;
+                        this.hasMoved = true;
                     }
                 }
 
@@ -112,19 +204,22 @@ class Player {
                 else if (pieceCurrentIndex - newIndex == 9 || pieceCurrentIndex - newIndex == 7) {
                     
                     if (this.enPassant == true && grid[newIndex - 8] != "BK") {
-                        grid[pieceCurrentIndex] = " ";
+                        grid[pieceCurrentIndex] = "|||";
                         grid[newIndex] = pieceString;
-                        grid[newIndex + 8] = " "; // Capture enemy pawn
+                        grid[newIndex + 8] = "|||"; // Capture enemy pawn
                         this.enPassant = false;
+                        this.hasMoved = true;
+                        console.log("enPassant by white pawn");
                     }
 
-                    else if (grid[newIndex] == " " || grid[newIndex] == "BK") { // Can not capture king
+                    else if (grid[newIndex] == "|||" || grid[newIndex] == "BK") { // Can not capture king
 
                     }
 
                     else {
-                        grid[pieceCurrentIndex] = " ";
+                        grid[pieceCurrentIndex] = "|||";
                         grid[newIndex] = pieceString;
+                        this.hasMoved = true;
                     }
                 }
 
@@ -133,60 +228,70 @@ class Player {
                 }
 
                 // Check if enemy pawn can en passant
-                if (grid[newIndex - 1].startsWith("BP")) {
+                if (grid[newIndex - 1].startsWith("BP") && this.hasMoved == true) {
                     enemyPlayer.enPassant = true;
+                    console.log("White pawn has black pawn to the left");
                 }
 
-                else if (grid[newIndex + 1].startsWith("BP")) {
+                else if (grid[newIndex + 1].startsWith("BP") && this.hasMoved == true) {
                     enemyPlayer.enPassant = true;
+                    console.log("White pawn has black pawn to the right");
                 }
+
+                this.hasMoved = false;
             }
 
             else if (piece.color == "B") {
                 // Moving 1 or 2 spaces forward 
                 if (newIndex - pieceCurrentIndex == 8) {
-                    if (grid[newIndex] != " ") {
+                    if (grid[newIndex] != "|||") {
 
                     }
 
                     else {
-                        grid[pieceCurrentIndex] = " ";
+                        grid[pieceCurrentIndex] = "|||";
                         grid[newIndex] = pieceString;
+                        piece.firstTurn = false;
+                        this.hasMoved = true;
                     }
                 }
 
                 else if ((newIndex - pieceCurrentIndex == 16) && piece.firstTurn == true) {
-                    if (grid[newIndex] != " ") {
+                    if (grid[newIndex] != "|||") {
 
                     }
 
-                    else if (grid[newIndex - 8] != " ") {
+                    else if (grid[newIndex - 8] != "|||") {
 
                     }
 
                     else {
-                        grid[pieceCurrentIndex] = " ";
+                        grid[pieceCurrentIndex] = "|||";
                         grid[newIndex] = pieceString;
                         piece.firstTurn = false;
+                        this.hasMoved = true;
                     }                    
                 }
 
                 // Capturing piece diagonally in front of it
                 else if (newIndex - pieceCurrentIndex == 9 || newIndex - pieceCurrentIndex == 7) {
                     if (this.enPassant == true && grid[newIndex - 8] != "WK") {
-                        grid[pieceCurrentIndex] = " ";
+                        grid[pieceCurrentIndex] = "|||";
                         grid[newIndex] = pieceString;
-                        grid[newIndex - 8] = " "; // Capture enemy pawn
+                        grid[newIndex - 8] = "|||"; // Capture enemy pawn
                         this.enPassant = false;
+                        this.hasMoved = true;
+                        console.log("enPassant by black pawn");
                     }
 
-                    else if (grid[newIndex] == " " || grid[newIndex] == "WK") { // Can not capture king
+                    else if (grid[newIndex] == "|||" || grid[newIndex] == "WK") { // Can not capture king
 
                     }
 
                     else {
-                        grid[pieceCurrentIndex] = " ";
+                        grid[pieceCurrentIndex] = "|||";
                         grid[newIndex] = pieceString;
+                        this.hasMoved = true;
                     }
                 }
 
@@ -195,13 +300,17 @@ class Player {
                 }
 
                 // Check if enemy pawn can en passant
-                if (grid[newIndex - 1].startsWith("WP")) {
+                if (grid[newIndex - 1].startsWith("WP") && this.hasMoved == true) {
                     enemyPlayer.enPassant = true;
+                    console.log("Black pawn has white pawn to the left");
                 }
 
-                else if (grid[newIndex + 1].startsWith("WP")) {
+                else if (grid[newIndex + 1].startsWith("WP") && this.hasMoved == true) {
                     enemyPlayer.enPassant = true;
+                    console.log("Black pawn has white pawn to the right");
                 }
+
+                this.hasMoved = false;
             }
         }
 
@@ -218,7 +327,7 @@ class Player {
                     let notAllEmpty = false;
 
                     for (let i = pieceCurrentIndex - 8; i > newIndex; i -= 8) {
-                        if ((grid[i] != " ") && pieceCurrentIndex - newIndex != 8) {
+                        if ((grid[i] != "|||") && pieceCurrentIndex - newIndex != 8) {
                             notAllEmpty = true;
                         }
                     }
@@ -229,7 +338,7 @@ class Player {
                         }
 
                         else {
-                            grid[pieceCurrentIndex] = " ";
+                            grid[pieceCurrentIndex] = "|||";
                             grid[newIndex] = pieceString;
                         }
                     }
@@ -244,7 +353,7 @@ class Player {
                     let notAllEmpty = false;
 
                     for (let i = pieceCurrentIndex + 8; i < newIndex; i += 8) {
-                        if ((grid[i] != " ") && (newIndex - pieceCurrentIndex != 8)) {
+                        if ((grid[i] != "|||") && (newIndex - pieceCurrentIndex != 8)) {
                             notAllEmpty = true;
                         }
                     }
@@ -255,7 +364,7 @@ class Player {
                         }
 
                         else {
-                            grid[pieceCurrentIndex] = " ";
+                            grid[pieceCurrentIndex] = "|||";
                             grid[newIndex] = pieceString;
                         }
                     }
@@ -279,7 +388,7 @@ class Player {
                         let notAllEmpty = false;
 
                         for (let i = pieceCurrentIndex + 1; i < newIndex; i += 1) {
-                            if ((grid[i] != " ") && (newIndex - pieceCurrentIndex != 1)) {
+                            if ((grid[i] != "|||") && (newIndex - pieceCurrentIndex != 1)) {
                                 notAllEmpty = true;
                             }
                         }
@@ -290,7 +399,7 @@ class Player {
                             }
 
                             else {
-                                grid[pieceCurrentIndex] = " ";
+                                grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
                             }
                         }
@@ -315,7 +424,7 @@ class Player {
                         let notAllEmpty = false;
 
                         for (let i = pieceCurrentIndex - 1; i > newIndex; i -= 1) {
-                            if ((grid[i] != " ") && pieceCurrentIndex - newIndex != 1) {
+                            if ((grid[i] != "|||") && pieceCurrentIndex - newIndex != 1) {
                                 notAllEmpty = true;
                             }
                         }
@@ -326,7 +435,7 @@ class Player {
                             }
 
                             else {
-                                grid[pieceCurrentIndex] = " ";
+                                grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
                             }
                         }
@@ -345,7 +454,7 @@ class Player {
                     let notAllEmpty = false;
 
                     for (let i = pieceCurrentIndex - 8; i > newIndex; i -= 8) {
-                        if ((grid[i] != " ") && pieceCurrentIndex - newIndex != 8) {
+                        if ((grid[i] != "|||") && pieceCurrentIndex - newIndex != 8) {
                             notAllEmpty = true;
                         }
                     }
@@ -356,7 +465,7 @@ class Player {
                         }
 
                         else {
-                            grid[pieceCurrentIndex] = " ";
+                            grid[pieceCurrentIndex] = "|||";
                             grid[newIndex] = pieceString;
                         }
                     }
@@ -371,7 +480,7 @@ class Player {
                     let notAllEmpty = false;
 
                     for (let i = pieceCurrentIndex + 8; i < newIndex; i += 8) {
-                        if ((grid[i] != " ") && newIndex - pieceCurrentIndex != 8) {
+                        if ((grid[i] != "|||") && newIndex - pieceCurrentIndex != 8) {
                             notAllEmpty = true;
                         }
                     }
@@ -382,7 +491,7 @@ class Player {
                         }
 
                         else {
-                            grid[pieceCurrentIndex] = " ";
+                            grid[pieceCurrentIndex] = "|||";
                             grid[newIndex] = pieceString;
                         }
                     }
@@ -406,7 +515,7 @@ class Player {
                         let notAllEmpty = false;
 
                         for (let i = pieceCurrentIndex + 1; i < newIndex; i += 1) {
-                            if ((grid[i] != " ") && newIndex - pieceCurrentIndex != 1) {
+                            if ((grid[i] != "|||") && newIndex - pieceCurrentIndex != 1) {
                                 notAllEmpty = true;
                             }
                         }
@@ -417,7 +526,7 @@ class Player {
                             }
 
                             else {
-                                grid[pieceCurrentIndex] = " ";
+                                grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
                             }
                         }
@@ -442,7 +551,7 @@ class Player {
                         let notAllEmpty = false;
 
                         for (let i = pieceCurrentIndex - 1; i > newIndex; i -= 1) {
-                            if ((grid[i] != " ") && pieceCurrentIndex - newIndex != 1) {
+                            if ((grid[i] != "|||") && pieceCurrentIndex - newIndex != 1) {
                                 notAllEmpty = true;
                             }
                         }
@@ -453,7 +562,7 @@ class Player {
                             }
 
                             else {
-                                grid[pieceCurrentIndex] = " ";
+                                grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
                             }
                         }
@@ -477,7 +586,7 @@ class Player {
                     }
 
                     else {
-                        grid[pieceCurrentIndex] = " ";
+                        grid[pieceCurrentIndex] = "|||";
                         grid[newIndex] = pieceString;
                     }
                 }
