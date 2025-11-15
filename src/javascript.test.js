@@ -187,20 +187,19 @@ describe('Player', () => {
         const player2 = new Player("Black");
 
         const pawnW1 = new Piece("W", "P", 4);
-        const pawnW2 = new Piece("W", "P", 1);
-        const pawnB = new Piece("B", "P", 5);
+        const pawnB1 = new Piece("B", "P", 5);
+        const pawnB2 = new Piece("B", "P", 2);
         
         player1.move(gameboard.grid, pawnW1, 35, player2);
-        
-        player2.move(gameboard.grid, pawnB, 20, player1);
+        player2.move(gameboard.grid, pawnB2, 17, player1);
     
-        player1.move(gameboard.grid, pawnW2, 40, player2);
-        player2.move(gameboard.grid, pawnB, 36, player1);
+        player1.move(gameboard.grid, pawnW1, 27, player2);
+        player2.move(gameboard.grid, pawnB1, 28, player1);
         
-        player1.move(gameboard.grid, pawnW1, 28, player2);
+        player1.move(gameboard.grid, pawnW1, 20, player2);
 
-        expect(gameboard.grid[28]).toBe("WP4");
-        expect(gameboard.grid[36]).toBe("|||"); // Where pawnB was
+        expect(gameboard.grid[20]).toBe("WP4");
+        expect(gameboard.grid[28]).toBe("|||"); // Where pawnB was
     })
 
     test('move function works for black pawn when trying to capture enemy piece en passant', () => {
@@ -209,17 +208,21 @@ describe('Player', () => {
         const player1 = new Player("White");
         const player2 = new Player("Black");
 
-        const pawnW = new Piece("W", "P", 4);
+        const pawnW1 = new Piece("W", "P", 4);
+        const pawnW2 = new Piece("W", "P", 2);
         const pawnB = new Piece("B", "P", 5);
         
-        player1.move(gameboard.grid, pawnW, 43, player2);
+        player1.move(gameboard.grid, pawnW2, 40, player2);
         player2.move(gameboard.grid, pawnB, 28, player1);
     
-        player1.move(gameboard.grid, pawnW, 27, player2);
-        player2.move(gameboard.grid, pawnB, 35, player1);
+        player1.move(gameboard.grid, pawnW2, 32, player2);
+        player2.move(gameboard.grid, pawnB, 36, player1);
 
-        expect(gameboard.grid[35]).toBe("BP5");
-        expect(gameboard.grid[27]).toBe("|||"); // Where pawnB was
+        player1.move(gameboard.grid, pawnW1, 35, player2);
+        player2.move(gameboard.grid, pawnB, 43, player1);
+
+        expect(gameboard.grid[43]).toBe("BP5");
+        expect(gameboard.grid[35]).toBe("|||"); // Where pawnW1 was
     })
 
     test('move function does not work for white pawn when trying to capture enemy piece en passant when enemy piece is on another row and next to it', () => {
