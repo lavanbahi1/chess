@@ -225,26 +225,91 @@ describe('Player', () => {
         expect(gameboard.grid[35]).toBe("|||"); // Where pawnW1 was
     })
 
+    test('move function does not work for white pawn when trying to capture enemy piece when white pawn is two rows below the enemy piece', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW1 = new Piece("W", "P", 1);
+        const pawnB1 = new Piece("B", "P", 8);
+        
+        player1.move(gameboard.grid, pawnW1, 32, player2);
+        player2.move(gameboard.grid, pawnB1, 23, player1);
+    
+        player1.move(gameboard.grid, pawnW1, 23, player2);
+
+        expect(gameboard.grid[23]).toBe("BP8");
+        expect(gameboard.grid[32]).toBe("WP1"); 
+    })
+
+    test('move function does not work for white pawn when trying to capture enemy piece when white pawn is on the same row as the enemy piece and at opposite sides', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW1 = new Piece("W", "P", 8);
+        const pawnB1 = new Piece("B", "P", 1);
+        const pawnB2 = new Piece("B", "P", 3);
+        
+        player1.move(gameboard.grid, pawnW1, 39, player2);
+        player2.move(gameboard.grid, pawnB1, 16, player1);
+    
+        player1.move(gameboard.grid, pawnW1, 31, player2);
+        player2.move(gameboard.grid, pawnB2, 18, player1);
+
+        player1.move(gameboard.grid, pawnW1, 23, player2);
+        player2.move(gameboard.grid, pawnB2, 26, player1);
+
+        player1.move(gameboard.grid, pawnW1, 16, player2);
+
+        expect(gameboard.grid[16]).toBe("BP1");
+        expect(gameboard.grid[23]).toBe("WP8"); 
+    })
+
     test('move function does not work for white pawn when trying to capture enemy piece en passant when enemy piece is on another row and next to it', () => {
         const gameboard = new Gameboard();
 
         const player1 = new Player("White");
         const player2 = new Player("Black");
 
-        const pawnW1 = new Piece("W", "P", 4);
-        const pawnW2 = new Piece("W", "P", 1);
-        const pawnB = new Piece("B", "P", 5);
+        const pawnW1 = new Piece("W", "P", 1);
+        const pawnW2 = new Piece("W", "P", 4);
+        const pawnB = new Piece("B", "P", 8);
         
-        player1.move(gameboard.grid, pawnW1, 35, player2);
-        player2.move(gameboard.grid, pawnB, 20, player1);
+        player1.move(gameboard.grid, pawnW1, 32, player2);
+        player2.move(gameboard.grid, pawnB, 31, player1);
     
-        player1.move(gameboard.grid, pawnW2, 40, player2);
-        player2.move(gameboard.grid, pawnB, 36, player1);
-        
-        player1.move(gameboard.grid, pawnW1, 28, player2);
+        player1.move(gameboard.grid, pawnW1, 23, player2);
+        gameboard.printGrid();
 
-        expect(gameboard.grid[28]).toBe("WP4");
-        expect(gameboard.grid[36]).toBe("|||"); // Where pawnB was
+        expect(gameboard.grid[23]).toBe("|||");
+        expect(gameboard.grid[31]).toBe("BP8"); 
+    })
+
+
+    test('move function does not work for black pawn when trying to capture enemy piece en passant when enemy piece is on another row and next to it', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW1 = new Piece("W", "P", 1);
+        const pawnW2 = new Piece("W", "P", 4);
+        const pawnB = new Piece("B", "P", 8);
+        
+        player1.move(gameboard.grid, pawnW2, 43, player2);
+        player2.move(gameboard.grid, pawnB, 31, player1);
+    
+        player1.move(gameboard.grid, pawnW1, 32, player2);
+        gameboard.printGrid();
+        player2.move(gameboard.grid, pawnB, 40, player1);
+
+        gameboard.printGrid();
+
+        expect(gameboard.grid[40]).toBe("|||");
+        expect(gameboard.grid[32]).toBe("WP1"); 
     })
 
     test('move function does not work for white pawn when trying to move two squares forward after first move', () => {

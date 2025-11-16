@@ -204,12 +204,21 @@ class Player {
                 else if (pieceCurrentIndex - newIndex == 9 || pieceCurrentIndex - newIndex == 7) {
                     
                     if (this.enPassant == true && grid[newIndex - 8] != "BK") {
-                        grid[pieceCurrentIndex] = "|||";
-                        grid[newIndex] = pieceString;
-                        grid[newIndex + 8] = "|||"; // Capture enemy pawn
-                        this.enPassant = false;
-                        this.hasMoved = true;
-                        console.log("enPassant by white pawn");
+                        if (((newIndex >= 0 && newIndex < 8) && (pieceCurrentIndex >= 8 && pieceCurrentIndex < 16))
+                        || ((newIndex >= 8 && newIndex < 16) && (pieceCurrentIndex >= 16 && pieceCurrentIndex < 24))
+                        || ((newIndex >= 16 && newIndex < 24) && (pieceCurrentIndex >= 24 && pieceCurrentIndex < 32))
+                        || ((newIndex >= 24 && newIndex < 32) && (pieceCurrentIndex >= 32 && pieceCurrentIndex < 40))
+                        || ((newIndex >= 32 && newIndex < 40) && (pieceCurrentIndex >= 40 && pieceCurrentIndex < 48))
+                        || ((newIndex >= 40 && newIndex < 48) && (pieceCurrentIndex >= 48 && pieceCurrentIndex < 56))
+                        || ((newIndex >= 48 && newIndex < 56) && (pieceCurrentIndex >= 56 && pieceCurrentIndex < 64))) {
+
+                            grid[pieceCurrentIndex] = "|||";
+                            grid[newIndex] = pieceString;
+                            grid[newIndex + 8] = "|||"; // Capture enemy pawn
+                            this.enPassant = false;
+                            this.hasMoved = true;
+                            console.log("enPassant by white pawn");                            
+                        }
                     }
 
                     else if (grid[newIndex] == "|||" || grid[newIndex] == "BK") { // Can not capture king
@@ -217,9 +226,18 @@ class Player {
                     }
 
                     else {
-                        grid[pieceCurrentIndex] = "|||";
-                        grid[newIndex] = pieceString;
-                        this.hasMoved = true;
+                        if (((newIndex >= 0 && newIndex < 8) && (pieceCurrentIndex >= 8 && pieceCurrentIndex < 16))
+                        || ((newIndex >= 8 && newIndex < 16) && (pieceCurrentIndex >= 16 && pieceCurrentIndex < 24))
+                        || ((newIndex >= 16 && newIndex < 24) && (pieceCurrentIndex >= 24 && pieceCurrentIndex < 32))
+                        || ((newIndex >= 24 && newIndex < 32) && (pieceCurrentIndex >= 32 && pieceCurrentIndex < 40))
+                        || ((newIndex >= 32 && newIndex < 40) && (pieceCurrentIndex >= 40 && pieceCurrentIndex < 48))
+                        || ((newIndex >= 40 && newIndex < 48) && (pieceCurrentIndex >= 48 && pieceCurrentIndex < 56))
+                        || ((newIndex >= 48 && newIndex < 56) && (pieceCurrentIndex >= 56 && pieceCurrentIndex < 64))) {
+
+                            grid[pieceCurrentIndex] = "|||";
+                            grid[newIndex] = pieceString;
+                            this.hasMoved = true;
+                        }
                     }
                 }
 
@@ -230,12 +248,12 @@ class Player {
                 // Check if enemy pawn can en passant
                 if (grid[newIndex - 1].startsWith("BP") && this.hasMoved == true) {
                     enemyPlayer.enPassant = true;
-                    console.log("White pawn has black pawn to the left");
+                    console.log(`White pawn ${grid[newIndex]} has black pawn ${grid[newIndex - 1]} to the left`);
                 }
 
                 else if (grid[newIndex + 1].startsWith("BP") && this.hasMoved == true) {
                     enemyPlayer.enPassant = true;
-                    console.log("White pawn has black pawn to the right");
+                    console.log(`White pawn ${grid[newIndex]} has black pawn ${grid[newIndex + 1]} to the right`);
                 }
 
                 this.hasMoved = false;
@@ -302,12 +320,12 @@ class Player {
                 // Check if enemy pawn can en passant
                 if (grid[newIndex - 1].startsWith("WP") && this.hasMoved == true) {
                     enemyPlayer.enPassant = true;
-                    console.log("Black pawn has white pawn to the left");
+                    console.log(`Black pawn ${grid[newIndex]} has white pawn ${grid[newIndex - 1]} to the left`);
                 }
 
                 else if (grid[newIndex + 1].startsWith("WP") && this.hasMoved == true) {
                     enemyPlayer.enPassant = true;
-                    console.log("Black pawn has white pawn to the right");
+                    console.log(`Black pawn ${grid[newIndex]} has white pawn ${grid[newIndex + 1]} to the right`);
                 }
 
                 this.hasMoved = false;
