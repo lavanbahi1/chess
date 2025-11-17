@@ -294,12 +294,20 @@ class Player {
                 // Capturing piece diagonally in front of it
                 else if (newIndex - pieceCurrentIndex == 9 || newIndex - pieceCurrentIndex == 7) {
                     if (this.enPassant == true && grid[newIndex - 8] != "WK") {
-                        grid[pieceCurrentIndex] = "|||";
-                        grid[newIndex] = pieceString;
-                        grid[newIndex - 8] = "|||"; // Capture enemy pawn
-                        this.enPassant = false;
-                        this.hasMoved = true;
-                        console.log("enPassant by black pawn");
+                        if (((newIndex >= 8 && newIndex < 16) && (pieceCurrentIndex >= 0 && pieceCurrentIndex < 8))
+                        || ((newIndex >= 16 && newIndex < 24) && (pieceCurrentIndex >= 8 && pieceCurrentIndex < 16))
+                        || ((newIndex >= 24 && newIndex < 32) && (pieceCurrentIndex >= 16 && pieceCurrentIndex < 24))
+                        || ((newIndex >= 32 && newIndex < 40) && (pieceCurrentIndex >= 24 && pieceCurrentIndex < 32))
+                        || ((newIndex >= 40 && newIndex < 48) && (pieceCurrentIndex >= 32 && pieceCurrentIndex < 40))
+                        || ((newIndex >= 48 && newIndex < 56) && (pieceCurrentIndex >= 40 && pieceCurrentIndex < 48))
+                        || ((newIndex >= 56 && newIndex < 64) && (pieceCurrentIndex >= 48 && pieceCurrentIndex < 56))) { 
+                            grid[pieceCurrentIndex] = "|||";
+                            grid[newIndex] = pieceString;
+                            grid[newIndex - 8] = "|||"; // Capture enemy pawn
+                            this.enPassant = false;
+                            this.hasMoved = true;
+                            console.log("enPassant by black pawn");
+                        }
                     }
 
                     else if (grid[newIndex] == "|||" || grid[newIndex] == "WK") { // Can not capture king
@@ -307,9 +315,18 @@ class Player {
                     }
 
                     else {
-                        grid[pieceCurrentIndex] = "|||";
-                        grid[newIndex] = pieceString;
-                        this.hasMoved = true;
+
+                        if (((newIndex >= 8 && newIndex < 16) && (pieceCurrentIndex >= 0 && pieceCurrentIndex < 8))
+                        || ((newIndex >= 16 && newIndex < 24) && (pieceCurrentIndex >= 8 && pieceCurrentIndex < 16))
+                        || ((newIndex >= 24 && newIndex < 32) && (pieceCurrentIndex >= 16 && pieceCurrentIndex < 24))
+                        || ((newIndex >= 32 && newIndex < 40) && (pieceCurrentIndex >= 24 && pieceCurrentIndex < 32))
+                        || ((newIndex >= 40 && newIndex < 48) && (pieceCurrentIndex >= 32 && pieceCurrentIndex < 40))
+                        || ((newIndex >= 48 && newIndex < 56) && (pieceCurrentIndex >= 40 && pieceCurrentIndex < 48))
+                        || ((newIndex >= 56 && newIndex < 64) && (pieceCurrentIndex >= 48 && pieceCurrentIndex < 56))) {                        
+                            grid[pieceCurrentIndex] = "|||";
+                            grid[newIndex] = pieceString;
+                            this.hasMoved = true;
+                        }
                     }
                 }
 
