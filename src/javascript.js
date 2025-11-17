@@ -159,6 +159,7 @@ class Player {
         this.currentTurn = false;
         this.enPassant = false;
         this.hasMoved = false;
+        this.completedTwoSquaresMove = false;
     }
 
     move(grid, piece, newIndex, enemyPlayer) {
@@ -197,6 +198,7 @@ class Player {
                         grid[newIndex] = pieceString;
                         piece.firstTurn = false;
                         this.hasMoved = true;
+                        this.completedTwoSquaresMove = true;
                     }
                 }
 
@@ -245,18 +247,19 @@ class Player {
 
                 }
 
-                // Check if enemy pawn can en passant
-                if (grid[newIndex - 1].startsWith("BP") && this.hasMoved == true) {
+                // Check if enemy pawn can en passant. Makes sure the player pawn has moved (above occurred)
+                if (grid[newIndex - 1].startsWith("BP") && this.hasMoved == true && this.completedTwoSquaresMove == true) {
                     enemyPlayer.enPassant = true;
                     console.log(`White pawn ${grid[newIndex]} has black pawn ${grid[newIndex - 1]} to the left`);
                 }
 
-                else if (grid[newIndex + 1].startsWith("BP") && this.hasMoved == true) {
+                else if (grid[newIndex + 1].startsWith("BP") && this.hasMoved == true && this.completedTwoSquaresMove == true) {
                     enemyPlayer.enPassant = true;
                     console.log(`White pawn ${grid[newIndex]} has black pawn ${grid[newIndex + 1]} to the right`);
                 }
 
                 this.hasMoved = false;
+                this.completedTwoSquaresMove = false;
             }
 
             else if (piece.color == "B") {
@@ -288,6 +291,7 @@ class Player {
                         grid[newIndex] = pieceString;
                         piece.firstTurn = false;
                         this.hasMoved = true;
+                        this.completedTwoSquaresMove = true
                     }                    
                 }
 
@@ -334,18 +338,19 @@ class Player {
 
                 }
 
-                // Check if enemy pawn can en passant
-                if (grid[newIndex - 1].startsWith("WP") && this.hasMoved == true) {
+                // Check if enemy pawn can en passant. Makes sure the player pawn has moved (above occurred)
+                if (grid[newIndex - 1].startsWith("WP") && this.hasMoved == true && this.completedTwoSquaresMove == true) {
                     enemyPlayer.enPassant = true;
                     console.log(`Black pawn ${grid[newIndex]} has white pawn ${grid[newIndex - 1]} to the left`);
                 }
 
-                else if (grid[newIndex + 1].startsWith("WP") && this.hasMoved == true) {
+                else if (grid[newIndex + 1].startsWith("WP") && this.hasMoved == true && this.completedTwoSquaresMove == true) {
                     enemyPlayer.enPassant = true;
                     console.log(`Black pawn ${grid[newIndex]} has white pawn ${grid[newIndex + 1]} to the right`);
                 }
 
                 this.hasMoved = false;
+                this.completedTwoSquaresMove = false;
             }
         }
 
