@@ -196,7 +196,7 @@ describe('Player', () => {
         player1.move(gameboard.grid, pawnW1, 27, player2);
         player2.move(gameboard.grid, pawnB1, 28, player1);
 
-        gameboard.printGrid();
+        //gameboard.printGrid();
         
         player1.move(gameboard.grid, pawnW1, 20, player2);
 
@@ -752,6 +752,7 @@ describe('Player', () => {
 
         player1.move(gameboard.grid, pawnW, 43);
         player2.move(gameboard.grid, pawnB, 16);
+
         player1.move(gameboard.grid, bishopW, 44);
 
         expect(gameboard.grid[44]).toBe("WB1");
@@ -769,8 +770,292 @@ describe('Player', () => {
 
         player1.move(gameboard.grid, pawnW, 41);
         player2.move(gameboard.grid, pawnB, 16);
+
         player1.move(gameboard.grid, bishopW, 40);
 
         expect(gameboard.grid[40]).toBe("WB1");
+    })
+
+    test('move function works for white bishop when moving diagonally down and to the right', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW = new Piece("W", "P", 4);
+        const pawnB = new Piece("B", "P", 1);
+        const bishopW = new Piece("W", "B", 1);
+
+        player1.move(gameboard.grid, pawnW, 43);
+        player2.move(gameboard.grid, pawnB, 16);
+
+        player1.move(gameboard.grid, bishopW, 37);
+        player2.move(gameboard.grid, pawnB, 24);
+
+        player1.move(gameboard.grid, bishopW, 46);
+
+        expect(gameboard.grid[46]).toBe("WB1");
+    })
+
+    test('move function works for white bishop when moving diagonally down and to the left', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW = new Piece("W", "P", 5);
+        const pawnB = new Piece("B", "P", 1);
+        const bishopW = new Piece("W", "B", 2);
+
+        player1.move(gameboard.grid, pawnW, 44);
+        player2.move(gameboard.grid, pawnB, 16);
+
+        player1.move(gameboard.grid, bishopW, 34);
+        player2.move(gameboard.grid, pawnB, 24);
+
+        player1.move(gameboard.grid, bishopW, 41);
+
+        expect(gameboard.grid[41]).toBe("WB2");
+    })
+
+    test('move function works for black bishop when moving diagonally up and to the right', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnB = new Piece("B", "P", 4);
+        const pawnW = new Piece("W", "P", 1);
+        const bishopB = new Piece("B", "B", 1);
+
+        player2.move(gameboard.grid, pawnB, 19);
+        player1.move(gameboard.grid, pawnW, 40);
+
+        player2.move(gameboard.grid, bishopB, 29);
+        player1.move(gameboard.grid, pawnW, 32);
+
+        player2.move(gameboard.grid, bishopB, 22);
+        
+        expect(gameboard.grid[22]).toBe("BB1");
+    })
+
+    test('move function works for black bishop when moving diagonally up and to the left', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnB = new Piece("B", "P", 4);
+        const pawnW = new Piece("W", "P", 1);
+        const bishopB = new Piece("B", "B", 1);
+
+        player2.move(gameboard.grid, pawnB, 19);
+        player1.move(gameboard.grid, pawnW, 40);
+
+        player2.move(gameboard.grid, bishopB, 29);
+        player1.move(gameboard.grid, pawnW, 32);
+
+        player2.move(gameboard.grid, bishopB, 20);
+        
+        expect(gameboard.grid[20]).toBe("BB1");
+    })
+
+    test('move function works for black bishop when moving diagonally down and to the right', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnB = new Piece("B", "P", 4);
+        const pawnW = new Piece("W", "P", 1);
+        const bishopB = new Piece("B", "B", 1);
+
+        player2.move(gameboard.grid, pawnB, 19);
+        player1.move(gameboard.grid, pawnW, 40);
+
+        player2.move(gameboard.grid, bishopB, 29);
+
+        expect(gameboard.grid[29]).toBe("BB1");
+    })
+
+    test('move function works for black bishop when moving diagonally down and to the left', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnB = new Piece("B", "P", 4);
+        const pawnW = new Piece("W", "P", 1);
+        const bishopB = new Piece("B", "B", 1);
+
+        player2.move(gameboard.grid, pawnB, 19);
+        player1.move(gameboard.grid, pawnW, 40);
+
+        player2.move(gameboard.grid, bishopB, 29);
+        player1.move(gameboard.grid, pawnW, 32);
+
+        player2.move(gameboard.grid, bishopB, 36);
+        
+        expect(gameboard.grid[36]).toBe("BB1");
+    })
+
+    test('move function does not work for white bishop when trying to move to a square occupied by a piece of the same color', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW = new Piece("W", "P", 4);
+        const pawnB = new Piece("B", "P", 1);
+        const bishopW = new Piece("W", "B", 1);
+
+        player1.move(gameboard.grid, pawnW, 43);
+        player2.move(gameboard.grid, pawnB, 16);
+
+        player1.move(gameboard.grid, bishopW, 37);
+        player2.move(gameboard.grid, pawnB, 24);
+
+        player1.move(gameboard.grid, bishopW, 55);
+
+        expect(gameboard.grid[37]).toBe("WB1");
+        expect(gameboard.grid[55]).toBe("WP8");
+    })
+
+    test('move function does not work for white bishop when trying to move forwards/backwards', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW = new Piece("W", "P", 4);
+        const pawnB = new Piece("B", "P", 1);
+        const bishopW = new Piece("W", "B", 1);
+
+        player1.move(gameboard.grid, pawnW, 43);
+        player2.move(gameboard.grid, pawnB, 16);
+
+        player1.move(gameboard.grid, bishopW, 37);
+        player2.move(gameboard.grid, pawnB, 24);
+
+        player1.move(gameboard.grid, bishopW, 29);
+
+        expect(gameboard.grid[37]).toBe("WB1");
+        expect(gameboard.grid[29]).toBe("|||");
+    })
+
+    test('move function does not work for white bishop when there is another piece blocking its path', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW = new Piece("W", "P", 4);
+        const pawnB = new Piece("B", "P", 1);
+        const bishopW = new Piece("W", "B", 1);
+
+        player1.move(gameboard.grid, bishopW, 44);
+
+        expect(gameboard.grid[58]).toBe("WB1");
+        expect(gameboard.grid[44]).toBe("|||");
+    })
+
+    test('move function works for white bishop when trying to capture enemy piece', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW = new Piece("W", "P", 4);
+        const pawnB = new Piece("B", "P", 1);
+        const bishopW = new Piece("W", "B", 1);
+
+        player1.move(gameboard.grid, pawnW, 43);
+        player2.move(gameboard.grid, pawnB, 16);
+
+        player1.move(gameboard.grid, bishopW, 23);
+        player2.move(gameboard.grid, pawnB, 24);
+
+        player1.move(gameboard.grid, bishopW, 14);
+
+        expect(gameboard.grid[14]).toBe("WB1");
+    })
+
+    test('move function does not work for black bishop when trying to move to a square occupied by a piece of the same color', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnB = new Piece("B", "P", 4);
+        const pawnW = new Piece("W", "P", 1);
+        const bishopB = new Piece("B", "B", 1);
+
+        player2.move(gameboard.grid, pawnB, 19);
+        player1.move(gameboard.grid, pawnW, 40);
+
+        player2.move(gameboard.grid, bishopB, 29);
+        player1.move(gameboard.grid, pawnW, 32);
+
+        player2.move(gameboard.grid, bishopB, 15);
+        
+        expect(gameboard.grid[29]).toBe("BB1");
+    })
+
+    test('move function does not work for black bishop when trying to move forwards/backwards', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnB = new Piece("B", "P", 4);
+        const pawnW = new Piece("W", "P", 1);
+        const bishopB = new Piece("B", "B", 1);
+
+        player2.move(gameboard.grid, pawnB, 19);
+        player1.move(gameboard.grid, pawnW, 40);
+
+        player2.move(gameboard.grid, bishopB, 29);
+        player1.move(gameboard.grid, pawnW, 32);
+
+        player2.move(gameboard.grid, bishopB, 37);
+        
+        expect(gameboard.grid[29]).toBe("BB1");
+    })
+
+    test('move function does not work for black bishop when there is another piece blocking its path', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnB = new Piece("B", "P", 4);
+        const pawnW = new Piece("W", "P", 1);
+        const bishopB = new Piece("B", "B", 1);
+
+        player2.move(gameboard.grid, bishopB, 20);
+
+        expect(gameboard.grid[2]).toBe("BB1");
+        expect(gameboard.grid[20]).toBe("|||");
+    })
+
+    test('move function works for black bishop when trying to capture enemy piece', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnB = new Piece("B", "P", 4);
+        const pawnW = new Piece("W", "P", 1);
+        const bishopB = new Piece("B", "B", 1);
+
+        player2.move(gameboard.grid, pawnB, 19);
+        player1.move(gameboard.grid, pawnW, 40);
+
+        player2.move(gameboard.grid, bishopB, 29);
+        player1.move(gameboard.grid, pawnW, 32);
+
+        player2.move(gameboard.grid, bishopB, 50);
+        
+        expect(gameboard.grid[50]).toBe("BB1");
     })
 })
