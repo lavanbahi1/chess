@@ -1058,4 +1058,183 @@ describe('Player', () => {
         
         expect(gameboard.grid[50]).toBe("BB1");
     })
+
+    test('move function works for white knight when moving in an L-shape pattern 2 squares up and 1 square right', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const knightW = new Piece("W", "N", 1);
+
+        player1.move(gameboard.grid, knightW, 42);
+        
+        expect(gameboard.grid[42]).toBe("WN1");
+    })
+
+    test('move function works for white knight when moving in an L-shape pattern 2 square up and 1 square left', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const knightW = new Piece("W", "N", 1);
+        const pawnB = new Piece ("B", "P", 1);
+
+        player1.move(gameboard.grid, knightW, 40);
+        player2.move(gameboard.grid, pawnB, 16);
+        
+        expect(gameboard.grid[40]).toBe("WN1");
+    })
+
+    test('move function works for white knight when moving in an L-shape pattern 2 squares down and 1 square right', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const knightW = new Piece("W", "N", 1);
+        const pawnB = new Piece ("B", "P", 1);
+
+        player1.move(gameboard.grid, knightW, 42);
+        player2.move(gameboard.grid, pawnB, 16);
+
+        player1.move(gameboard.grid, knightW, 27);
+        player2.move(gameboard.grid, pawnB, 24);
+
+        player1.move(gameboard.grid, knightW, 44);
+        
+        expect(gameboard.grid[44]).toBe("WN1");
+    })
+
+    test('move function works for white knight when moving in an L-shape pattern 2 squares down and 1 square left', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const knightW = new Piece("W", "N", 1);
+        const pawnB = new Piece ("B", "P", 1);
+
+        player1.move(gameboard.grid, knightW, 42);
+        player2.move(gameboard.grid, pawnB, 16);
+
+        player1.move(gameboard.grid, knightW, 27);
+        player2.move(gameboard.grid, pawnB, 24);
+
+        player1.move(gameboard.grid, knightW, 42);
+        
+        expect(gameboard.grid[42]).toBe("WN1");
+    })
+
+    test('move function works for black knight when moving in an L-shape pattern 2 square up and 1 square right', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const knightB = new Piece("B", "N", 1);
+        const pawnW = new Piece ("W", "P", 1);
+
+        player2.move(gameboard.grid, knightB, 18);
+        player1.move(gameboard.grid, pawnW, 40);
+
+        player2.move(gameboard.grid, knightB, 35);
+        player1.move(gameboard.grid, pawnW, 32);
+
+        player2.move(gameboard.grid, knightB, 20);
+        
+        expect(gameboard.grid[20]).toBe("BN1");
+    })
+
+    test('move function works for black knight when moving in an L-shape pattern 2 square up and 1 square left', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const knightB = new Piece("B", "N", 1);
+        const pawnW = new Piece ("W", "P", 1);
+
+        player2.move(gameboard.grid, knightB, 18);
+        player1.move(gameboard.grid, pawnW, 40);
+
+        player2.move(gameboard.grid, knightB, 35);
+        player1.move(gameboard.grid, pawnW, 32);
+
+        player2.move(gameboard.grid, knightB, 18);
+        
+        expect(gameboard.grid[18]).toBe("BN1");
+    })
+
+    test('move function works for black knight when moving in an L-shape pattern 2 square down and 1 square right', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const knightB = new Piece("B", "N", 1);
+        const pawnW = new Piece ("W", "P", 1);
+
+        player2.move(gameboard.grid, knightB, 18);
+        player1.move(gameboard.grid, pawnW, 40);
+
+        player2.move(gameboard.grid, knightB, 35);
+        
+        expect(gameboard.grid[35]).toBe("BN1");
+    })
+
+    test('move function works for black knight when moving in an L-shape pattern 2 square down and 1 square left', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const knightB = new Piece("B", "N", 1);
+        const pawnW = new Piece ("W", "P", 1);
+
+        player2.move(gameboard.grid, knightB, 16);
+        
+        expect(gameboard.grid[16]).toBe("BN1");
+    })
+
+    test('move function works for white knight when trying to capture enemy piece', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const knightW = new Piece("W", "N", 1);
+        const pawnB = new Piece ("B", "P", 1);
+
+        player1.move(gameboard.grid, knightW, 42);
+        player2.move(gameboard.grid, pawnB, 16);
+
+        player1.move(gameboard.grid, knightW, 27);
+        player2.move(gameboard.grid, pawnB, 24);
+
+        player1.move(gameboard.grid, knightW, 12);
+        
+        expect(gameboard.grid[12]).toBe("WN1");
+    })
+
+    test('move function works for black knight when trying to capture enemy piece', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const knightB = new Piece("B", "N", 1);
+        const pawnW = new Piece ("W", "P", 1);
+
+        player2.move(gameboard.grid, knightB, 18);
+        player1.move(gameboard.grid, pawnW, 40);
+
+        player2.move(gameboard.grid, knightB, 35);
+        player1.move(gameboard.grid, pawnW, 32);
+
+        player2.move(gameboard.grid, knightB, 52);
+        
+        expect(gameboard.grid[52]).toBe("BN1");
+    })
 })
