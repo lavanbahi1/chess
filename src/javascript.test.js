@@ -1486,4 +1486,150 @@ describe('Player', () => {
         
         expect(gameboard.grid[55]).toBe("BQ");
     })
+
+    test('move function works for white king when moving up', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const kingW = new Piece("W", "K");
+        const pawnW = new Piece("W", "P", 5);
+
+        player1.move(gameboard.grid, pawnW, 36);
+
+        player1.move(gameboard.grid, kingW, 52);
+        
+        expect(gameboard.grid[52]).toBe("WK");
+    })
+
+    test('move function works for white king when moving right', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const kingW = new Piece("W", "K");
+        const pawnW = new Piece("W", "P", 5);
+
+        player1.move(gameboard.grid, pawnW, 36);
+
+        player1.move(gameboard.grid, kingW, 52);
+
+        player1.move(gameboard.grid, pawnW, 28);
+
+        player1.move(gameboard.grid, kingW, 44);
+
+        player1.move(gameboard.grid, kingW, 45);
+        
+        expect(gameboard.grid[45]).toBe("WK");
+    })
+
+    test('move function works for white king when moving diagonally up and to the right', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const kingW = new Piece("W", "K");
+        const pawnW = new Piece("W", "P", 5);
+
+        player1.move(gameboard.grid, pawnW, 36);
+
+        player1.move(gameboard.grid, kingW, 52);
+
+        player1.move(gameboard.grid, pawnW, 28);
+
+        player1.move(gameboard.grid, kingW, 44);
+
+        player1.move(gameboard.grid, kingW, 37);
+        
+        expect(gameboard.grid[37]).toBe("WK");
+    })
+
+    test('move function does not work for white king when trying to move to a square occupied by a piece of the same color', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const kingW = new Piece("W", "K");
+        const pawnW = new Piece("W", "P", 5);
+
+        player1.move(gameboard.grid, kingW, 52);
+        
+        expect(gameboard.grid[52]).toBe("WP5");
+        expect(gameboard.grid[60]).toBe("WK");
+    })
+
+    test('move function works for black king when moving down', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const kingB = new Piece("B", "K");
+        const pawnB = new Piece("B", "P", 5);
+
+        player2.move(gameboard.grid, pawnB, 28);
+
+        player1.move(gameboard.grid, kingB, 12);
+        
+        expect(gameboard.grid[12]).toBe("BK");
+    })
+
+    test('move function works for black king when moving right', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const kingB = new Piece("B", "K");
+        const pawnB = new Piece("B", "P", 5);
+
+        player2.move(gameboard.grid, pawnB, 28);
+
+        player1.move(gameboard.grid, kingB, 12);
+
+        player1.move(gameboard.grid, kingB, 20);
+
+        player1.move(gameboard.grid, kingB, 21);
+        
+        expect(gameboard.grid[21]).toBe("BK");
+    })
+
+    test('move function works for black king when diagonally down and to the right', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const kingB = new Piece("B", "K");
+        const pawnB = new Piece("B", "P", 5);
+
+        player2.move(gameboard.grid, pawnB, 28);
+
+        player1.move(gameboard.grid, kingB, 12);
+
+        player1.move(gameboard.grid, kingB, 20);
+
+        player1.move(gameboard.grid, kingB, 29);
+        
+        expect(gameboard.grid[29]).toBe("BK");
+    })
+
+    test('move function does not work for black king when trying to move to a square occupied by a piece of the same color', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const kingB = new Piece("B", "K");
+        const pawnB = new Piece("B", "P", 5);
+
+        player1.move(gameboard.grid, kingB, 12);
+        
+        expect(gameboard.grid[4]).toBe("BK");
+        expect(gameboard.grid[12]).toBe("BP5");
+    })
 })
