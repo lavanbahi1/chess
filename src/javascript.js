@@ -2155,6 +2155,11 @@ class Player {
             }
         }
 
+        if (this.currentTurn == true) {
+            this.currentTurn = false;
+            enemyPlayer.currentTurn = true;
+        }
+
         //console.log(grid);
     }
 }

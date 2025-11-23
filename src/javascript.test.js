@@ -1573,7 +1573,7 @@ describe('Player', () => {
 
         player2.move(gameboard.grid, pawnB, 28);
 
-        player1.move(gameboard.grid, kingB, 12);
+        player2.move(gameboard.grid, kingB, 12);
         
         expect(gameboard.grid[12]).toBe("BK");
     })
@@ -1589,11 +1589,11 @@ describe('Player', () => {
 
         player2.move(gameboard.grid, pawnB, 28);
 
-        player1.move(gameboard.grid, kingB, 12);
+        player2.move(gameboard.grid, kingB, 12);
 
-        player1.move(gameboard.grid, kingB, 20);
+        player2.move(gameboard.grid, kingB, 20);
 
-        player1.move(gameboard.grid, kingB, 21);
+        player2.move(gameboard.grid, kingB, 21);
         
         expect(gameboard.grid[21]).toBe("BK");
     })
@@ -1609,11 +1609,11 @@ describe('Player', () => {
 
         player2.move(gameboard.grid, pawnB, 28);
 
-        player1.move(gameboard.grid, kingB, 12);
+        player2.move(gameboard.grid, kingB, 12);
 
-        player1.move(gameboard.grid, kingB, 20);
+        player2.move(gameboard.grid, kingB, 20);
 
-        player1.move(gameboard.grid, kingB, 29);
+        player2.move(gameboard.grid, kingB, 29);
         
         expect(gameboard.grid[29]).toBe("BK");
     })
@@ -1627,9 +1627,26 @@ describe('Player', () => {
         const kingB = new Piece("B", "K");
         const pawnB = new Piece("B", "P", 5);
 
-        player1.move(gameboard.grid, kingB, 12);
+        player2.move(gameboard.grid, kingB, 12);
         
         expect(gameboard.grid[4]).toBe("BK");
         expect(gameboard.grid[12]).toBe("BP5");
+    })
+
+    test('after a player moves, the current player changes', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW = new Piece("W", "P", 5);
+        const pawnB = new Piece("B", "P", 5);
+
+        player1.currentTurn = true;
+
+        player1.move(gameboard.grid, pawnW, 44, player2);
+        
+        expect(player2.currentTurn).toBe(true);
+        expect(player1.currentTurn).toBe(false);
     })
 })
