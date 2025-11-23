@@ -160,6 +160,8 @@ class Player {
         this.enPassant = false;
         this.hasMoved = false;
         this.completedTwoSquaresMove = false;
+        this.numOfWhiteQueens = [2, 3, 4, 5, 6, 7, 8, 9];
+        this.numOfBlackQueens = [2, 3, 4, 5, 6, 7, 8, 9];
     }
 
     move(grid, piece, newIndex, enemyPlayer) {
@@ -264,6 +266,13 @@ class Player {
                     console.log(`White pawn ${grid[newIndex]} has black pawn ${grid[newIndex + 1]} to the right`);
                 }
 
+                if (newIndex == 0 || newIndex == 1 || newIndex == 2 || newIndex == 3 || newIndex == 4 || newIndex == 5 || newIndex == 6 || newIndex == 7) {
+                    piece.name = "Q"
+                    piece.num = this.numOfWhiteQueens[0];
+                    this.numOfWhiteQueens.shift();
+                    grid[newIndex] = "W" + piece.name + piece.num;
+                }
+
                 this.hasMoved = false;
                 this.completedTwoSquaresMove = false;
             }
@@ -353,6 +362,13 @@ class Player {
                 else if (grid[newIndex + 1].startsWith("WP") && this.hasMoved == true && this.completedTwoSquaresMove == true) {
                     enemyPlayer.enPassant = true;
                     console.log(`Black pawn ${grid[newIndex]} has white pawn ${grid[newIndex + 1]} to the right`);
+                }
+
+                if (newIndex == 0 || newIndex == 1 || newIndex == 2 || newIndex == 3 || newIndex == 4 || newIndex == 5 || newIndex == 6 || newIndex == 7) {
+                    piece.name = "Q"
+                    piece.num = this.numOfBlackQueens[0];
+                    this.numOfBlackQueens.shift();
+                    grid[newIndex] = "B" + piece.name + piece.num;
                 }
 
                 this.hasMoved = false;
