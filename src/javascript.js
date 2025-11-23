@@ -163,7 +163,13 @@ class Player {
     }
 
     move(grid, piece, newIndex, enemyPlayer) {
-        let pieceString = piece.color + piece.name + piece.num;
+        let pieceNum = piece.num;
+
+        if (pieceNum == undefined) {
+            pieceNum = "";
+        }
+
+        let pieceString = piece.color + piece.name + pieceNum;
         let pieceCurrentIndex = grid.indexOf(pieceString);
 
         if (piece.name == "P") {
@@ -622,14 +628,24 @@ class Player {
                     || pieceCurrentIndex - newIndex == 49) {
 
                     let notAllEmpty = false;
+                    let hitEdge = false;
 
                     for (let i = pieceCurrentIndex - 7; i > newIndex; i -= 7) {
                         if ((grid[i] != "|||") && pieceCurrentIndex - newIndex != 7) {
                             notAllEmpty = true;
                         }
+
+                        if ((i == 7 && newIndex < i) || (i == 15 && newIndex < i) 
+                            || (i == 23 && newIndex < i) || (i == 31 && newIndex < i) 
+                            || (i == 39 && newIndex < i) || (i == 47 && newIndex < i) 
+                            || (i == 55 && newIndex < i)) {
+
+                            hitEdge = true;
+                            break;
+                        }
                     }
 
-                    if (notAllEmpty == false) {
+                    if (notAllEmpty == false && hitEdge == false) {
                         if (grid[newIndex].startsWith("W") || grid[newIndex] == "BK") { // Can not land on same color pieces and opposing king
 
                         }
@@ -648,14 +664,23 @@ class Player {
                     || pieceCurrentIndex - newIndex == 63) {
                     
                     let notAllEmpty = false;
+                    let hitEdge = false;
 
                     for (let i = pieceCurrentIndex - 9; i > newIndex; i -= 9) {
                         if ((grid[i] != "|||") && pieceCurrentIndex - newIndex != 9) {
                             notAllEmpty = true;
                         }
+
+                        if ((i == 8 && newIndex < i) || (i == 16 && newIndex < i) 
+                            || (i == 24 && newIndex < i) || (i == 32 && newIndex < i) 
+                            || (i == 40 && newIndex < i) || (i == 48 && newIndex < i) ) {
+
+                            hitEdge = true;
+                            break;
+                        }
                     }
 
-                    if (notAllEmpty == false) {
+                    if (notAllEmpty == false && hitEdge == false) {
                         if (grid[newIndex].startsWith("W") || grid[newIndex] == "BK") { // Can not land on same color pieces and opposing king
 
                         }
@@ -674,14 +699,23 @@ class Player {
                     || newIndex - pieceCurrentIndex == 63) {
                     
                     let notAllEmpty = false;
+                    let hitEdge = false;
 
                     for (let i = pieceCurrentIndex + 9; i < newIndex; i += 9) {
                         if ((grid[i] != "|||") && newIndex - pieceCurrentIndex != 9) {
                             notAllEmpty = true;
                         }
+
+                        if ((i == 15 && newIndex > i) || (i == 23 && newIndex > i) 
+                            || (i == 31 && newIndex > i) || (i == 39 && newIndex > i) 
+                            || (i == 47 && newIndex > i) || (i == 55 && newIndex > i)) {
+
+                            hitEdge = true;
+                            break;
+                        }
                     }
 
-                    if (notAllEmpty == false) {
+                    if (notAllEmpty == false && hitEdge == false) {
                         if (grid[newIndex].startsWith("W") || grid[newIndex] == "BK") { // Can not land on same color pieces and opposing king
 
                         }
@@ -700,14 +734,23 @@ class Player {
                     || newIndex - pieceCurrentIndex == 49) {
                     
                     let notAllEmpty = false;
+                    let hitEdge = false;
 
                     for (let i = pieceCurrentIndex + 7; i < newIndex; i += 7) {
                         if ((grid[i] != "|||") && newIndex - pieceCurrentIndex != 7) {
                             notAllEmpty = true;
                         }
+
+                        if ((i == 8 && newIndex > i) || (i == 16 && newIndex > i) 
+                            || (i == 24 && newIndex > i) || (i == 32 && newIndex > i) 
+                            || (i == 40 && newIndex > i) || (i == 48 && newIndex > i) ) {
+
+                            hitEdge = true;
+                            break;
+                        }
                     }
 
-                    if (notAllEmpty == false) {
+                    if (notAllEmpty == false && hitEdge == false) {
                         if (grid[newIndex].startsWith("W") || grid[newIndex] == "BK") { // Can not land on same color pieces and opposing king
 
                         }
@@ -729,14 +772,24 @@ class Player {
                     || pieceCurrentIndex - newIndex == 49) {
                     
                     let notAllEmpty = false;
+                    let hitEdge = false;
 
                     for (let i = pieceCurrentIndex - 7; i > newIndex; i -= 7) {
                         if ((grid[i] != "|||") && pieceCurrentIndex - newIndex != 7) {
                             notAllEmpty = true;
                         }
+
+                        if ((i == 7 && newIndex < i) || (i == 15 && newIndex < i) 
+                            || (i == 23 && newIndex < i) || (i == 31 && newIndex < i) 
+                            || (i == 39 && newIndex < i) || (i == 47 && newIndex < i) 
+                            || (i == 55 && newIndex < i)) {
+
+                            hitEdge = true;
+                            break;
+                        }
                     }
 
-                    if (notAllEmpty == false) {
+                    if (notAllEmpty == false && hitEdge == false) {
                         if (grid[newIndex].startsWith("B") || grid[newIndex] == "WK") { // Can not land on same color pieces and opposing king
 
                         }
@@ -755,14 +808,23 @@ class Player {
                     || pieceCurrentIndex - newIndex == 63) {
                     
                     let notAllEmpty = false;
+                    let hitEdge = false;
 
                     for (let i = pieceCurrentIndex - 9; i > newIndex; i -= 9) {
                         if ((grid[i] != "|||") && pieceCurrentIndex - newIndex != 9) {
                             notAllEmpty = true;
                         }
+
+                        if ((i == 8 && newIndex < i) || (i == 16 && newIndex < i) 
+                            || (i == 24 && newIndex < i) || (i == 32 && newIndex < i) 
+                            || (i == 40 && newIndex < i) || (i == 48 && newIndex < i) ) {
+
+                            hitEdge = true;
+                            break;
+                        }
                     }
 
-                    if (notAllEmpty == false) {
+                    if (notAllEmpty == false && hitEdge == false) {
                         if (grid[newIndex].startsWith("B") || grid[newIndex] == "WK") { // Can not land on same color pieces and opposing king
 
                         }
@@ -781,14 +843,23 @@ class Player {
                     || newIndex - pieceCurrentIndex == 63) {
                     
                     let notAllEmpty = false;
+                    let hitEdge = false;
 
                     for (let i = pieceCurrentIndex + 9; i < newIndex; i += 9) {
                         if ((grid[i] != "|||") && newIndex - pieceCurrentIndex != 9) {
                             notAllEmpty = true;
                         }
+
+                        if ((i == 15 && newIndex > i) || (i == 23 && newIndex > i) 
+                            || (i == 31 && newIndex > i) || (i == 39 && newIndex > i) 
+                            || (i == 47 && newIndex > i) || (i == 55 && newIndex > i)) {
+
+                            hitEdge = true;
+                            break;
+                        }
                     }
 
-                    if (notAllEmpty == false) {
+                    if (notAllEmpty == false && hitEdge == false) {
                         if (grid[newIndex].startsWith("B") || grid[newIndex] == "WK") { // Can not land on same color pieces and opposing king
 
                         }
@@ -807,14 +878,23 @@ class Player {
                     || newIndex - pieceCurrentIndex == 49) {
                     
                     let notAllEmpty = false;
+                    let hitEdge = false;
 
                     for (let i = pieceCurrentIndex + 7; i < newIndex; i += 7) {
                         if ((grid[i] != "|||") && newIndex - pieceCurrentIndex != 7) {
                             notAllEmpty = true;
                         }
+
+                        if ((i == 8 && newIndex > i) || (i == 16 && newIndex > i) 
+                            || (i == 24 && newIndex > i) || (i == 32 && newIndex > i) 
+                            || (i == 40 && newIndex > i) || (i == 48 && newIndex > i) ) {
+
+                            hitEdge = true;
+                            break;
+                        }
                     }
 
-                    if (notAllEmpty == false) {
+                    if (notAllEmpty == false && hitEdge == false) {
                         if (grid[newIndex].startsWith("B") || grid[newIndex] == "WK") { // Can not land on same color pieces and opposing king
 
                         }
@@ -1025,6 +1105,545 @@ class Player {
                         grid[pieceCurrentIndex] = "|||";
                         grid[newIndex] = pieceString;
                     }
+                }
+            }
+        }
+
+        else if (piece.name == "Q") {
+            
+            if (piece.color == "W") {
+                
+                // Moving up and capturing
+                if (pieceCurrentIndex - newIndex == 8 || pieceCurrentIndex - newIndex == 16
+                    || pieceCurrentIndex - newIndex == 24 || pieceCurrentIndex - newIndex == 32 
+                    || pieceCurrentIndex - newIndex == 40 || pieceCurrentIndex - newIndex == 48 
+                    || pieceCurrentIndex - newIndex == 56) {
+
+                    let notAllEmpty = false;
+
+                    for (let i = pieceCurrentIndex - 8; i > newIndex; i -= 8) {
+                        if ((grid[i] != "|||") && pieceCurrentIndex - newIndex != 8) {
+                            notAllEmpty = true;
+                        }
+                    }
+
+                    if (notAllEmpty == false) {
+                        if (grid[newIndex].startsWith("W") || grid[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            grid[pieceCurrentIndex] = "|||";
+                            grid[newIndex] = pieceString;
+                        }
+                    }
+                }
+
+                // Moving down and capturing
+                else if (newIndex - pieceCurrentIndex == 8 || newIndex - pieceCurrentIndex == 16
+                    || newIndex - pieceCurrentIndex == 24 || newIndex - pieceCurrentIndex == 32 
+                    || newIndex - pieceCurrentIndex == 40 || newIndex - pieceCurrentIndex == 48 
+                    || newIndex - pieceCurrentIndex == 56) {
+                        
+                    let notAllEmpty = false;
+
+                    for (let i = pieceCurrentIndex + 8; i < newIndex; i += 8) {
+                        if ((grid[i] != "|||") && (newIndex - pieceCurrentIndex != 8)) {
+                            notAllEmpty = true;
+                        }
+                    }
+
+                    if (notAllEmpty == false) {
+                        if (grid[newIndex].startsWith("W") || grid[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            grid[pieceCurrentIndex] = "|||";
+                            grid[newIndex] = pieceString;
+                        }
+                    }
+                }
+
+                // Moving right and capturing
+                else if (newIndex - pieceCurrentIndex == 1 || newIndex - pieceCurrentIndex == 2
+                    || newIndex - pieceCurrentIndex == 3 || newIndex - pieceCurrentIndex == 4 
+                    || newIndex - pieceCurrentIndex == 5 || newIndex - pieceCurrentIndex == 6 
+                    || newIndex - pieceCurrentIndex == 7) {
+
+                    if (((newIndex >= 0 && newIndex < 8) && (pieceCurrentIndex >= 0 && pieceCurrentIndex < 8))
+                    || ((newIndex >= 8 && newIndex < 16) && (pieceCurrentIndex >= 8 && pieceCurrentIndex < 16))
+                    || ((newIndex >= 16 && newIndex < 24) && (pieceCurrentIndex >= 16 && pieceCurrentIndex < 24))
+                    || ((newIndex >= 24 && newIndex < 32) && (pieceCurrentIndex >= 24 && pieceCurrentIndex < 32))
+                    || ((newIndex >= 32 && newIndex < 40) && (pieceCurrentIndex >= 32 && pieceCurrentIndex < 40))
+                    || ((newIndex >= 40 && newIndex < 48) && (pieceCurrentIndex >= 40 && pieceCurrentIndex < 48))
+                    || ((newIndex >= 48 && newIndex < 56) && (pieceCurrentIndex >= 48 && pieceCurrentIndex < 56))
+                    || ((newIndex >= 56 && newIndex < 64) && (pieceCurrentIndex >= 56 && pieceCurrentIndex < 64))) {
+                        
+                        let notAllEmpty = false;
+
+                        for (let i = pieceCurrentIndex + 1; i < newIndex; i += 1) {
+                            if ((grid[i] != "|||") && (newIndex - pieceCurrentIndex != 1)) {
+                                notAllEmpty = true;
+                            }
+                        }
+
+                        if (notAllEmpty == false) {
+                            if (grid[newIndex].startsWith("W") || grid[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                            }
+
+                            else {
+                                grid[pieceCurrentIndex] = "|||";
+                                grid[newIndex] = pieceString;
+                            }
+                        }
+                    }
+                }
+
+                // Moving left and capturing
+                else if (pieceCurrentIndex - newIndex == 1 || pieceCurrentIndex - newIndex == 2
+                    || pieceCurrentIndex - newIndex == 3 || pieceCurrentIndex - newIndex == 4 
+                    || pieceCurrentIndex - newIndex == 5 || pieceCurrentIndex - newIndex == 6 
+                    || pieceCurrentIndex - newIndex == 7) {
+                    
+                    if (((newIndex >= 0 && newIndex < 8) && (pieceCurrentIndex >= 0 && pieceCurrentIndex < 8))
+                    || ((newIndex >= 8 && newIndex < 16) && (pieceCurrentIndex >= 8 && pieceCurrentIndex < 16))
+                    || ((newIndex >= 16 && newIndex < 24) && (pieceCurrentIndex >= 16 && pieceCurrentIndex < 24))
+                    || ((newIndex >= 24 && newIndex < 32) && (pieceCurrentIndex >= 24 && pieceCurrentIndex < 32))
+                    || ((newIndex >= 32 && newIndex < 40) && (pieceCurrentIndex >= 32 && pieceCurrentIndex < 40))
+                    || ((newIndex >= 40 && newIndex < 48) && (pieceCurrentIndex >= 40 && pieceCurrentIndex < 48))
+                    || ((newIndex >= 48 && newIndex < 56) && (pieceCurrentIndex >= 48 && pieceCurrentIndex < 56))
+                    || ((newIndex >= 56 && newIndex < 64) && (pieceCurrentIndex >= 56 && pieceCurrentIndex < 64))) {
+                        
+                        let notAllEmpty = false;
+
+                        for (let i = pieceCurrentIndex - 1; i > newIndex; i -= 1) {
+                            if ((grid[i] != "|||") && pieceCurrentIndex - newIndex != 1) {
+                                notAllEmpty = true;
+                            }
+                        }
+
+                        if (notAllEmpty == false) {
+                            if (grid[newIndex].startsWith("W") || grid[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                            }
+
+                            else {
+                                grid[pieceCurrentIndex] = "|||";
+                                grid[newIndex] = pieceString;
+                            }
+                        }
+                    }
+                }
+
+                // Moving up and to the right
+                if (pieceCurrentIndex - newIndex == 7 || pieceCurrentIndex - newIndex == 14
+                    || pieceCurrentIndex - newIndex == 21 || pieceCurrentIndex - newIndex == 28 
+                    || pieceCurrentIndex - newIndex == 35 || pieceCurrentIndex - newIndex == 42 
+                    || pieceCurrentIndex - newIndex == 49) {
+
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex - 7; i > newIndex; i -= 7) {
+                        if ((grid[i] != "|||") && pieceCurrentIndex - newIndex != 7) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 7 && newIndex < i) || (i == 15 && newIndex < i) 
+                            || (i == 23 && newIndex < i) || (i == 31 && newIndex < i) 
+                            || (i == 39 && newIndex < i) || (i == 47 && newIndex < i) 
+                            || (i == 55 && newIndex < i)) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (grid[newIndex].startsWith("W") || grid[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            grid[pieceCurrentIndex] = "|||";
+                            grid[newIndex] = pieceString;
+                        }
+                    }      
+                }
+
+                // Moving up and to the left
+                else if (pieceCurrentIndex - newIndex == 9 || pieceCurrentIndex - newIndex == 18
+                    || pieceCurrentIndex - newIndex == 27 || pieceCurrentIndex - newIndex == 36 
+                    || pieceCurrentIndex - newIndex == 45 || pieceCurrentIndex - newIndex == 54 
+                    || pieceCurrentIndex - newIndex == 63) {
+                    
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex - 9; i > newIndex; i -= 9) {
+                        if ((grid[i] != "|||") && pieceCurrentIndex - newIndex != 9) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 8 && newIndex < i) || (i == 16 && newIndex < i) 
+                            || (i == 24 && newIndex < i) || (i == 32 && newIndex < i) 
+                            || (i == 40 && newIndex < i) || (i == 48 && newIndex < i) ) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (grid[newIndex].startsWith("W") || grid[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            grid[pieceCurrentIndex] = "|||";
+                            grid[newIndex] = pieceString;
+                        }
+                    }     
+                }
+
+                // Moving down and to the right
+                else if (newIndex - pieceCurrentIndex == 9 || newIndex - pieceCurrentIndex == 18
+                    || newIndex - pieceCurrentIndex == 27 || newIndex - pieceCurrentIndex == 36 
+                    || newIndex - pieceCurrentIndex == 45 || newIndex - pieceCurrentIndex == 54 
+                    || newIndex - pieceCurrentIndex == 63) {
+                    
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex + 9; i < newIndex; i += 9) {
+                        if ((grid[i] != "|||") && newIndex - pieceCurrentIndex != 9) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 15 && newIndex > i) || (i == 23 && newIndex > i) 
+                            || (i == 31 && newIndex > i) || (i == 39 && newIndex > i) 
+                            || (i == 47 && newIndex > i) || (i == 55 && newIndex > i)) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (grid[newIndex].startsWith("W") || grid[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            grid[pieceCurrentIndex] = "|||";
+                            grid[newIndex] = pieceString;
+                        }
+                    }     
+                }
+
+                // Moving down and to the left
+                else if (newIndex - pieceCurrentIndex == 7 || newIndex - pieceCurrentIndex == 14
+                    || newIndex - pieceCurrentIndex == 21 || newIndex - pieceCurrentIndex == 28 
+                    || newIndex - pieceCurrentIndex == 35 || newIndex - pieceCurrentIndex == 42 
+                    || newIndex - pieceCurrentIndex == 49) {
+                    
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex + 7; i < newIndex; i += 7) {
+                        if ((grid[i] != "|||") && newIndex - pieceCurrentIndex != 7) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 8 && newIndex > i) || (i == 16 && newIndex > i) 
+                            || (i == 24 && newIndex > i) || (i == 32 && newIndex > i) 
+                            || (i == 40 && newIndex > i) || (i == 48 && newIndex > i) ) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (grid[newIndex].startsWith("W") || grid[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            grid[pieceCurrentIndex] = "|||";
+                            grid[newIndex] = pieceString;
+                        }
+                    }   
+                }
+            }
+
+            else if (piece.color == "B") {
+
+                // Moving up and capturing
+                if (pieceCurrentIndex - newIndex == 8 || pieceCurrentIndex - newIndex == 16
+                    || pieceCurrentIndex - newIndex == 24 || pieceCurrentIndex - newIndex == 32 
+                    || pieceCurrentIndex - newIndex == 40 || pieceCurrentIndex - newIndex == 48 
+                    || pieceCurrentIndex - newIndex == 56) {
+
+                    let notAllEmpty = false;
+
+                    for (let i = pieceCurrentIndex - 8; i > newIndex; i -= 8) {
+                        if ((grid[i] != "|||") && pieceCurrentIndex - newIndex != 8) {
+                            notAllEmpty = true;
+                        }
+                    }
+
+                    if (notAllEmpty == false) {
+                        if (grid[newIndex].startsWith("B") || grid[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            grid[pieceCurrentIndex] = "|||";
+                            grid[newIndex] = pieceString;
+                        }
+                    }
+                }
+
+                // Moving down and capturing
+                else if (newIndex - pieceCurrentIndex == 8 || newIndex - pieceCurrentIndex == 16
+                    || newIndex - pieceCurrentIndex == 24 || newIndex - pieceCurrentIndex == 32 
+                    || newIndex - pieceCurrentIndex == 40 || newIndex - pieceCurrentIndex == 48 
+                    || newIndex - pieceCurrentIndex == 56) {
+                        
+                    let notAllEmpty = false;
+
+                    for (let i = pieceCurrentIndex + 8; i < newIndex; i += 8) {
+                        if ((grid[i] != "|||") && (newIndex - pieceCurrentIndex != 8)) {
+                            notAllEmpty = true;
+                        }
+                    }
+
+                    if (notAllEmpty == false) {
+                        if (grid[newIndex].startsWith("B") || grid[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            grid[pieceCurrentIndex] = "|||";
+                            grid[newIndex] = pieceString;
+                        }
+                    }
+                }
+
+                // Moving right and capturing
+                else if (newIndex - pieceCurrentIndex == 1 || newIndex - pieceCurrentIndex == 2
+                    || newIndex - pieceCurrentIndex == 3 || newIndex - pieceCurrentIndex == 4 
+                    || newIndex - pieceCurrentIndex == 5 || newIndex - pieceCurrentIndex == 6 
+                    || newIndex - pieceCurrentIndex == 7) {
+
+                    if (((newIndex >= 0 && newIndex < 8) && (pieceCurrentIndex >= 0 && pieceCurrentIndex < 8))
+                    || ((newIndex >= 8 && newIndex < 16) && (pieceCurrentIndex >= 8 && pieceCurrentIndex < 16))
+                    || ((newIndex >= 16 && newIndex < 24) && (pieceCurrentIndex >= 16 && pieceCurrentIndex < 24))
+                    || ((newIndex >= 24 && newIndex < 32) && (pieceCurrentIndex >= 24 && pieceCurrentIndex < 32))
+                    || ((newIndex >= 32 && newIndex < 40) && (pieceCurrentIndex >= 32 && pieceCurrentIndex < 40))
+                    || ((newIndex >= 40 && newIndex < 48) && (pieceCurrentIndex >= 40 && pieceCurrentIndex < 48))
+                    || ((newIndex >= 48 && newIndex < 56) && (pieceCurrentIndex >= 48 && pieceCurrentIndex < 56))
+                    || ((newIndex >= 56 && newIndex < 64) && (pieceCurrentIndex >= 56 && pieceCurrentIndex < 64))) {
+                        
+                        let notAllEmpty = false;
+
+                        for (let i = pieceCurrentIndex + 1; i < newIndex; i += 1) {
+                            if ((grid[i] != "|||") && (newIndex - pieceCurrentIndex != 1)) {
+                                notAllEmpty = true;
+                            }
+                        }
+
+                        if (notAllEmpty == false) {
+                            if (grid[newIndex].startsWith("B") || grid[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                            }
+
+                            else {
+                                grid[pieceCurrentIndex] = "|||";
+                                grid[newIndex] = pieceString;
+                            }
+                        }
+                    }
+                }
+
+                // Moving left and capturing
+                else if (pieceCurrentIndex - newIndex == 1 || pieceCurrentIndex - newIndex == 2
+                    || pieceCurrentIndex - newIndex == 3 || pieceCurrentIndex - newIndex == 4 
+                    || pieceCurrentIndex - newIndex == 5 || pieceCurrentIndex - newIndex == 6 
+                    || pieceCurrentIndex - newIndex == 7) {
+                    
+                    if (((newIndex >= 0 && newIndex < 8) && (pieceCurrentIndex >= 0 && pieceCurrentIndex < 8))
+                    || ((newIndex >= 8 && newIndex < 16) && (pieceCurrentIndex >= 8 && pieceCurrentIndex < 16))
+                    || ((newIndex >= 16 && newIndex < 24) && (pieceCurrentIndex >= 16 && pieceCurrentIndex < 24))
+                    || ((newIndex >= 24 && newIndex < 32) && (pieceCurrentIndex >= 24 && pieceCurrentIndex < 32))
+                    || ((newIndex >= 32 && newIndex < 40) && (pieceCurrentIndex >= 32 && pieceCurrentIndex < 40))
+                    || ((newIndex >= 40 && newIndex < 48) && (pieceCurrentIndex >= 40 && pieceCurrentIndex < 48))
+                    || ((newIndex >= 48 && newIndex < 56) && (pieceCurrentIndex >= 48 && pieceCurrentIndex < 56))
+                    || ((newIndex >= 56 && newIndex < 64) && (pieceCurrentIndex >= 56 && pieceCurrentIndex < 64))) {
+                        
+                        let notAllEmpty = false;
+
+                        for (let i = pieceCurrentIndex - 1; i > newIndex; i -= 1) {
+                            if ((grid[i] != "|||") && pieceCurrentIndex - newIndex != 1) {
+                                notAllEmpty = true;
+                            }
+                        }
+
+                        if (notAllEmpty == false) {
+                            if (grid[newIndex].startsWith("B") || grid[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                            }
+
+                            else {
+                                grid[pieceCurrentIndex] = "|||";
+                                grid[newIndex] = pieceString;
+                            }
+                        }
+                    }
+                }
+
+                // Moving up and to the right
+                if (pieceCurrentIndex - newIndex == 7 || pieceCurrentIndex - newIndex == 14
+                    || pieceCurrentIndex - newIndex == 21 || pieceCurrentIndex - newIndex == 28 
+                    || pieceCurrentIndex - newIndex == 35 || pieceCurrentIndex - newIndex == 42 
+                    || pieceCurrentIndex - newIndex == 49) {
+
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex - 7; i > newIndex; i -= 7) {
+                        if ((grid[i] != "|||") && pieceCurrentIndex - newIndex != 7) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 7 && newIndex < i) || (i == 15 && newIndex < i) 
+                            || (i == 23 && newIndex < i) || (i == 31 && newIndex < i) 
+                            || (i == 39 && newIndex < i) || (i == 47 && newIndex < i) 
+                            || (i == 55 && newIndex < i)) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (grid[newIndex].startsWith("B") || grid[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            grid[pieceCurrentIndex] = "|||";
+                            grid[newIndex] = pieceString;
+                        }
+                    }      
+                }
+
+                // Moving up and to the left
+                else if (pieceCurrentIndex - newIndex == 9 || pieceCurrentIndex - newIndex == 18
+                    || pieceCurrentIndex - newIndex == 27 || pieceCurrentIndex - newIndex == 36 
+                    || pieceCurrentIndex - newIndex == 45 || pieceCurrentIndex - newIndex == 54 
+                    || pieceCurrentIndex - newIndex == 63) {
+                    
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex - 9; i > newIndex; i -= 9) {
+                        if ((grid[i] != "|||") && pieceCurrentIndex - newIndex != 9) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 8 && newIndex < i) || (i == 16 && newIndex < i) 
+                            || (i == 24 && newIndex < i) || (i == 32 && newIndex < i) 
+                            || (i == 40 && newIndex < i) || (i == 48 && newIndex < i) ) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (grid[newIndex].startsWith("B") || grid[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            grid[pieceCurrentIndex] = "|||";
+                            grid[newIndex] = pieceString;
+                        }
+                    }     
+                }
+
+                // Moving down and to the right
+                else if (newIndex - pieceCurrentIndex == 9 || newIndex - pieceCurrentIndex == 18
+                    || newIndex - pieceCurrentIndex == 27 || newIndex - pieceCurrentIndex == 36 
+                    || newIndex - pieceCurrentIndex == 45 || newIndex - pieceCurrentIndex == 54 
+                    || newIndex - pieceCurrentIndex == 63) {
+                    
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex + 9; i < newIndex; i += 9) {
+                        if ((grid[i] != "|||") && newIndex - pieceCurrentIndex != 9) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 15 && newIndex > i) || (i == 23 && newIndex > i) 
+                            || (i == 31 && newIndex > i) || (i == 39 && newIndex > i) 
+                            || (i == 47 && newIndex > i) || (i == 55 && newIndex > i)) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (grid[newIndex].startsWith("B") || grid[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            grid[pieceCurrentIndex] = "|||";
+                            grid[newIndex] = pieceString;
+                        }
+                    }     
+                }
+
+                // Moving down and to the left
+                else if (newIndex - pieceCurrentIndex == 7 || newIndex - pieceCurrentIndex == 14
+                    || newIndex - pieceCurrentIndex == 21 || newIndex - pieceCurrentIndex == 28 
+                    || newIndex - pieceCurrentIndex == 35 || newIndex - pieceCurrentIndex == 42 
+                    || newIndex - pieceCurrentIndex == 49) {
+                    
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex + 7; i < newIndex; i += 7) {
+                        if ((grid[i] != "|||") && newIndex - pieceCurrentIndex != 7) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 8 && newIndex > i) || (i == 16 && newIndex > i) 
+                            || (i == 24 && newIndex > i) || (i == 32 && newIndex > i) 
+                            || (i == 40 && newIndex > i) || (i == 48 && newIndex > i) ) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (grid[newIndex].startsWith("B") || grid[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            grid[pieceCurrentIndex] = "|||";
+                            grid[newIndex] = pieceString;
+                        }
+                    }   
                 }
             }
         }

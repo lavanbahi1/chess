@@ -959,6 +959,22 @@ describe('Player', () => {
         expect(gameboard.grid[44]).toBe("|||");
     })
 
+    test('move function does not work for white bishop when trying to move within its row', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW = new Piece("W", "P", 7);
+        const bishopW = new Piece("W", "B", 2);
+
+        player1.move(gameboard.grid, pawnW, 38);
+        player1.move(gameboard.grid, bishopW, 40);
+
+        expect(gameboard.grid[61]).toBe("WB2");
+        expect(gameboard.grid[40]).toBe("|||");
+    })
+
     test('move function works for white bishop when trying to capture enemy piece', () => {
         const gameboard = new Gameboard();
 
@@ -1036,6 +1052,22 @@ describe('Player', () => {
 
         expect(gameboard.grid[2]).toBe("BB1");
         expect(gameboard.grid[20]).toBe("|||");
+    })
+
+    test('move function does not work for black bishop when trying to move within its row', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnB = new Piece("B", "P", 7);
+        const bishopB = new Piece("B", "B", 2);
+
+        player2.move(gameboard.grid, pawnB, 30);
+        player2.move(gameboard.grid, bishopB, 32);
+
+        expect(gameboard.grid[5]).toBe("BB2");
+        expect(gameboard.grid[32]).toBe("|||");
     })
 
     test('move function works for black bishop when trying to capture enemy piece', () => {
@@ -1236,5 +1268,222 @@ describe('Player', () => {
         player2.move(gameboard.grid, knightB, 52);
         
         expect(gameboard.grid[52]).toBe("BN1");
+    })
+
+    test('move function works for white queen when moving up', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const queenW = new Piece("W", "Q");
+        const pawnW = new Piece("W", "P", 4);
+
+        player1.move(gameboard.grid, pawnW, 35);
+
+        player1.move(gameboard.grid, queenW, 43);
+        
+        expect(gameboard.grid[43]).toBe("WQ");
+    })
+
+    test('move function works for white queen when moving right', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const queenW = new Piece("W", "Q");
+        const pawnW = new Piece("W", "P", 4);
+
+        player1.move(gameboard.grid, pawnW, 35);
+
+        player1.move(gameboard.grid, queenW, 43);
+        
+        player1.move(gameboard.grid, queenW, 44)
+        
+        expect(gameboard.grid[44]).toBe("WQ");
+    }) 
+
+    test('move function works for white queen when moving diagonally up and to the right', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const queenW = new Piece("W", "Q");
+        const pawnW = new Piece("W", "P", 4);
+
+        player1.move(gameboard.grid, pawnW, 35);
+
+        player1.move(gameboard.grid, queenW, 43);
+        
+        player1.move(gameboard.grid, queenW, 36);
+        
+        expect(gameboard.grid[36]).toBe("WQ");
+    })
+
+    test('move function does not work for white queen when trying to move from one row to another', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const queenW = new Piece("W", "Q");
+        const pawnW = new Piece("W", "P", 4);
+
+        player1.move(gameboard.grid, pawnW, 35);
+
+        player1.move(gameboard.grid, queenW, 43);
+        
+        player1.move(gameboard.grid, queenW, 39);
+        
+        expect(gameboard.grid[43]).toBe("WQ");
+        expect(gameboard.grid[39]).toBe("|||");
+    })
+
+    test('move function does not work for white queen when there is another piece blocking its path', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const queenW = new Piece("W", "Q");
+        const pawnW = new Piece("W", "P", 4);
+
+        player1.move(gameboard.grid, queenW, 43);
+        
+        player1.move(gameboard.grid, queenW, 45);
+        
+        expect(gameboard.grid[59]).toBe("WQ");
+        expect(gameboard.grid[43]).toBe("|||");
+        expect(gameboard.grid[45]).toBe("|||");
+    })
+
+    test('move function works for white queen when trying to capture enemy piece', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const queenW = new Piece("W", "Q");
+        const pawnW = new Piece("W", "P", 4);
+        const pawnB = new Piece("B", "P", 7);
+
+        player1.move(gameboard.grid, pawnW, 35);
+        player2.move(gameboard.grid, pawnB, 30);
+
+        player1.move(gameboard.grid, queenW, 43);
+        player2.move(gameboard.grid, pawnB, 38);
+        
+        player1.move(gameboard.grid, queenW, 44);
+        player2.move(gameboard.grid, pawnB, 46);
+
+        player1.move(gameboard.grid, queenW, 46);
+        
+        expect(gameboard.grid[46]).toBe("WQ");
+    })
+
+    test('move function works for black queen when moving down', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const queenB = new Piece("B", "Q");
+        const pawnB = new Piece("B", "P", 4);
+
+        player2.move(gameboard.grid, pawnB, 27);
+
+        player2.move(gameboard.grid, queenB, 19);
+        
+        expect(gameboard.grid[19]).toBe("BQ");
+    })
+
+    test('move function works for black queen when moving right', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const queenB = new Piece("B", "Q");
+        const pawnB = new Piece("B", "P", 4);
+
+        player2.move(gameboard.grid, pawnB, 27);
+
+        player2.move(gameboard.grid, queenB, 19);
+
+        player2.move(gameboard.grid, queenB, 20);
+        
+        expect(gameboard.grid[20]).toBe("BQ");
+    })
+
+    test('move function works for black queen when moving diagonally down and to the right', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const queenB = new Piece("B", "Q");
+        const pawnB = new Piece("B", "P", 4);
+
+        player2.move(gameboard.grid, pawnB, 27);
+
+        player2.move(gameboard.grid, queenB, 19);
+
+        player2.move(gameboard.grid, queenB, 28);
+        
+        expect(gameboard.grid[28]).toBe("BQ");
+    })
+
+    test('move function does not work for black queen when trying to move from one row to another', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const queenB = new Piece("B", "Q");
+        const pawnB = new Piece("B", "P", 4);
+
+        player2.move(gameboard.grid, pawnB, 27);
+
+        player2.move(gameboard.grid, queenB, 19);
+
+        player2.move(gameboard.grid, queenB, 24);
+        
+        expect(gameboard.grid[19]).toBe("BQ");
+        expect(gameboard.grid[24]).toBe("|||");
+    })
+
+    test('move function does not work for black queen when there is another piece blocking its path ', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const queenB = new Piece("B", "Q");
+        const pawnB = new Piece("B", "P", 4);
+
+        player2.move(gameboard.grid, queenB, 19);
+        
+        expect(gameboard.grid[3]).toBe("BQ");
+        expect(gameboard.grid[19]).toBe("|||");
+    })
+
+    test('move function works for black queen when trying to capture enemy piece', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const queenB = new Piece("B", "Q");
+        const pawnB = new Piece("B", "P", 4);
+
+        player2.move(gameboard.grid, pawnB, 27);
+
+        player2.move(gameboard.grid, queenB, 19);
+
+        player2.move(gameboard.grid, queenB, 55);
+        
+        expect(gameboard.grid[55]).toBe("BQ");
     })
 })
