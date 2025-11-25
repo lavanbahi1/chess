@@ -1598,7 +1598,7 @@ describe('Player', () => {
         expect(gameboard.grid[21]).toBe("BK");
     })
 
-    test('move function works for black king when diagonally down and to the right', () => {
+    test('move function works for black king when moving diagonally down and to the right', () => {
         const gameboard = new Gameboard();
 
         const player1 = new Player("White");
@@ -1648,5 +1648,51 @@ describe('Player', () => {
         
         expect(player2.currentTurn).toBe(true);
         expect(player1.currentTurn).toBe(false);
+    })
+
+    test('move function works when a white piece puts enemy king in check', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW = new Piece("W", "P", 5);
+        const queenW = new Piece("W", "Q");
+        const pawnB = new Piece("B", "P", 6);
+
+        player1.currentTurn = true;
+
+        player1.move(gameboard.grid, pawnW, 44, player2);
+        player2.move(gameboard.grid, pawnB, 29, player1);
+
+        player1.move(gameboard.grid, queenW, 31, player2);
+        
+        expect(player2.inCheck).toBe(true);
+    })
+
+    test('move function works when a black piece puts enemy king in check', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW = new Piece("W", "P", 6);
+        const queenB = new Piece("B", "Q");
+        const pawnB = new Piece("B", "P", 5);
+
+        player1.currentTurn = true;
+
+        player2.move(gameboard.grid, pawnB, 20, player1);
+        player1.move(gameboard.grid, pawnW, 37, player2);
+
+        player2.move(gameboard.grid, queenB, 39, player1);
+        
+        expect(player1.inCheck).toBe(true);
+    })
+
+    test('move function works when a player moves king or other pieces to get out of check', () => {
+    })
+
+    test('move function does not work when a player tries to move king or other pieces and does not get out of check', () => {
     })
 })
