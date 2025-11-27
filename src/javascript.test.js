@@ -12,7 +12,7 @@ describe('Gameboard', () => {
         const gameboard = new Gameboard();
         expect(gameboard.grid.length).toBe(64);
     })
-})
+}) 
 
 describe('Player', () => {
     test('color property initialized', () => {
@@ -1228,7 +1228,7 @@ describe('Player', () => {
         player2.move(gameboard.grid, knightB, 16);
         
         expect(gameboard.grid[16]).toBe("BN1");
-    })
+    }) 
 
     test('move function works for white knight when trying to capture enemy piece', () => {
         const gameboard = new Gameboard();
@@ -1648,7 +1648,7 @@ describe('Player', () => {
         
         expect(player2.currentTurn).toBe(true);
         expect(player1.currentTurn).toBe(false);
-    })
+    }) 
 
     test('move function works when a white piece puts enemy king in check', () => {
         const gameboard = new Gameboard();
@@ -1666,6 +1666,8 @@ describe('Player', () => {
         player2.move(gameboard.grid, pawnB, 29, player1);
 
         player1.move(gameboard.grid, queenW, 31, player2);
+
+        gameboard.printGrid();
         
         expect(player2.inCheck).toBe(true);
     })
@@ -1694,5 +1696,5 @@ describe('Player', () => {
     })
 
     test('move function does not work when a player tries to move king or other pieces and does not get out of check', () => {
-    })
+    }) 
 })

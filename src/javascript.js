@@ -268,8 +268,28 @@ class Player {
                 }
 
                 // Check if enemy king is in check
-                if (grid[newIndex - 7].startsWith("BK") || grid[newIndex - 9].startsWith("BK")) {
-                    enemyPlayer.isCheck = true;
+                if (((newIndex - 7 >= 0 && newIndex - 7 < 8) && (newIndex >= 8 && newIndex < 16))
+                || ((newIndex - 7 >= 8 && newIndex - 7 < 16) && (newIndex >= 16 && newIndex < 24))
+                || ((newIndex - 7 >= 16 && newIndex - 7 < 24) && (newIndex >= 24 && newIndex < 32))
+                || ((newIndex - 7 >= 24 && newIndex - 7 < 32) && (newIndex >= 32 && newIndex < 40))
+                || ((newIndex - 7 >= 32 && newIndex - 7 < 40) && (newIndex >= 40 && newIndex < 48))
+                || ((newIndex - 7 >= 40 && newIndex - 7 < 48) && (newIndex >= 48 && newIndex < 56))
+                || ((newIndex - 7 >= 48 && newIndex - 7 < 56) && (newIndex >= 56 && newIndex < 64))) {
+                    if (grid[newIndex - 7].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (((newIndex - 9 >= 0 && newIndex - 9 < 8) && (newIndex >= 8 && newIndex < 16))
+                || ((newIndex - 9 >= 8 && newIndex - 9 < 16) && (newIndex >= 16 && newIndex < 24))
+                || ((newIndex - 9 >= 16 && newIndex - 9 < 24) && (newIndex >= 24 && newIndex < 32))
+                || ((newIndex - 9 >= 24 && newIndex - 9 < 32) && (newIndex >= 32 && newIndex < 40))
+                || ((newIndex - 9 >= 32 && newIndex - 9 < 40) && (newIndex >= 40 && newIndex < 48))
+                || ((newIndex - 9 >= 40 && newIndex - 9 < 48) && (newIndex >= 48 && newIndex < 56))
+                || ((newIndex - 9 >= 48 && newIndex - 9 < 56) && (newIndex >= 56 && newIndex < 64))) {
+                    if (grid[newIndex - 9].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                    }
                 }
 
                 if (newIndex == 0 || newIndex == 1 || newIndex == 2 || newIndex == 3 || newIndex == 4 || newIndex == 5 || newIndex == 6 || newIndex == 7) {
@@ -369,6 +389,32 @@ class Player {
                     enemyPlayer.enPassant = true;
                     console.log(`Black pawn ${grid[newIndex]} has white pawn ${grid[newIndex + 1]} to the right`);
                 }
+
+                // Check if enemy king is in check
+                if (((newIndex >= 0 && newIndex < 8) && (newIndex + 7 >= 8 && newIndex + 7 < 16))
+                || ((newIndex >= 8 && newIndex < 16) && (newIndex + 7 >= 16 && newIndex + 7 < 24))
+                || ((newIndex >= 16 && newIndex < 24) && (newIndex + 7 >= 24 && newIndex + 7 < 32))
+                || ((newIndex >= 24 && newIndex < 32) && (newIndex + 7 >= 32 && newIndex + 7 < 40))
+                || ((newIndex >= 32 && newIndex < 40) && (newIndex + 7 >= 40 && newIndex + 7 < 48))
+                || ((newIndex >= 40 && newIndex < 48) && (newIndex + 7 >= 48 && newIndex + 7 < 56))
+                || ((newIndex >= 48 && newIndex < 56) && (newIndex + 7 >= 56 && newIndex + 7 < 64))) {
+                    if (grid[newIndex + 7].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (((newIndex >= 0 && newIndex < 8) && (newIndex + 9 >= 8 && newIndex + 9 < 16))
+                || ((newIndex >= 8 && newIndex < 16) && (newIndex + 9 >= 16 && newIndex + 9 < 24))
+                || ((newIndex >= 16 && newIndex < 24) && (newIndex + 9 >= 24 && newIndex + 9 < 32))
+                || ((newIndex >= 24 && newIndex < 32) && (newIndex + 9 >= 32 && newIndex + 9 < 40))
+                || ((newIndex >= 32 && newIndex < 40) && (newIndex + 9 >= 40 && newIndex + 9 < 48))
+                || ((newIndex >= 40 && newIndex < 48) && (newIndex + 9 >= 48 && newIndex + 9 < 56))
+                || ((newIndex >= 48 && newIndex < 56) && (newIndex + 9 >= 56 && newIndex + 9 < 64))) {
+                    if (grid[newIndex + 9].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
 
                 if (newIndex == 0 || newIndex == 1 || newIndex == 2 || newIndex == 3 || newIndex == 4 || newIndex == 5 || newIndex == 6 || newIndex == 7) {
                     piece.name = "Q"
@@ -511,129 +557,129 @@ class Player {
                 }
 
                 // Check if enemy king is in check upwards
-                for (let i = newIndex; i >= 0; i -= 8) {
+                for (let i = newIndex - 8; i >= 0; i -= 8) {
                     if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                         break;
                     }
 
                     else if (grid[i].startsWith("BK")) {
-                        enemyPlayer.isCheck = true;
+                        enemyPlayer.inCheck = true;
                         break;
                     }
                 }
 
                 // Check if enemy king is in check downwards
-                for (let i = newIndex; i <= 63; i += 8) {
+                for (let i = newIndex + 8; i <= 63; i += 8) {
                     if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                         break;
                     }
 
                     else if (grid[i].startsWith("BK")) {
-                        enemyPlayer.isCheck = true;
+                        enemyPlayer.inCheck = true;
                         break;
                     }
                 }
 
                 // Check if enemy king is in check right
                 if (newIndex >= 0 && newIndex < 8) {
-                    for (let i = newIndex; i < 8; i++) {
+                    for (let i = newIndex + 1; i < 8; i++) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
                 }
 
                 else if (newIndex >= 8 && newIndex < 16) {
-                    for (let i = newIndex; i < 16; i++) {
+                    for (let i = newIndex + 1; i < 16; i++) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
                 }
 
                 else if (newIndex >= 16 && newIndex < 24) {
-                    for (let i = newIndex; i < 24; i++) {
+                    for (let i = newIndex + 1; i < 24; i++) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
                 }
 
                 else if (newIndex >= 24 && newIndex < 32) {
-                    for (let i = newIndex; i < 32; i++) {
+                    for (let i = newIndex + 1; i < 32; i++) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
                 }
 
                 else if (newIndex >= 32 && newIndex < 40) {
-                    for (let i = newIndex; i < 40; i++) {
+                    for (let i = newIndex + 1; i < 40; i++) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
                 }
 
                 else if (newIndex >= 40 && newIndex < 48) {
-                    for (let i = newIndex; i < 48; i++) {
+                    for (let i = newIndex + 1; i < 48; i++) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
                 }
 
                 else if (newIndex >= 48 && newIndex < 56) {
-                    for (let i = newIndex; i < 56; i++) {
+                    for (let i = newIndex + 1; i < 56; i++) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
                 }
 
                 else if (newIndex >= 56 && newIndex < 64) {
-                    for (let i = newIndex; i < 64; i++) {
+                    for (let i = newIndex + 1; i < 64; i++) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
@@ -641,104 +687,104 @@ class Player {
 
                 // Check if enemy king is in check left
                 if (newIndex >= 0 && newIndex < 8) {
-                    for (let i = newIndex; i >= 0; i--) {
+                    for (let i = newIndex - 1; i >= 0; i--) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
                 }
 
                 else if (newIndex >= 8 && newIndex < 16) {
-                    for (let i = newIndex; i >= 8; i--) {
+                    for (let i = newIndex - 1; i >= 8; i--) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
                 }
 
                 else if (newIndex >= 16 && newIndex < 24) {
-                    for (let i = newIndex; i >= 16; i--) {
+                    for (let i = newIndex - 1; i >= 16; i--) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
                 }
 
                 else if (newIndex >= 24 && newIndex < 32) {
-                    for (let i = newIndex; i >= 24; i--) {
+                    for (let i = newIndex - 1; i >= 24; i--) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
                 }
 
                 else if (newIndex >= 32 && newIndex < 40) {
-                    for (let i = newIndex; i >= 32; i--) {
+                    for (let i = newIndex - 1; i >= 32; i--) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
                 }
 
                 else if (newIndex >= 40 && newIndex < 48) {
-                    for (let i = newIndex; i >= 40; i--) {
+                    for (let i = newIndex - 1; i >= 40; i--) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
                 }
 
                 else if (newIndex >= 48 && newIndex < 56) {
-                    for (let i = newIndex; i >= 48; i--) {
+                    for (let i = newIndex - 1; i >= 48; i--) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
                 }
 
                 else if (newIndex >= 56 && newIndex < 64) {
-                    for (let i = newIndex; i >= 56; i--) {
+                    for (let i = newIndex - 1; i >= 56; i--) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
@@ -867,6 +913,240 @@ class Player {
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
                             }
+                        }
+                    }
+                }
+
+                // Check if enemy king is in check upwards
+                for (let i = newIndex - 8; i >= 0; i -= 8) {
+                    if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (grid[i].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+                }
+
+                // Check if enemy king is in check downwards
+                for (let i = newIndex + 8; i <= 63; i += 8) {
+                    if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (grid[i].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+                }
+
+                // Check if enemy king is in check right
+                if (newIndex >= 0 && newIndex < 8) {
+                    for (let i = newIndex + 1; i < 8; i++) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 8 && newIndex < 16) {
+                    for (let i = newIndex + 1; i < 16; i++) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 16 && newIndex < 24) {
+                    for (let i = newIndex + 1; i < 24; i++) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 24 && newIndex < 32) {
+                    for (let i = newIndex + 1; i < 32; i++) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 32 && newIndex < 40) {
+                    for (let i = newIndex + 1; i < 40; i++) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 40 && newIndex < 48) {
+                    for (let i = newIndex + 1; i < 48; i++) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 48 && newIndex < 56) {
+                    for (let i = newIndex + 1; i < 56; i++) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 56 && newIndex < 64) {
+                    for (let i = newIndex + 1; i < 64; i++) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                // Check if enemy king is in check left
+                if (newIndex >= 0 && newIndex < 8) {
+                    for (let i = newIndex - 1; i >= 0; i--) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 8 && newIndex < 16) {
+                    for (let i = newIndex - 1; i >= 8; i--) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 16 && newIndex < 24) {
+                    for (let i = newIndex - 1; i >= 16; i--) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 24 && newIndex < 32) {
+                    for (let i = newIndex - 1; i >= 24; i--) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 32 && newIndex < 40) {
+                    for (let i = newIndex - 1; i >= 32; i--) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 40 && newIndex < 48) {
+                    for (let i = newIndex - 1; i >= 40; i--) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 48 && newIndex < 56) {
+                    for (let i = newIndex - 1; i >= 48; i--) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 56 && newIndex < 64) {
+                    for (let i = newIndex - 1; i >= 56; i--) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
                         }
                     }
                 }
@@ -1019,13 +1299,13 @@ class Player {
                 }
 
                 // Check if enemy king is in check up and to the right
-                for (let i = newIndex; i >= 0; i -= 7) {
+                for (let i = newIndex - 7; i >= 0; i -= 7) {
                     if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                         break;
                     }
 
                     else if (grid[i].startsWith("BK")) {
-                        enemyPlayer.isCheck = true;
+                        enemyPlayer.inCheck = true;
                         break;
                     }
 
@@ -1035,13 +1315,13 @@ class Player {
                 }
 
                 // Check if enemy king is in check up and to the left
-                for (let i = newIndex; i >= 0; i -= 9) {
+                for (let i = newIndex - 9; i >= 0; i -= 9) {
                     if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                         break;
                     }
 
                     else if (grid[i].startsWith("BK")) {
-                        enemyPlayer.isCheck = true;
+                        enemyPlayer.inCheck = true;
                         break;
                     }
 
@@ -1051,13 +1331,13 @@ class Player {
                 }
 
                 // Check if enemy king is in check down and to the right
-                for (let i = newIndex; i <= 63; i += 9) {
+                for (let i = newIndex + 9; i <= 63; i += 9) {
                     if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                         break;
                     }
 
                     else if (grid[i].startsWith("BK")) {
-                        enemyPlayer.isCheck = true;
+                        enemyPlayer.inCheck = true;
                         break;
                     }
 
@@ -1067,13 +1347,13 @@ class Player {
                 }
 
                 // Check if enemy king is in check down and to the left
-                for (let i = newIndex; i <= 63; i += 7) {
+                for (let i = newIndex + 7; i <= 63; i += 7) {
                     if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                         break;
                     }
 
                     else if (grid[i].startsWith("BK")) {
-                        enemyPlayer.isCheck = true;
+                        enemyPlayer.inCheck = true;
                         break;
                     }
 
@@ -1225,6 +1505,70 @@ class Player {
                         }
                     }  
                 }
+
+                // Check if enemy king is in check up and to the right
+                for (let i = newIndex - 7; i >= 0; i -= 7) {
+                    if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (grid[i].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+
+                    if (i == 7 || i == 15 || i == 23 || i == 31 || i == 39 || i == 47 || i == 55) {
+                        break;
+                    }
+                }
+
+                // Check if enemy king is in check up and to the left
+                for (let i = newIndex - 9; i >= 0; i -= 9) {
+                    if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (grid[i].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+
+                    if (i == 0 || i == 8 || i == 16 || i == 24 || i == 32 || i == 40 || i == 48) {
+                        break;
+                    }
+                }
+
+                // Check if enemy king is in check down and to the right
+                for (let i = newIndex + 9; i <= 63; i += 9) {
+                    if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (grid[i].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+
+                    if (i == 15 || i == 23 || i == 31 || i == 39 || i == 47 || i == 55 || i == 63) {
+                        break;
+                    }
+                }
+
+                // Check if enemy king is in check down and to the left
+                for (let i = newIndex + 7; i <= 63; i += 7) {
+                    if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (grid[i].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+
+                    if (i == 8 || i == 16 || i == 24 || i == 32 || i == 40 || i == 48 || i == 56) {
+                        break;
+                    }
+                }
             }
         }
 
@@ -1329,26 +1673,52 @@ class Player {
                 }
 
                 // Check if enemy king is in check
-                for (let i = newIndex; i <= 63; i += 7) {
-                    if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
-                        break;
-                    }
-
-                    else if (grid[i].startsWith("BK")) {
-                        enemyPlayer.isCheck = true;
-                        break;
-                    }
-
-                    if (i == 8 || i == 16 || i == 24 || i == 32 || i == 40 || i == 48 || i == 56) {
-                        break;
+                if (grid[newIndex - 15] != undefined) {
+                    if (grid[newIndex - 15].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
                     }
                 }
 
-                if (grid[newIndex - 15].startsWith("BK") || grid[newIndex - 6].startsWith("BK")
-                || grid[newIndex - 17].startsWith("BK") || grid[newIndex - 10].startsWith("BK") 
-                || grid[newIndex + 17].startsWith("BK") || grid[newIndex + 10].startsWith("BK")
-                || grid[newIndex + 6].startsWith("BK") || grid[newIndex + 15].startsWith("BK")) {
-                    enemyPlayer.isCheck = true;
+                else if (grid[newIndex - 6] != undefined) {
+                    if (grid[newIndex - 6].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (grid[newIndex - 17] != undefined) {
+                    if (grid[newIndex - 17].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (grid[newIndex - 10] != undefined) {
+                    if (grid[newIndex - 10].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (grid[newIndex + 17] != undefined) {
+                    if (grid[newIndex + 17].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (grid[newIndex + 10] != undefined) {
+                    if (grid[newIndex + 10].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (grid[newIndex + 6] != undefined) {
+                    if (grid[newIndex + 6].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (grid[newIndex + 15] != undefined) {
+                    if (grid[newIndex + 15].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                    }
                 }
             }
 
@@ -1447,6 +1817,55 @@ class Player {
                     else {
                         grid[pieceCurrentIndex] = "|||";
                         grid[newIndex] = pieceString;
+                    }
+                }
+
+                // Check if enemy king is in check
+                if (grid[newIndex - 15] != undefined) {
+                    if (grid[newIndex - 15].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (grid[newIndex - 6] != undefined) {
+                    if (grid[newIndex - 6].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (grid[newIndex - 17] != undefined) {
+                    if (grid[newIndex - 17].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (grid[newIndex - 10] != undefined) {
+                    if (grid[newIndex - 10].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (grid[newIndex + 17] != undefined) {
+                    if (grid[newIndex + 17].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (grid[newIndex + 10] != undefined) {
+                    if (grid[newIndex + 10].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (grid[newIndex + 6] != undefined) {
+                    if (grid[newIndex + 6].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (grid[newIndex + 15] != undefined) {
+                    if (grid[newIndex + 15].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
                     }
                 }
             }
@@ -1722,129 +2141,129 @@ class Player {
                 }
 
                 // Check if enemy king is in check upwards
-                for (let i = newIndex; i >= 0; i -= 8) {
+                for (let i = newIndex - 8; i >= 0; i -= 8) {
                     if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                         break;
                     }
 
                     else if (grid[i].startsWith("BK")) {
-                        enemyPlayer.isCheck = true;
+                        enemyPlayer.inCheck = true;
                         break;
                     }
                 }
 
                 // Check if enemy king is in check downwards
-                for (let i = newIndex; i <= 63; i += 8) {
+                for (let i = newIndex + 8; i <= 63; i += 8) {
                     if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                         break;
                     }
 
                     else if (grid[i].startsWith("BK")) {
-                        enemyPlayer.isCheck = true;
+                        enemyPlayer.inCheck = true;
                         break;
                     }
                 }
 
                 // Check if enemy king is in check right
                 if (newIndex >= 0 && newIndex < 8) {
-                    for (let i = newIndex; i < 8; i++) {
+                    for (let i = newIndex + 1; i < 8; i++) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
                 }
 
                 else if (newIndex >= 8 && newIndex < 16) {
-                    for (let i = newIndex; i < 16; i++) {
+                    for (let i = newIndex + 1; i < 16; i++) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
                 }
 
                 else if (newIndex >= 16 && newIndex < 24) {
-                    for (let i = newIndex; i < 24; i++) {
+                    for (let i = newIndex + 1; i < 24; i++) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
                 }
 
                 else if (newIndex >= 24 && newIndex < 32) {
-                    for (let i = newIndex; i < 32; i++) {
+                    for (let i = newIndex + 1; i < 32; i++) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
                 }
 
                 else if (newIndex >= 32 && newIndex < 40) {
-                    for (let i = newIndex; i < 40; i++) {
+                    for (let i = newIndex + 1; i < 40; i++) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
                 }
 
                 else if (newIndex >= 40 && newIndex < 48) {
-                    for (let i = newIndex; i < 48; i++) {
+                    for (let i = newIndex + 1; i < 48; i++) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
                 }
 
                 else if (newIndex >= 48 && newIndex < 56) {
-                    for (let i = newIndex; i < 56; i++) {
+                    for (let i = newIndex + 1; i < 56; i++) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
                 }
 
                 else if (newIndex >= 56 && newIndex < 64) {
-                    for (let i = newIndex; i < 64; i++) {
+                    for (let i = newIndex + 1; i < 64; i++) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
@@ -1852,117 +2271,117 @@ class Player {
 
                 // Check if enemy king is in check left
                 if (newIndex >= 0 && newIndex < 8) {
-                    for (let i = newIndex; i >= 0; i--) {
+                    for (let i = newIndex - 1; i >= 0; i--) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
                 }
 
                 else if (newIndex >= 8 && newIndex < 16) {
-                    for (let i = newIndex; i >= 8; i--) {
+                    for (let i = newIndex - 1; i >= 8; i--) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
                 }
 
                 else if (newIndex >= 16 && newIndex < 24) {
-                    for (let i = newIndex; i >= 16; i--) {
+                    for (let i = newIndex - 1; i >= 16; i--) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
                 }
 
                 else if (newIndex >= 24 && newIndex < 32) {
-                    for (let i = newIndex; i >= 24; i--) {
+                    for (let i = newIndex - 1; i >= 24; i--) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
                 }
 
                 else if (newIndex >= 32 && newIndex < 40) {
-                    for (let i = newIndex; i >= 32; i--) {
+                    for (let i = newIndex - 1; i >= 32; i--) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
                 }
 
                 else if (newIndex >= 40 && newIndex < 48) {
-                    for (let i = newIndex; i >= 40; i--) {
+                    for (let i = newIndex - 1; i >= 40; i--) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
                 }
 
                 else if (newIndex >= 48 && newIndex < 56) {
-                    for (let i = newIndex; i >= 48; i--) {
+                    for (let i = newIndex - 1; i >= 48; i--) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
                 }
 
                 else if (newIndex >= 56 && newIndex < 64) {
-                    for (let i = newIndex; i >= 56; i--) {
+                    for (let i = newIndex - 1; i >= 56; i--) {
                         if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                             break;
                         }
 
                         else if (grid[i].startsWith("BK")) {
-                            enemyPlayer.isCheck = true;
+                            enemyPlayer.inCheck = true;
                             break;
                         }
                     }
                 }
 
                 // Check if enemy king is in check up and to the right
-                for (let i = newIndex; i >= 0; i -= 7) {
+                for (let i = newIndex - 7; i >= 0; i -= 7) {
                     if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                         break;
                     }
 
                     else if (grid[i].startsWith("BK")) {
-                        enemyPlayer.isCheck = true;
+                        enemyPlayer.inCheck = true;
                         break;
                     }
 
@@ -1972,13 +2391,13 @@ class Player {
                 }
 
                 // Check if enemy king is in check up and to the left
-                for (let i = newIndex; i >= 0; i -= 9) {
+                for (let i = newIndex - 9; i >= 0; i -= 9) {
                     if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                         break;
                     }
 
                     else if (grid[i].startsWith("BK")) {
-                        enemyPlayer.isCheck = true;
+                        enemyPlayer.inCheck = true;
                         break;
                     }
 
@@ -1988,13 +2407,13 @@ class Player {
                 }
 
                 // Check if enemy king is in check down and to the right
-                for (let i = newIndex; i <= 63; i += 9) {
+                for (let i = newIndex + 9; i <= 63; i += 9) {
                     if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                         break;
                     }
 
                     else if (grid[i].startsWith("BK")) {
-                        enemyPlayer.isCheck = true;
+                        enemyPlayer.inCheck = true;
                         break;
                     }
 
@@ -2004,13 +2423,13 @@ class Player {
                 }
 
                 // Check if enemy king is in check down and to the left
-                for (let i = newIndex; i <= 63; i += 7) {
+                for (let i = newIndex + 7; i <= 63; i += 7) {
                     if (grid[i].startsWith("BK") == false && grid[i].startsWith("|||") == false) {
                         break;
                     }
 
                     else if (grid[i].startsWith("BK")) {
-                        enemyPlayer.isCheck = true;
+                        enemyPlayer.inCheck = true;
                         break;
                     }
 
@@ -2285,6 +2704,304 @@ class Player {
                             grid[newIndex] = pieceString;
                         }
                     }   
+                }
+
+                // Check if enemy king is in check upwards
+                for (let i = newIndex - 8; i >= 0; i -= 8) {
+                    if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (grid[i].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+                }
+
+                // Check if enemy king is in check downwards
+                for (let i = newIndex + 8; i <= 63; i += 8) {
+                    if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (grid[i].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+                }
+
+                // Check if enemy king is in check right
+                if (newIndex >= 0 && newIndex < 8) {
+                    for (let i = newIndex + 1; i < 8; i++) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 8 && newIndex < 16) {
+                    for (let i = newIndex + 1; i < 16; i++) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 16 && newIndex < 24) {
+                    for (let i = newIndex + 1; i < 24; i++) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 24 && newIndex < 32) {
+                    for (let i = newIndex + 1; i < 32; i++) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 32 && newIndex < 40) {
+                    for (let i = newIndex + 1; i < 40; i++) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 40 && newIndex < 48) {
+                    for (let i = newIndex + 1; i < 48; i++) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 48 && newIndex < 56) {
+                    for (let i = newIndex + 1; i < 56; i++) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 56 && newIndex < 64) {
+                    for (let i = newIndex + 1; i < 64; i++) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                // Check if enemy king is in check left
+                if (newIndex >= 0 && newIndex < 8) {
+                    for (let i = newIndex - 1; i >= 0; i--) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 8 && newIndex < 16) {
+                    for (let i = newIndex - 1; i >= 8; i--) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 16 && newIndex < 24) {
+                    for (let i = newIndex - 1; i >= 16; i--) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 24 && newIndex < 32) {
+                    for (let i = newIndex - 1; i >= 24; i--) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 32 && newIndex < 40) {
+                    for (let i = newIndex - 1; i >= 32; i--) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 40 && newIndex < 48) {
+                    for (let i = newIndex - 1; i >= 40; i--) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 48 && newIndex < 56) {
+                    for (let i = newIndex - 1; i >= 48; i--) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 56 && newIndex < 64) {
+                    for (let i = newIndex - 1; i >= 56; i--) {
+                        if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (grid[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                // Check if enemy king is in check up and to the right
+                for (let i = newIndex - 7; i >= 0; i -= 7) {
+                    if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (grid[i].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+
+                    if (i == 7 || i == 15 || i == 23 || i == 31 || i == 39 || i == 47 || i == 55) {
+                        break;
+                    }
+                }
+
+                // Check if enemy king is in check up and to the left
+                for (let i = newIndex - 9; i >= 0; i -= 9) {
+                    if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (grid[i].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+
+                    if (i == 0 || i == 8 || i == 16 || i == 24 || i == 32 || i == 40 || i == 48) {
+                        break;
+                    }
+                }
+
+                // Check if enemy king is in check down and to the right
+                for (let i = newIndex + 9; i <= 63; i += 9) {
+                    if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (grid[i].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+
+                    if (i == 15 || i == 23 || i == 31 || i == 39 || i == 47 || i == 55 || i == 63) {
+                        break;
+                    }
+                }
+
+                // Check if enemy king is in check down and to the left
+                for (let i = newIndex + 7; i <= 63; i += 7) {
+                    if (grid[i].startsWith("WK") == false && grid[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (grid[i].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+
+                    if (i == 8 || i == 16 || i == 24 || i == 32 || i == 40 || i == 48 || i == 56) {
+                        break;
+                    }
                 }
             }
         }
@@ -2786,6 +3503,10 @@ class Player {
         }
 
         //console.log(grid);
+    }
+
+    checkIfKingInCheck(grid, piece, newIndex, enemyPlayer) {
+
     }
 }
 
