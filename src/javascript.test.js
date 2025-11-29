@@ -1666,8 +1666,6 @@ describe('Player', () => {
         player2.move(gameboard.grid, pawnB, 29, player1);
 
         player1.move(gameboard.grid, queenW, 31, player2);
-
-        gameboard.printGrid();
         
         expect(player2.inCheck).toBe(true);
     })
@@ -1693,8 +1691,50 @@ describe('Player', () => {
     })
 
     test('move function works when a player moves king or other pieces to get out of check', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW = new Piece("W", "P", 5);
+        const queenW = new Piece("W", "Q");
+        const pawnB1 = new Piece("B", "P", 6);
+        const pawnB2 = new Piece("B", "P", 7);
+
+        player1.currentTurn = true;
+
+        player1.move(gameboard.grid, pawnW, 44, player2);
+        player2.move(gameboard.grid, pawnB1, 29, player1);
+
+        player1.move(gameboard.grid, queenW, 31, player2);
+        player2.move(gameboard.grid, pawnB2, 22, player1);
+
+        gameboard.printGrid();
+        
+        expect(player2.inCheck).toBe(false);
     })
 
     test('move function does not work when a player tries to move king or other pieces and does not get out of check', () => {
+        const gameboard = new Gameboard();
+
+        const player1 = new Player("White");
+        const player2 = new Player("Black");
+
+        const pawnW = new Piece("W", "P", 5);
+        const queenW = new Piece("W", "Q");
+        const pawnB1 = new Piece("B", "P", 6);
+        const kingB = new Piece("B", "K");
+
+        player1.currentTurn = true;
+
+        player1.move(gameboard.grid, pawnW, 44, player2);
+        player2.move(gameboard.grid, pawnB1, 29, player1);
+
+        player1.move(gameboard.grid, queenW, 31, player2);
+        player2.move(gameboard.grid, kingB, 13, player1);
+
+        expect(player2.inCheck).toBe(true);
+        expect(gameboard.grid[13]).toBe("|||");
+        expect(gameboard.grid[4]).toBe("BK");
     }) 
 })

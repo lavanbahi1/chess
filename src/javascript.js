@@ -3505,8 +3505,3997 @@ class Player {
         //console.log(grid);
     }
 
-    checkIfKingInCheck(grid, piece, newIndex, enemyPlayer) {
+    checkIfKingIsInCheck(grid, piece, newIndex, player) {
+        let gridCopy = [...grid];
 
+        let pieceNum = piece.num;
+
+        if (pieceNum == undefined) {
+            pieceNum = "";
+        }
+
+        let pieceString = piece.color + piece.name + pieceNum;
+        let pieceCurrentIndex = gridCopy.indexOf(pieceString);
+
+        if (piece.name == "P") {
+            if (piece.color == "W") {
+                
+                // Moving 1 space forward 
+                if (pieceCurrentIndex - newIndex == 8) {
+                    if (gridCopy[newIndex] != "|||") {
+
+                    }
+
+                    else {
+                        gridCopy[pieceCurrentIndex] = "|||";
+                        gridCopy[newIndex] = pieceString;
+                        /*piece.firstTurn = false;
+                        this.hasMoved = true;*/
+                    }
+                }
+
+                // Moving 2 spaces forward only during first turn
+                else if ((pieceCurrentIndex - newIndex == 16) && piece.firstTurn == true) {
+                    if (gridCopy[newIndex] != "|||") {
+
+                    }
+
+                    else if (gridCopy[newIndex + 8] != "|||") {
+
+                    }
+
+                    else {
+                        gridCopy[pieceCurrentIndex] = "|||";
+                        gridCopy[newIndex] = pieceString;
+                        /*piece.firstTurn = false;
+                        this.hasMoved = true;
+                        this.completedTwoSquaresMove = true;*/
+                    }
+                }
+
+                // Capturing piece diagonally in front of it
+                else if (pieceCurrentIndex - newIndex == 9 || pieceCurrentIndex - newIndex == 7) {
+                    
+                    if (this.enPassant == true && gridCopy[newIndex - 8] != "BK") {
+                        if (((newIndex >= 0 && newIndex < 8) && (pieceCurrentIndex >= 8 && pieceCurrentIndex < 16))
+                        || ((newIndex >= 8 && newIndex < 16) && (pieceCurrentIndex >= 16 && pieceCurrentIndex < 24))
+                        || ((newIndex >= 16 && newIndex < 24) && (pieceCurrentIndex >= 24 && pieceCurrentIndex < 32))
+                        || ((newIndex >= 24 && newIndex < 32) && (pieceCurrentIndex >= 32 && pieceCurrentIndex < 40))
+                        || ((newIndex >= 32 && newIndex < 40) && (pieceCurrentIndex >= 40 && pieceCurrentIndex < 48))
+                        || ((newIndex >= 40 && newIndex < 48) && (pieceCurrentIndex >= 48 && pieceCurrentIndex < 56))
+                        || ((newIndex >= 48 && newIndex < 56) && (pieceCurrentIndex >= 56 && pieceCurrentIndex < 64))) {
+
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                            gridCopy[newIndex + 8] = "|||"; // Capture enemy pawn
+                            /*this.enPassant = false;
+                            this.hasMoved = true;
+                            console.log("enPassant by white pawn");*/                         
+                        }
+                    }
+
+                    else if (gridCopy[newIndex] == "|||" || gridCopy[newIndex] == "BK") { // Can not capture king
+
+                    }
+
+                    else {
+                        if (((newIndex >= 0 && newIndex < 8) && (pieceCurrentIndex >= 8 && pieceCurrentIndex < 16))
+                        || ((newIndex >= 8 && newIndex < 16) && (pieceCurrentIndex >= 16 && pieceCurrentIndex < 24))
+                        || ((newIndex >= 16 && newIndex < 24) && (pieceCurrentIndex >= 24 && pieceCurrentIndex < 32))
+                        || ((newIndex >= 24 && newIndex < 32) && (pieceCurrentIndex >= 32 && pieceCurrentIndex < 40))
+                        || ((newIndex >= 32 && newIndex < 40) && (pieceCurrentIndex >= 40 && pieceCurrentIndex < 48))
+                        || ((newIndex >= 40 && newIndex < 48) && (pieceCurrentIndex >= 48 && pieceCurrentIndex < 56))
+                        || ((newIndex >= 48 && newIndex < 56) && (pieceCurrentIndex >= 56 && pieceCurrentIndex < 64))) {
+
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                            /*this.hasMoved = true;*/
+                        }
+                    }
+                }
+
+                else {
+
+                }
+
+                // Check if enemy pawn can en passant. Makes sure the player pawn has moved (above occurred)
+                /*if (gridCopy[newIndex - 1].startsWith("BP") && this.hasMoved == true && this.completedTwoSquaresMove == true) {
+                    enemyPlayer.enPassant = true;
+                    console.log(`White pawn ${gridCopy[newIndex]} has black pawn ${gridCopy[newIndex - 1]} to the left`);
+                }
+
+                else if (gridCopy[newIndex + 1].startsWith("BP") && this.hasMoved == true && this.completedTwoSquaresMove == true) {
+                    enemyPlayer.enPassant = true;
+                    console.log(`White pawn ${gridCopy[newIndex]} has black pawn ${gridCopy[newIndex + 1]} to the right`);
+                } */
+
+                // Check if enemy king is in check
+                /*if (((newIndex - 7 >= 0 && newIndex - 7 < 8) && (newIndex >= 8 && newIndex < 16))
+                || ((newIndex - 7 >= 8 && newIndex - 7 < 16) && (newIndex >= 16 && newIndex < 24))
+                || ((newIndex - 7 >= 16 && newIndex - 7 < 24) && (newIndex >= 24 && newIndex < 32))
+                || ((newIndex - 7 >= 24 && newIndex - 7 < 32) && (newIndex >= 32 && newIndex < 40))
+                || ((newIndex - 7 >= 32 && newIndex - 7 < 40) && (newIndex >= 40 && newIndex < 48))
+                || ((newIndex - 7 >= 40 && newIndex - 7 < 48) && (newIndex >= 48 && newIndex < 56))
+                || ((newIndex - 7 >= 48 && newIndex - 7 < 56) && (newIndex >= 56 && newIndex < 64))) {
+                    if (gridCopy[newIndex - 7].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (((newIndex - 9 >= 0 && newIndex - 9 < 8) && (newIndex >= 8 && newIndex < 16))
+                || ((newIndex - 9 >= 8 && newIndex - 9 < 16) && (newIndex >= 16 && newIndex < 24))
+                || ((newIndex - 9 >= 16 && newIndex - 9 < 24) && (newIndex >= 24 && newIndex < 32))
+                || ((newIndex - 9 >= 24 && newIndex - 9 < 32) && (newIndex >= 32 && newIndex < 40))
+                || ((newIndex - 9 >= 32 && newIndex - 9 < 40) && (newIndex >= 40 && newIndex < 48))
+                || ((newIndex - 9 >= 40 && newIndex - 9 < 48) && (newIndex >= 48 && newIndex < 56))
+                || ((newIndex - 9 >= 48 && newIndex - 9 < 56) && (newIndex >= 56 && newIndex < 64))) {
+                    if (gridCopy[newIndex - 9].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                } */
+
+                /*if (newIndex == 0 || newIndex == 1 || newIndex == 2 || newIndex == 3 || newIndex == 4 || newIndex == 5 || newIndex == 6 || newIndex == 7) {
+                    piece.name = "Q"
+                    piece.num = this.numOfWhiteQueens[0];
+                    this.numOfWhiteQueens.shift();
+                    gridCopy[newIndex] = "W" + piece.name + piece.num;
+                } */
+
+                /*this.hasMoved = false;
+                this.completedTwoSquaresMove = false; */
+            }
+
+            else if (piece.color == "B") {
+                // Moving 1 or 2 spaces forward 
+                if (newIndex - pieceCurrentIndex == 8) {
+                    if (gridCopy[newIndex] != "|||") {
+
+                    }
+
+                    else {
+                        gridCopy[pieceCurrentIndex] = "|||";
+                        gridCopy[newIndex] = pieceString;
+                        /*piece.firstTurn = false;
+                        this.hasMoved = true;*/
+                    }
+                }
+
+                else if ((newIndex - pieceCurrentIndex == 16) && piece.firstTurn == true) {
+                    if (gridCopy[newIndex] != "|||") {
+
+                    }
+
+                    else if (gridCopy[newIndex - 8] != "|||") {
+
+                    }
+
+                    else {
+                        gridCopy[pieceCurrentIndex] = "|||";
+                        gridCopy[newIndex] = pieceString;
+                        /*piece.firstTurn = false;
+                        this.hasMoved = true;
+                        this.completedTwoSquaresMove = true*/
+                    }                    
+                }
+
+                // Capturing piece diagonally in front of it
+                else if (newIndex - pieceCurrentIndex == 9 || newIndex - pieceCurrentIndex == 7) {
+                    if (this.enPassant == true && gridCopy[newIndex - 8] != "WK") {
+                        if (((newIndex >= 8 && newIndex < 16) && (pieceCurrentIndex >= 0 && pieceCurrentIndex < 8))
+                        || ((newIndex >= 16 && newIndex < 24) && (pieceCurrentIndex >= 8 && pieceCurrentIndex < 16))
+                        || ((newIndex >= 24 && newIndex < 32) && (pieceCurrentIndex >= 16 && pieceCurrentIndex < 24))
+                        || ((newIndex >= 32 && newIndex < 40) && (pieceCurrentIndex >= 24 && pieceCurrentIndex < 32))
+                        || ((newIndex >= 40 && newIndex < 48) && (pieceCurrentIndex >= 32 && pieceCurrentIndex < 40))
+                        || ((newIndex >= 48 && newIndex < 56) && (pieceCurrentIndex >= 40 && pieceCurrentIndex < 48))
+                        || ((newIndex >= 56 && newIndex < 64) && (pieceCurrentIndex >= 48 && pieceCurrentIndex < 56))) { 
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                            gridCopy[newIndex - 8] = "|||"; // Capture enemy pawn
+                            /*this.enPassant = false;
+                            this.hasMoved = true;
+                            console.log("enPassant by black pawn");*/
+                        }
+                    }
+
+                    else if (gridCopy[newIndex] == "|||" || gridCopy[newIndex] == "WK") { // Can not capture king
+
+                    }
+
+                    else {
+
+                        if (((newIndex >= 8 && newIndex < 16) && (pieceCurrentIndex >= 0 && pieceCurrentIndex < 8))
+                        || ((newIndex >= 16 && newIndex < 24) && (pieceCurrentIndex >= 8 && pieceCurrentIndex < 16))
+                        || ((newIndex >= 24 && newIndex < 32) && (pieceCurrentIndex >= 16 && pieceCurrentIndex < 24))
+                        || ((newIndex >= 32 && newIndex < 40) && (pieceCurrentIndex >= 24 && pieceCurrentIndex < 32))
+                        || ((newIndex >= 40 && newIndex < 48) && (pieceCurrentIndex >= 32 && pieceCurrentIndex < 40))
+                        || ((newIndex >= 48 && newIndex < 56) && (pieceCurrentIndex >= 40 && pieceCurrentIndex < 48))
+                        || ((newIndex >= 56 && newIndex < 64) && (pieceCurrentIndex >= 48 && pieceCurrentIndex < 56))) {                        
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                            /*this.hasMoved = true;*/
+                        }
+                    }
+                }
+
+                else {
+
+                }
+
+                // Check if enemy pawn can en passant. Makes sure the player pawn has moved (above occurred)
+                /*if (gridCopy[newIndex - 1].startsWith("WP") && this.hasMoved == true && this.completedTwoSquaresMove == true) {
+                    enemyPlayer.enPassant = true;
+                    console.log(`Black pawn ${gridCopy[newIndex]} has white pawn ${gridCopy[newIndex - 1]} to the left`);
+                }
+
+                else if (gridCopy[newIndex + 1].startsWith("WP") && this.hasMoved == true && this.completedTwoSquaresMove == true) {
+                    enemyPlayer.enPassant = true;
+                    console.log(`Black pawn ${gridCopy[newIndex]} has white pawn ${gridCopy[newIndex + 1]} to the right`);
+                }*/
+
+                // Check if enemy king is in check
+                /*if (((newIndex >= 0 && newIndex < 8) && (newIndex + 7 >= 8 && newIndex + 7 < 16))
+                || ((newIndex >= 8 && newIndex < 16) && (newIndex + 7 >= 16 && newIndex + 7 < 24))
+                || ((newIndex >= 16 && newIndex < 24) && (newIndex + 7 >= 24 && newIndex + 7 < 32))
+                || ((newIndex >= 24 && newIndex < 32) && (newIndex + 7 >= 32 && newIndex + 7 < 40))
+                || ((newIndex >= 32 && newIndex < 40) && (newIndex + 7 >= 40 && newIndex + 7 < 48))
+                || ((newIndex >= 40 && newIndex < 48) && (newIndex + 7 >= 48 && newIndex + 7 < 56))
+                || ((newIndex >= 48 && newIndex < 56) && (newIndex + 7 >= 56 && newIndex + 7 < 64))) {
+                    if (gridCopy[newIndex + 7].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (((newIndex >= 0 && newIndex < 8) && (newIndex + 9 >= 8 && newIndex + 9 < 16))
+                || ((newIndex >= 8 && newIndex < 16) && (newIndex + 9 >= 16 && newIndex + 9 < 24))
+                || ((newIndex >= 16 && newIndex < 24) && (newIndex + 9 >= 24 && newIndex + 9 < 32))
+                || ((newIndex >= 24 && newIndex < 32) && (newIndex + 9 >= 32 && newIndex + 9 < 40))
+                || ((newIndex >= 32 && newIndex < 40) && (newIndex + 9 >= 40 && newIndex + 9 < 48))
+                || ((newIndex >= 40 && newIndex < 48) && (newIndex + 9 >= 48 && newIndex + 9 < 56))
+                || ((newIndex >= 48 && newIndex < 56) && (newIndex + 9 >= 56 && newIndex + 9 < 64))) {
+                    if (gridCopy[newIndex + 9].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }*/
+
+
+                /*if (newIndex == 0 || newIndex == 1 || newIndex == 2 || newIndex == 3 || newIndex == 4 || newIndex == 5 || newIndex == 6 || newIndex == 7) {
+                    piece.name = "Q"
+                    piece.num = this.numOfBlackQueens[0];
+                    this.numOfBlackQueens.shift();
+                    gridCopy[newIndex] = "B" + piece.name + piece.num;
+                }*/
+
+                /*this.hasMoved = false;
+                this.completedTwoSquaresMove = false;*/
+            }
+        }
+
+        else if (piece.name == "R") {
+
+            if (piece.color == "W") {
+
+                // Moving up and capturing
+                if (pieceCurrentIndex - newIndex == 8 || pieceCurrentIndex - newIndex == 16
+                    || pieceCurrentIndex - newIndex == 24 || pieceCurrentIndex - newIndex == 32 
+                    || pieceCurrentIndex - newIndex == 40 || pieceCurrentIndex - newIndex == 48 
+                    || pieceCurrentIndex - newIndex == 56) {
+
+                    let notAllEmpty = false;
+
+                    for (let i = pieceCurrentIndex - 8; i > newIndex; i -= 8) {
+                        if ((gridCopy[i] != "|||") && pieceCurrentIndex - newIndex != 8) {
+                            notAllEmpty = true;
+                        }
+                    }
+
+                    if (notAllEmpty == false) {
+                        if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }
+                }
+
+                // Moving down and capturing
+                else if (newIndex - pieceCurrentIndex == 8 || newIndex - pieceCurrentIndex == 16
+                    || newIndex - pieceCurrentIndex == 24 || newIndex - pieceCurrentIndex == 32 
+                    || newIndex - pieceCurrentIndex == 40 || newIndex - pieceCurrentIndex == 48 
+                    || newIndex - pieceCurrentIndex == 56) {
+                        
+                    let notAllEmpty = false;
+
+                    for (let i = pieceCurrentIndex + 8; i < newIndex; i += 8) {
+                        if ((gridCopy[i] != "|||") && (newIndex - pieceCurrentIndex != 8)) {
+                            notAllEmpty = true;
+                        }
+                    }
+
+                    if (notAllEmpty == false) {
+                        if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }
+                }
+
+                // Moving right and capturing
+                else if (newIndex - pieceCurrentIndex == 1 || newIndex - pieceCurrentIndex == 2
+                    || newIndex - pieceCurrentIndex == 3 || newIndex - pieceCurrentIndex == 4 
+                    || newIndex - pieceCurrentIndex == 5 || newIndex - pieceCurrentIndex == 6 
+                    || newIndex - pieceCurrentIndex == 7) {
+
+                    if (((newIndex >= 0 && newIndex < 8) && (pieceCurrentIndex >= 0 && pieceCurrentIndex < 8))
+                    || ((newIndex >= 8 && newIndex < 16) && (pieceCurrentIndex >= 8 && pieceCurrentIndex < 16))
+                    || ((newIndex >= 16 && newIndex < 24) && (pieceCurrentIndex >= 16 && pieceCurrentIndex < 24))
+                    || ((newIndex >= 24 && newIndex < 32) && (pieceCurrentIndex >= 24 && pieceCurrentIndex < 32))
+                    || ((newIndex >= 32 && newIndex < 40) && (pieceCurrentIndex >= 32 && pieceCurrentIndex < 40))
+                    || ((newIndex >= 40 && newIndex < 48) && (pieceCurrentIndex >= 40 && pieceCurrentIndex < 48))
+                    || ((newIndex >= 48 && newIndex < 56) && (pieceCurrentIndex >= 48 && pieceCurrentIndex < 56))
+                    || ((newIndex >= 56 && newIndex < 64) && (pieceCurrentIndex >= 56 && pieceCurrentIndex < 64))) {
+                        
+                        let notAllEmpty = false;
+
+                        for (let i = pieceCurrentIndex + 1; i < newIndex; i += 1) {
+                            if ((gridCopy[i] != "|||") && (newIndex - pieceCurrentIndex != 1)) {
+                                notAllEmpty = true;
+                            }
+                        }
+
+                        if (notAllEmpty == false) {
+                            if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                            }
+
+                            else {
+                                gridCopy[pieceCurrentIndex] = "|||";
+                                gridCopy[newIndex] = pieceString;
+                            }
+                        }
+                    }
+                }
+
+                // Moving left and capturing
+                else if (pieceCurrentIndex - newIndex == 1 || pieceCurrentIndex - newIndex == 2
+                    || pieceCurrentIndex - newIndex == 3 || pieceCurrentIndex - newIndex == 4 
+                    || pieceCurrentIndex - newIndex == 5 || pieceCurrentIndex - newIndex == 6 
+                    || pieceCurrentIndex - newIndex == 7) {
+                    
+                    if (((newIndex >= 0 && newIndex < 8) && (pieceCurrentIndex >= 0 && pieceCurrentIndex < 8))
+                    || ((newIndex >= 8 && newIndex < 16) && (pieceCurrentIndex >= 8 && pieceCurrentIndex < 16))
+                    || ((newIndex >= 16 && newIndex < 24) && (pieceCurrentIndex >= 16 && pieceCurrentIndex < 24))
+                    || ((newIndex >= 24 && newIndex < 32) && (pieceCurrentIndex >= 24 && pieceCurrentIndex < 32))
+                    || ((newIndex >= 32 && newIndex < 40) && (pieceCurrentIndex >= 32 && pieceCurrentIndex < 40))
+                    || ((newIndex >= 40 && newIndex < 48) && (pieceCurrentIndex >= 40 && pieceCurrentIndex < 48))
+                    || ((newIndex >= 48 && newIndex < 56) && (pieceCurrentIndex >= 48 && pieceCurrentIndex < 56))
+                    || ((newIndex >= 56 && newIndex < 64) && (pieceCurrentIndex >= 56 && pieceCurrentIndex < 64))) {
+                        
+                        let notAllEmpty = false;
+
+                        for (let i = pieceCurrentIndex - 1; i > newIndex; i -= 1) {
+                            if ((gridCopy[i] != "|||") && pieceCurrentIndex - newIndex != 1) {
+                                notAllEmpty = true;
+                            }
+                        }
+
+                        if (notAllEmpty == false) {
+                            if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                            }
+
+                            else {
+                                gridCopy[pieceCurrentIndex] = "|||";
+                                gridCopy[newIndex] = pieceString;
+                            }
+                        }
+                    }
+                }
+
+                // Check if enemy king is in check upwards
+                /*for (let i = newIndex - 8; i >= 0; i -= 8) {
+                    if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (gridCopy[i].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+                }*/
+
+                // Check if enemy king is in check downwards
+                /*for (let i = newIndex + 8; i <= 63; i += 8) {
+                    if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (gridCopy[i].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+                }*/
+
+                // Check if enemy king is in check right
+                /*if (newIndex >= 0 && newIndex < 8) {
+                    for (let i = newIndex + 1; i < 8; i++) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 8 && newIndex < 16) {
+                    for (let i = newIndex + 1; i < 16; i++) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 16 && newIndex < 24) {
+                    for (let i = newIndex + 1; i < 24; i++) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 24 && newIndex < 32) {
+                    for (let i = newIndex + 1; i < 32; i++) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 32 && newIndex < 40) {
+                    for (let i = newIndex + 1; i < 40; i++) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 40 && newIndex < 48) {
+                    for (let i = newIndex + 1; i < 48; i++) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 48 && newIndex < 56) {
+                    for (let i = newIndex + 1; i < 56; i++) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 56 && newIndex < 64) {
+                    for (let i = newIndex + 1; i < 64; i++) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                // Check if enemy king is in check left
+                if (newIndex >= 0 && newIndex < 8) {
+                    for (let i = newIndex - 1; i >= 0; i--) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 8 && newIndex < 16) {
+                    for (let i = newIndex - 1; i >= 8; i--) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 16 && newIndex < 24) {
+                    for (let i = newIndex - 1; i >= 16; i--) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 24 && newIndex < 32) {
+                    for (let i = newIndex - 1; i >= 24; i--) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 32 && newIndex < 40) {
+                    for (let i = newIndex - 1; i >= 32; i--) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 40 && newIndex < 48) {
+                    for (let i = newIndex - 1; i >= 40; i--) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 48 && newIndex < 56) {
+                    for (let i = newIndex - 1; i >= 48; i--) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 56 && newIndex < 64) {
+                    for (let i = newIndex - 1; i >= 56; i--) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }*/
+            }
+
+            else if (piece.color == "B") {
+
+                // Moving up and capturing
+                if (pieceCurrentIndex - newIndex == 8 || pieceCurrentIndex - newIndex == 16
+                    || pieceCurrentIndex - newIndex == 24 || pieceCurrentIndex - newIndex == 32 
+                    || pieceCurrentIndex - newIndex == 40 || pieceCurrentIndex - newIndex == 48 
+                    || pieceCurrentIndex - newIndex == 56) {
+
+                    let notAllEmpty = false;
+
+                    for (let i = pieceCurrentIndex - 8; i > newIndex; i -= 8) {
+                        if ((gridCopy[i] != "|||") && pieceCurrentIndex - newIndex != 8) {
+                            notAllEmpty = true;
+                        }
+                    }
+
+                    if (notAllEmpty == false) {
+                        if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }
+                }
+
+                // Moving down and capturing
+                else if (newIndex - pieceCurrentIndex == 8 || newIndex - pieceCurrentIndex == 16
+                    || newIndex - pieceCurrentIndex == 24 || newIndex - pieceCurrentIndex == 32 
+                    || newIndex - pieceCurrentIndex == 40 || newIndex - pieceCurrentIndex == 48 
+                    || newIndex - pieceCurrentIndex == 56) {
+                    
+                    let notAllEmpty = false;
+
+                    for (let i = pieceCurrentIndex + 8; i < newIndex; i += 8) {
+                        if ((gridCopy[i] != "|||") && newIndex - pieceCurrentIndex != 8) {
+                            notAllEmpty = true;
+                        }
+                    }
+
+                    if (notAllEmpty == false) {
+                        if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }
+                }
+
+                // Moving right and capturing
+                else if (newIndex - pieceCurrentIndex == 1 || newIndex - pieceCurrentIndex == 2
+                    || newIndex - pieceCurrentIndex == 3 || newIndex - pieceCurrentIndex == 4 
+                    || newIndex - pieceCurrentIndex == 5 || newIndex - pieceCurrentIndex == 6 
+                    || newIndex - pieceCurrentIndex == 7) {
+
+                    if (((newIndex >= 0 && newIndex < 8) && (pieceCurrentIndex >= 0 && pieceCurrentIndex < 8))
+                    || ((newIndex >= 8 && newIndex < 16) && (pieceCurrentIndex >= 8 && pieceCurrentIndex < 16))
+                    || ((newIndex >= 16 && newIndex < 24) && (pieceCurrentIndex >= 16 && pieceCurrentIndex < 24))
+                    || ((newIndex >= 24 && newIndex < 32) && (pieceCurrentIndex >= 24 && pieceCurrentIndex < 32))
+                    || ((newIndex >= 32 && newIndex < 40) && (pieceCurrentIndex >= 32 && pieceCurrentIndex < 40))
+                    || ((newIndex >= 40 && newIndex < 48) && (pieceCurrentIndex >= 40 && pieceCurrentIndex < 48))
+                    || ((newIndex >= 48 && newIndex < 56) && (pieceCurrentIndex >= 48 && pieceCurrentIndex < 56))
+                    || ((newIndex >= 56 && newIndex < 64) && (pieceCurrentIndex >= 56 && pieceCurrentIndex < 64))) {
+                        
+                        let notAllEmpty = false;
+
+                        for (let i = pieceCurrentIndex + 1; i < newIndex; i += 1) {
+                            if ((gridCopy[i] != "|||") && newIndex - pieceCurrentIndex != 1) {
+                                notAllEmpty = true;
+                            }
+                        }
+
+                        if (notAllEmpty == false) {
+                            if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                            }
+
+                            else {
+                                gridCopy[pieceCurrentIndex] = "|||";
+                                gridCopy[newIndex] = pieceString;
+                            }
+                        }
+                    }
+                }
+
+                // Moving left and capturing
+                else if (pieceCurrentIndex - newIndex == 1 || pieceCurrentIndex - newIndex == 2
+                    || pieceCurrentIndex - newIndex == 3 || pieceCurrentIndex - newIndex == 4 
+                    || pieceCurrentIndex - newIndex == 5 || pieceCurrentIndex - newIndex == 6 
+                    || pieceCurrentIndex - newIndex == 7) {
+                    
+                    if (((newIndex >= 0 && newIndex < 8) && (pieceCurrentIndex >= 0 && pieceCurrentIndex < 8))
+                    || ((newIndex >= 8 && newIndex < 16) && (pieceCurrentIndex >= 8 && pieceCurrentIndex < 16))
+                    || ((newIndex >= 16 && newIndex < 24) && (pieceCurrentIndex >= 16 && pieceCurrentIndex < 24))
+                    || ((newIndex >= 24 && newIndex < 32) && (pieceCurrentIndex >= 24 && pieceCurrentIndex < 32))
+                    || ((newIndex >= 32 && newIndex < 40) && (pieceCurrentIndex >= 32 && pieceCurrentIndex < 40))
+                    || ((newIndex >= 40 && newIndex < 48) && (pieceCurrentIndex >= 40 && pieceCurrentIndex < 48))
+                    || ((newIndex >= 48 && newIndex < 56) && (pieceCurrentIndex >= 48 && pieceCurrentIndex < 56))
+                    || ((newIndex >= 56 && newIndex < 64) && (pieceCurrentIndex >= 56 && pieceCurrentIndex < 64))) {
+                        
+                        let notAllEmpty = false;
+
+                        for (let i = pieceCurrentIndex - 1; i > newIndex; i -= 1) {
+                            if ((gridCopy[i] != "|||") && pieceCurrentIndex - newIndex != 1) {
+                                notAllEmpty = true;
+                            }
+                        }
+
+                        if (notAllEmpty == false) {
+                            if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                            }
+
+                            else {
+                                gridCopy[pieceCurrentIndex] = "|||";
+                                gridCopy[newIndex] = pieceString;
+                            }
+                        }
+                    }
+                }
+
+                /*
+                // Check if enemy king is in check upwards
+                for (let i = newIndex - 8; i >= 0; i -= 8) {
+                    if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (gridCopy[i].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+                }
+
+                // Check if enemy king is in check downwards
+                for (let i = newIndex + 8; i <= 63; i += 8) {
+                    if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (gridCopy[i].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+                }
+
+                // Check if enemy king is in check right
+                if (newIndex >= 0 && newIndex < 8) {
+                    for (let i = newIndex + 1; i < 8; i++) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 8 && newIndex < 16) {
+                    for (let i = newIndex + 1; i < 16; i++) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 16 && newIndex < 24) {
+                    for (let i = newIndex + 1; i < 24; i++) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 24 && newIndex < 32) {
+                    for (let i = newIndex + 1; i < 32; i++) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 32 && newIndex < 40) {
+                    for (let i = newIndex + 1; i < 40; i++) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 40 && newIndex < 48) {
+                    for (let i = newIndex + 1; i < 48; i++) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 48 && newIndex < 56) {
+                    for (let i = newIndex + 1; i < 56; i++) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 56 && newIndex < 64) {
+                    for (let i = newIndex + 1; i < 64; i++) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                // Check if enemy king is in check left
+                if (newIndex >= 0 && newIndex < 8) {
+                    for (let i = newIndex - 1; i >= 0; i--) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 8 && newIndex < 16) {
+                    for (let i = newIndex - 1; i >= 8; i--) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 16 && newIndex < 24) {
+                    for (let i = newIndex - 1; i >= 16; i--) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 24 && newIndex < 32) {
+                    for (let i = newIndex - 1; i >= 24; i--) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 32 && newIndex < 40) {
+                    for (let i = newIndex - 1; i >= 32; i--) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 40 && newIndex < 48) {
+                    for (let i = newIndex - 1; i >= 40; i--) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 48 && newIndex < 56) {
+                    for (let i = newIndex - 1; i >= 48; i--) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 56 && newIndex < 64) {
+                    for (let i = newIndex - 1; i >= 56; i--) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }*/
+            }
+        }
+
+        else if (piece.name == "B") {
+
+            if (piece.color == "W") {
+
+                // Moving up and to the right
+                if (pieceCurrentIndex - newIndex == 7 || pieceCurrentIndex - newIndex == 14
+                    || pieceCurrentIndex - newIndex == 21 || pieceCurrentIndex - newIndex == 28 
+                    || pieceCurrentIndex - newIndex == 35 || pieceCurrentIndex - newIndex == 42 
+                    || pieceCurrentIndex - newIndex == 49) {
+
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex - 7; i > newIndex; i -= 7) {
+                        if ((gridCopy[i] != "|||") && pieceCurrentIndex - newIndex != 7) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 7 && newIndex < i) || (i == 15 && newIndex < i) 
+                            || (i == 23 && newIndex < i) || (i == 31 && newIndex < i) 
+                            || (i == 39 && newIndex < i) || (i == 47 && newIndex < i) 
+                            || (i == 55 && newIndex < i)) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }      
+                }
+
+                // Moving up and to the left
+                else if (pieceCurrentIndex - newIndex == 9 || pieceCurrentIndex - newIndex == 18
+                    || pieceCurrentIndex - newIndex == 27 || pieceCurrentIndex - newIndex == 36 
+                    || pieceCurrentIndex - newIndex == 45 || pieceCurrentIndex - newIndex == 54 
+                    || pieceCurrentIndex - newIndex == 63) {
+                    
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex - 9; i > newIndex; i -= 9) {
+                        if ((gridCopy[i] != "|||") && pieceCurrentIndex - newIndex != 9) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 8 && newIndex < i) || (i == 16 && newIndex < i) 
+                            || (i == 24 && newIndex < i) || (i == 32 && newIndex < i) 
+                            || (i == 40 && newIndex < i) || (i == 48 && newIndex < i) ) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }     
+                }
+
+                // Moving down and to the right
+                else if (newIndex - pieceCurrentIndex == 9 || newIndex - pieceCurrentIndex == 18
+                    || newIndex - pieceCurrentIndex == 27 || newIndex - pieceCurrentIndex == 36 
+                    || newIndex - pieceCurrentIndex == 45 || newIndex - pieceCurrentIndex == 54 
+                    || newIndex - pieceCurrentIndex == 63) {
+                    
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex + 9; i < newIndex; i += 9) {
+                        if ((gridCopy[i] != "|||") && newIndex - pieceCurrentIndex != 9) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 15 && newIndex > i) || (i == 23 && newIndex > i) 
+                            || (i == 31 && newIndex > i) || (i == 39 && newIndex > i) 
+                            || (i == 47 && newIndex > i) || (i == 55 && newIndex > i)) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }     
+                }
+
+                // Moving down and to the left
+                else if (newIndex - pieceCurrentIndex == 7 || newIndex - pieceCurrentIndex == 14
+                    || newIndex - pieceCurrentIndex == 21 || newIndex - pieceCurrentIndex == 28 
+                    || newIndex - pieceCurrentIndex == 35 || newIndex - pieceCurrentIndex == 42 
+                    || newIndex - pieceCurrentIndex == 49) {
+                    
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex + 7; i < newIndex; i += 7) {
+                        if ((gridCopy[i] != "|||") && newIndex - pieceCurrentIndex != 7) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 8 && newIndex > i) || (i == 16 && newIndex > i) 
+                            || (i == 24 && newIndex > i) || (i == 32 && newIndex > i) 
+                            || (i == 40 && newIndex > i) || (i == 48 && newIndex > i) ) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }   
+                }
+
+                /*
+                // Check if enemy king is in check up and to the right
+                for (let i = newIndex - 7; i >= 0; i -= 7) {
+                    if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (gridCopy[i].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+
+                    if (i == 7 || i == 15 || i == 23 || i == 31 || i == 39 || i == 47 || i == 55) {
+                        break;
+                    }
+                }
+
+                // Check if enemy king is in check up and to the left
+                for (let i = newIndex - 9; i >= 0; i -= 9) {
+                    if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (gridCopy[i].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+
+                    if (i == 0 || i == 8 || i == 16 || i == 24 || i == 32 || i == 40 || i == 48) {
+                        break;
+                    }
+                }
+
+                // Check if enemy king is in check down and to the right
+                for (let i = newIndex + 9; i <= 63; i += 9) {
+                    if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (gridCopy[i].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+
+                    if (i == 15 || i == 23 || i == 31 || i == 39 || i == 47 || i == 55 || i == 63) {
+                        break;
+                    }
+                }
+
+                // Check if enemy king is in check down and to the left
+                for (let i = newIndex + 7; i <= 63; i += 7) {
+                    if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (gridCopy[i].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+
+                    if (i == 8 || i == 16 || i == 24 || i == 32 || i == 40 || i == 48 || i == 56) {
+                        break;
+                    }
+                }*/
+            }
+
+            else if (piece.color == "B") {
+
+                // Moving up and to the right
+                if (pieceCurrentIndex - newIndex == 7 || pieceCurrentIndex - newIndex == 14
+                    || pieceCurrentIndex - newIndex == 21 || pieceCurrentIndex - newIndex == 28 
+                    || pieceCurrentIndex - newIndex == 35 || pieceCurrentIndex - newIndex == 42 
+                    || pieceCurrentIndex - newIndex == 49) {
+                    
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex - 7; i > newIndex; i -= 7) {
+                        if ((gridCopy[i] != "|||") && pieceCurrentIndex - newIndex != 7) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 7 && newIndex < i) || (i == 15 && newIndex < i) 
+                            || (i == 23 && newIndex < i) || (i == 31 && newIndex < i) 
+                            || (i == 39 && newIndex < i) || (i == 47 && newIndex < i) 
+                            || (i == 55 && newIndex < i)) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }   
+                }
+
+                // Moving up and to the left
+                else if (pieceCurrentIndex - newIndex == 9 || pieceCurrentIndex - newIndex == 18
+                    || pieceCurrentIndex - newIndex == 27 || pieceCurrentIndex - newIndex == 36 
+                    || pieceCurrentIndex - newIndex == 45 || pieceCurrentIndex - newIndex == 54 
+                    || pieceCurrentIndex - newIndex == 63) {
+                    
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex - 9; i > newIndex; i -= 9) {
+                        if ((gridCopy[i] != "|||") && pieceCurrentIndex - newIndex != 9) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 8 && newIndex < i) || (i == 16 && newIndex < i) 
+                            || (i == 24 && newIndex < i) || (i == 32 && newIndex < i) 
+                            || (i == 40 && newIndex < i) || (i == 48 && newIndex < i) ) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }    
+                }
+
+                // Moving down and to the right
+                else if (newIndex - pieceCurrentIndex == 9 || newIndex - pieceCurrentIndex == 18
+                    || newIndex - pieceCurrentIndex == 27 || newIndex - pieceCurrentIndex == 36 
+                    || newIndex - pieceCurrentIndex == 45 || newIndex - pieceCurrentIndex == 54 
+                    || newIndex - pieceCurrentIndex == 63) {
+                    
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex + 9; i < newIndex; i += 9) {
+                        if ((gridCopy[i] != "|||") && newIndex - pieceCurrentIndex != 9) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 15 && newIndex > i) || (i == 23 && newIndex > i) 
+                            || (i == 31 && newIndex > i) || (i == 39 && newIndex > i) 
+                            || (i == 47 && newIndex > i) || (i == 55 && newIndex > i)) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }   
+                }
+
+                // Moving down and to the left
+                else if (newIndex - pieceCurrentIndex == 7 || newIndex - pieceCurrentIndex == 14
+                    || newIndex - pieceCurrentIndex == 21 || newIndex - pieceCurrentIndex == 28 
+                    || newIndex - pieceCurrentIndex == 35 || newIndex - pieceCurrentIndex == 42 
+                    || newIndex - pieceCurrentIndex == 49) {
+                    
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex + 7; i < newIndex; i += 7) {
+                        if ((gridCopy[i] != "|||") && newIndex - pieceCurrentIndex != 7) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 8 && newIndex > i) || (i == 16 && newIndex > i) 
+                            || (i == 24 && newIndex > i) || (i == 32 && newIndex > i) 
+                            || (i == 40 && newIndex > i) || (i == 48 && newIndex > i) ) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }  
+                }
+
+                /*
+                // Check if enemy king is in check up and to the right
+                for (let i = newIndex - 7; i >= 0; i -= 7) {
+                    if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (gridCopy[i].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+
+                    if (i == 7 || i == 15 || i == 23 || i == 31 || i == 39 || i == 47 || i == 55) {
+                        break;
+                    }
+                }
+
+                // Check if enemy king is in check up and to the left
+                for (let i = newIndex - 9; i >= 0; i -= 9) {
+                    if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (gridCopy[i].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+
+                    if (i == 0 || i == 8 || i == 16 || i == 24 || i == 32 || i == 40 || i == 48) {
+                        break;
+                    }
+                }
+
+                // Check if enemy king is in check down and to the right
+                for (let i = newIndex + 9; i <= 63; i += 9) {
+                    if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (gridCopy[i].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+
+                    if (i == 15 || i == 23 || i == 31 || i == 39 || i == 47 || i == 55 || i == 63) {
+                        break;
+                    }
+                }
+
+                // Check if enemy king is in check down and to the left
+                for (let i = newIndex + 7; i <= 63; i += 7) {
+                    if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (gridCopy[i].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+
+                    if (i == 8 || i == 16 || i == 24 || i == 32 || i == 40 || i == 48 || i == 56) {
+                        break;
+                    }
+                }*/
+            }
+        }
+
+        else if (piece.name == "N") {
+
+            if (piece.color == "W") {
+
+                // Moving 2 squares up and 1 square right
+                if (pieceCurrentIndex - newIndex == 15) {
+                    if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                    }
+
+                    else {
+                        gridCopy[pieceCurrentIndex] = "|||";
+                        gridCopy[newIndex] = pieceString;
+                    }
+                }
+
+                // Moving 1 square up and 2 squares right
+                else if (pieceCurrentIndex - newIndex == 6) {
+                    if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                    }
+
+                    else {
+                        gridCopy[pieceCurrentIndex] = "|||";
+                        gridCopy[newIndex] = pieceString;
+                    }
+                }
+
+                // Moving 2 squares up and 1 square left
+                else if (pieceCurrentIndex - newIndex == 17) {
+                    if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                    }
+
+                    else {
+                        gridCopy[pieceCurrentIndex] = "|||";
+                        gridCopy[newIndex] = pieceString;
+                    }
+                }
+
+                // Moving 1 square up and 2 squares left
+                else if (pieceCurrentIndex - newIndex == 10) {
+                    if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                    }
+
+                    else {
+                        gridCopy[pieceCurrentIndex] = "|||";
+                        gridCopy[newIndex] = pieceString;
+                    }
+                }
+
+                // Moving 2 squares down and 1 square right
+                else if (newIndex - pieceCurrentIndex == 17) {
+                    if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                    }
+
+                    else {
+                        gridCopy[pieceCurrentIndex] = "|||";
+                        gridCopy[newIndex] = pieceString;
+                    }
+                }
+
+                // Moving 1 square down and 2 squares right
+                else if (newIndex - pieceCurrentIndex == 10) {
+                    if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                    }
+
+                    else {
+                        gridCopy[pieceCurrentIndex] = "|||";
+                        gridCopy[newIndex] = pieceString;
+                    }
+                }
+
+                // Moving 2 squares down and 1 square left
+                else if (newIndex - pieceCurrentIndex == 15) {
+                    if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                    }
+
+                    else {
+                        gridCopy[pieceCurrentIndex] = "|||";
+                        gridCopy[newIndex] = pieceString;
+                    }
+                }
+
+                // Moving 1 square down and 2 squares left
+                else if (newIndex - pieceCurrentIndex == 6) {
+                    if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                    }
+
+                    else {
+                        gridCopy[pieceCurrentIndex] = "|||";
+                        gridCopy[newIndex] = pieceString;
+                    }
+                }
+
+                /*
+                // Check if enemy king is in check
+                if (gridCopy[newIndex - 15] != undefined) {
+                    if (gridCopy[newIndex - 15].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (gridCopy[newIndex - 6] != undefined) {
+                    if (gridCopy[newIndex - 6].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (gridCopy[newIndex - 17] != undefined) {
+                    if (gridCopy[newIndex - 17].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (gridCopy[newIndex - 10] != undefined) {
+                    if (gridCopy[newIndex - 10].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (gridCopy[newIndex + 17] != undefined) {
+                    if (gridCopy[newIndex + 17].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (gridCopy[newIndex + 10] != undefined) {
+                    if (gridCopy[newIndex + 10].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (gridCopy[newIndex + 6] != undefined) {
+                    if (gridCopy[newIndex + 6].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (gridCopy[newIndex + 15] != undefined) {
+                    if (gridCopy[newIndex + 15].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                } */
+            }
+
+            else if (piece.color == "B") {
+
+                // Moving 2 squares up and 1 square right
+                if (pieceCurrentIndex - newIndex == 15) {
+                    if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                    }
+
+                    else {
+                        gridCopy[pieceCurrentIndex] = "|||";
+                        gridCopy[newIndex] = pieceString;
+                    }
+                }
+
+                // Moving 1 square up and 2 squares right
+                else if (pieceCurrentIndex - newIndex == 6) {
+                    if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                    }
+
+                    else {
+                        gridCopy[pieceCurrentIndex] = "|||";
+                        gridCopy[newIndex] = pieceString;
+                    }
+                }
+
+                // Moving 2 squares up and 1 square left
+                else if (pieceCurrentIndex - newIndex == 17) {
+                    if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                    }
+
+                    else {
+                        gridCopy[pieceCurrentIndex] = "|||";
+                        gridCopy[newIndex] = pieceString;
+                    }
+                }
+
+                // Moving 1 square up and 2 squares left
+                else if (pieceCurrentIndex - newIndex == 10) {
+                    if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                    }
+
+                    else {
+                        gridCopy[pieceCurrentIndex] = "|||";
+                        gridCopy[newIndex] = pieceString;
+                    }
+                }
+
+                // Moving 2 squares down and 1 square right
+                else if (newIndex - pieceCurrentIndex == 17) {
+                    if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                    }
+
+                    else {
+                        gridCopy[pieceCurrentIndex] = "|||";
+                        gridCopy[newIndex] = pieceString;
+                    }
+                }
+
+                // Moving 1 square down and 2 squares right
+                else if (newIndex - pieceCurrentIndex == 10) {
+                    if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                    }
+
+                    else {
+                        gridCopy[pieceCurrentIndex] = "|||";
+                        gridCopy[newIndex] = pieceString;
+                    }
+                }
+
+                // Moving 2 squares down and 1 square left
+                else if (newIndex - pieceCurrentIndex == 15) {
+                    if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                    }
+
+                    else {
+                        gridCopy[pieceCurrentIndex] = "|||";
+                        gridCopy[newIndex] = pieceString;
+                    }
+                }
+
+                // Moving 1 square down and 2 squares left
+                else if (newIndex - pieceCurrentIndex == 6) {
+                    if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                    }
+
+                    else {
+                        gridCopy[pieceCurrentIndex] = "|||";
+                        gridCopy[newIndex] = pieceString;
+                    }
+                }
+
+                /*
+                // Check if enemy king is in check
+                if (gridCopy[newIndex - 15] != undefined) {
+                    if (gridCopy[newIndex - 15].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (gridCopy[newIndex - 6] != undefined) {
+                    if (gridCopy[newIndex - 6].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (gridCopy[newIndex - 17] != undefined) {
+                    if (gridCopy[newIndex - 17].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (gridCopy[newIndex - 10] != undefined) {
+                    if (gridCopy[newIndex - 10].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (gridCopy[newIndex + 17] != undefined) {
+                    if (gridCopy[newIndex + 17].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (gridCopy[newIndex + 10] != undefined) {
+                    if (gridCopy[newIndex + 10].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (gridCopy[newIndex + 6] != undefined) {
+                    if (gridCopy[newIndex + 6].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                }
+
+                else if (gridCopy[newIndex + 15] != undefined) {
+                    if (gridCopy[newIndex + 15].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                    }
+                } */
+            }
+        }
+
+        else if (piece.name == "Q") {
+            
+            if (piece.color == "W") {
+                
+                // Moving up and capturing
+                if (pieceCurrentIndex - newIndex == 8 || pieceCurrentIndex - newIndex == 16
+                    || pieceCurrentIndex - newIndex == 24 || pieceCurrentIndex - newIndex == 32 
+                    || pieceCurrentIndex - newIndex == 40 || pieceCurrentIndex - newIndex == 48 
+                    || pieceCurrentIndex - newIndex == 56) {
+
+                    let notAllEmpty = false;
+
+                    for (let i = pieceCurrentIndex - 8; i > newIndex; i -= 8) {
+                        if ((gridCopy[i] != "|||") && pieceCurrentIndex - newIndex != 8) {
+                            notAllEmpty = true;
+                        }
+                    }
+
+                    if (notAllEmpty == false) {
+                        if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }
+                }
+
+                // Moving down and capturing
+                else if (newIndex - pieceCurrentIndex == 8 || newIndex - pieceCurrentIndex == 16
+                    || newIndex - pieceCurrentIndex == 24 || newIndex - pieceCurrentIndex == 32 
+                    || newIndex - pieceCurrentIndex == 40 || newIndex - pieceCurrentIndex == 48 
+                    || newIndex - pieceCurrentIndex == 56) {
+                        
+                    let notAllEmpty = false;
+
+                    for (let i = pieceCurrentIndex + 8; i < newIndex; i += 8) {
+                        if ((gridCopy[i] != "|||") && (newIndex - pieceCurrentIndex != 8)) {
+                            notAllEmpty = true;
+                        }
+                    }
+
+                    if (notAllEmpty == false) {
+                        if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }
+                }
+
+                // Moving right and capturing
+                else if (newIndex - pieceCurrentIndex == 1 || newIndex - pieceCurrentIndex == 2
+                    || newIndex - pieceCurrentIndex == 3 || newIndex - pieceCurrentIndex == 4 
+                    || newIndex - pieceCurrentIndex == 5 || newIndex - pieceCurrentIndex == 6 
+                    || newIndex - pieceCurrentIndex == 7) {
+
+                    if (((newIndex >= 0 && newIndex < 8) && (pieceCurrentIndex >= 0 && pieceCurrentIndex < 8))
+                    || ((newIndex >= 8 && newIndex < 16) && (pieceCurrentIndex >= 8 && pieceCurrentIndex < 16))
+                    || ((newIndex >= 16 && newIndex < 24) && (pieceCurrentIndex >= 16 && pieceCurrentIndex < 24))
+                    || ((newIndex >= 24 && newIndex < 32) && (pieceCurrentIndex >= 24 && pieceCurrentIndex < 32))
+                    || ((newIndex >= 32 && newIndex < 40) && (pieceCurrentIndex >= 32 && pieceCurrentIndex < 40))
+                    || ((newIndex >= 40 && newIndex < 48) && (pieceCurrentIndex >= 40 && pieceCurrentIndex < 48))
+                    || ((newIndex >= 48 && newIndex < 56) && (pieceCurrentIndex >= 48 && pieceCurrentIndex < 56))
+                    || ((newIndex >= 56 && newIndex < 64) && (pieceCurrentIndex >= 56 && pieceCurrentIndex < 64))) {
+                        
+                        let notAllEmpty = false;
+
+                        for (let i = pieceCurrentIndex + 1; i < newIndex; i += 1) {
+                            if ((gridCopy[i] != "|||") && (newIndex - pieceCurrentIndex != 1)) {
+                                notAllEmpty = true;
+                            }
+                        }
+
+                        if (notAllEmpty == false) {
+                            if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                            }
+
+                            else {
+                                gridCopy[pieceCurrentIndex] = "|||";
+                                gridCopy[newIndex] = pieceString;
+                            }
+                        }
+                    }
+                }
+
+                // Moving left and capturing
+                else if (pieceCurrentIndex - newIndex == 1 || pieceCurrentIndex - newIndex == 2
+                    || pieceCurrentIndex - newIndex == 3 || pieceCurrentIndex - newIndex == 4 
+                    || pieceCurrentIndex - newIndex == 5 || pieceCurrentIndex - newIndex == 6 
+                    || pieceCurrentIndex - newIndex == 7) {
+                    
+                    if (((newIndex >= 0 && newIndex < 8) && (pieceCurrentIndex >= 0 && pieceCurrentIndex < 8))
+                    || ((newIndex >= 8 && newIndex < 16) && (pieceCurrentIndex >= 8 && pieceCurrentIndex < 16))
+                    || ((newIndex >= 16 && newIndex < 24) && (pieceCurrentIndex >= 16 && pieceCurrentIndex < 24))
+                    || ((newIndex >= 24 && newIndex < 32) && (pieceCurrentIndex >= 24 && pieceCurrentIndex < 32))
+                    || ((newIndex >= 32 && newIndex < 40) && (pieceCurrentIndex >= 32 && pieceCurrentIndex < 40))
+                    || ((newIndex >= 40 && newIndex < 48) && (pieceCurrentIndex >= 40 && pieceCurrentIndex < 48))
+                    || ((newIndex >= 48 && newIndex < 56) && (pieceCurrentIndex >= 48 && pieceCurrentIndex < 56))
+                    || ((newIndex >= 56 && newIndex < 64) && (pieceCurrentIndex >= 56 && pieceCurrentIndex < 64))) {
+                        
+                        let notAllEmpty = false;
+
+                        for (let i = pieceCurrentIndex - 1; i > newIndex; i -= 1) {
+                            if ((gridCopy[i] != "|||") && pieceCurrentIndex - newIndex != 1) {
+                                notAllEmpty = true;
+                            }
+                        }
+
+                        if (notAllEmpty == false) {
+                            if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                            }
+
+                            else {
+                                gridCopy[pieceCurrentIndex] = "|||";
+                                gridCopy[newIndex] = pieceString;
+                            }
+                        }
+                    }
+                }
+
+                // Moving up and to the right
+                if (pieceCurrentIndex - newIndex == 7 || pieceCurrentIndex - newIndex == 14
+                    || pieceCurrentIndex - newIndex == 21 || pieceCurrentIndex - newIndex == 28 
+                    || pieceCurrentIndex - newIndex == 35 || pieceCurrentIndex - newIndex == 42 
+                    || pieceCurrentIndex - newIndex == 49) {
+
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex - 7; i > newIndex; i -= 7) {
+                        if ((gridCopy[i] != "|||") && pieceCurrentIndex - newIndex != 7) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 7 && newIndex < i) || (i == 15 && newIndex < i) 
+                            || (i == 23 && newIndex < i) || (i == 31 && newIndex < i) 
+                            || (i == 39 && newIndex < i) || (i == 47 && newIndex < i) 
+                            || (i == 55 && newIndex < i)) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }      
+                }
+
+                // Moving up and to the left
+                else if (pieceCurrentIndex - newIndex == 9 || pieceCurrentIndex - newIndex == 18
+                    || pieceCurrentIndex - newIndex == 27 || pieceCurrentIndex - newIndex == 36 
+                    || pieceCurrentIndex - newIndex == 45 || pieceCurrentIndex - newIndex == 54 
+                    || pieceCurrentIndex - newIndex == 63) {
+                    
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex - 9; i > newIndex; i -= 9) {
+                        if ((gridCopy[i] != "|||") && pieceCurrentIndex - newIndex != 9) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 8 && newIndex < i) || (i == 16 && newIndex < i) 
+                            || (i == 24 && newIndex < i) || (i == 32 && newIndex < i) 
+                            || (i == 40 && newIndex < i) || (i == 48 && newIndex < i) ) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }     
+                }
+
+                // Moving down and to the right
+                else if (newIndex - pieceCurrentIndex == 9 || newIndex - pieceCurrentIndex == 18
+                    || newIndex - pieceCurrentIndex == 27 || newIndex - pieceCurrentIndex == 36 
+                    || newIndex - pieceCurrentIndex == 45 || newIndex - pieceCurrentIndex == 54 
+                    || newIndex - pieceCurrentIndex == 63) {
+                    
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex + 9; i < newIndex; i += 9) {
+                        if ((gridCopy[i] != "|||") && newIndex - pieceCurrentIndex != 9) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 15 && newIndex > i) || (i == 23 && newIndex > i) 
+                            || (i == 31 && newIndex > i) || (i == 39 && newIndex > i) 
+                            || (i == 47 && newIndex > i) || (i == 55 && newIndex > i)) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }     
+                }
+
+                // Moving down and to the left
+                else if (newIndex - pieceCurrentIndex == 7 || newIndex - pieceCurrentIndex == 14
+                    || newIndex - pieceCurrentIndex == 21 || newIndex - pieceCurrentIndex == 28 
+                    || newIndex - pieceCurrentIndex == 35 || newIndex - pieceCurrentIndex == 42 
+                    || newIndex - pieceCurrentIndex == 49) {
+                    
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex + 7; i < newIndex; i += 7) {
+                        if ((gridCopy[i] != "|||") && newIndex - pieceCurrentIndex != 7) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 8 && newIndex > i) || (i == 16 && newIndex > i) 
+                            || (i == 24 && newIndex > i) || (i == 32 && newIndex > i) 
+                            || (i == 40 && newIndex > i) || (i == 48 && newIndex > i) ) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }   
+                }
+
+                /*
+                // Check if enemy king is in check upwards
+                for (let i = newIndex - 8; i >= 0; i -= 8) {
+                    if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (gridCopy[i].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+                }
+
+                // Check if enemy king is in check downwards
+                for (let i = newIndex + 8; i <= 63; i += 8) {
+                    if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (gridCopy[i].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+                }
+
+                // Check if enemy king is in check right
+                if (newIndex >= 0 && newIndex < 8) {
+                    for (let i = newIndex + 1; i < 8; i++) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 8 && newIndex < 16) {
+                    for (let i = newIndex + 1; i < 16; i++) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 16 && newIndex < 24) {
+                    for (let i = newIndex + 1; i < 24; i++) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 24 && newIndex < 32) {
+                    for (let i = newIndex + 1; i < 32; i++) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 32 && newIndex < 40) {
+                    for (let i = newIndex + 1; i < 40; i++) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 40 && newIndex < 48) {
+                    for (let i = newIndex + 1; i < 48; i++) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 48 && newIndex < 56) {
+                    for (let i = newIndex + 1; i < 56; i++) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 56 && newIndex < 64) {
+                    for (let i = newIndex + 1; i < 64; i++) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                // Check if enemy king is in check left
+                if (newIndex >= 0 && newIndex < 8) {
+                    for (let i = newIndex - 1; i >= 0; i--) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 8 && newIndex < 16) {
+                    for (let i = newIndex - 1; i >= 8; i--) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 16 && newIndex < 24) {
+                    for (let i = newIndex - 1; i >= 16; i--) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 24 && newIndex < 32) {
+                    for (let i = newIndex - 1; i >= 24; i--) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 32 && newIndex < 40) {
+                    for (let i = newIndex - 1; i >= 32; i--) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 40 && newIndex < 48) {
+                    for (let i = newIndex - 1; i >= 40; i--) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 48 && newIndex < 56) {
+                    for (let i = newIndex - 1; i >= 48; i--) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 56 && newIndex < 64) {
+                    for (let i = newIndex - 1; i >= 56; i--) {
+                        if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("BK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                // Check if enemy king is in check up and to the right
+                for (let i = newIndex - 7; i >= 0; i -= 7) {
+                    if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (gridCopy[i].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+
+                    if (i == 7 || i == 15 || i == 23 || i == 31 || i == 39 || i == 47 || i == 55) {
+                        break;
+                    }
+                }
+
+                // Check if enemy king is in check up and to the left
+                for (let i = newIndex - 9; i >= 0; i -= 9) {
+                    if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (gridCopy[i].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+
+                    if (i == 0 || i == 8 || i == 16 || i == 24 || i == 32 || i == 40 || i == 48) {
+                        break;
+                    }
+                }
+
+                // Check if enemy king is in check down and to the right
+                for (let i = newIndex + 9; i <= 63; i += 9) {
+                    if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (gridCopy[i].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+
+                    if (i == 15 || i == 23 || i == 31 || i == 39 || i == 47 || i == 55 || i == 63) {
+                        break;
+                    }
+                }
+
+                // Check if enemy king is in check down and to the left
+                for (let i = newIndex + 7; i <= 63; i += 7) {
+                    if (gridCopy[i].startsWith("BK") == false && gridCopy[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (gridCopy[i].startsWith("BK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+
+                    if (i == 8 || i == 16 || i == 24 || i == 32 || i == 40 || i == 48 || i == 56) {
+                        break;
+                    }
+                } */
+            }
+
+            else if (piece.color == "B") {
+
+                // Moving up and capturing
+                if (pieceCurrentIndex - newIndex == 8 || pieceCurrentIndex - newIndex == 16
+                    || pieceCurrentIndex - newIndex == 24 || pieceCurrentIndex - newIndex == 32 
+                    || pieceCurrentIndex - newIndex == 40 || pieceCurrentIndex - newIndex == 48 
+                    || pieceCurrentIndex - newIndex == 56) {
+
+                    let notAllEmpty = false;
+
+                    for (let i = pieceCurrentIndex - 8; i > newIndex; i -= 8) {
+                        if ((gridCopy[i] != "|||") && pieceCurrentIndex - newIndex != 8) {
+                            notAllEmpty = true;
+                        }
+                    }
+
+                    if (notAllEmpty == false) {
+                        if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }
+                }
+
+                // Moving down and capturing
+                else if (newIndex - pieceCurrentIndex == 8 || newIndex - pieceCurrentIndex == 16
+                    || newIndex - pieceCurrentIndex == 24 || newIndex - pieceCurrentIndex == 32 
+                    || newIndex - pieceCurrentIndex == 40 || newIndex - pieceCurrentIndex == 48 
+                    || newIndex - pieceCurrentIndex == 56) {
+                        
+                    let notAllEmpty = false;
+
+                    for (let i = pieceCurrentIndex + 8; i < newIndex; i += 8) {
+                        if ((gridCopy[i] != "|||") && (newIndex - pieceCurrentIndex != 8)) {
+                            notAllEmpty = true;
+                        }
+                    }
+
+                    if (notAllEmpty == false) {
+                        if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }
+                }
+
+                // Moving right and capturing
+                else if (newIndex - pieceCurrentIndex == 1 || newIndex - pieceCurrentIndex == 2
+                    || newIndex - pieceCurrentIndex == 3 || newIndex - pieceCurrentIndex == 4 
+                    || newIndex - pieceCurrentIndex == 5 || newIndex - pieceCurrentIndex == 6 
+                    || newIndex - pieceCurrentIndex == 7) {
+
+                    if (((newIndex >= 0 && newIndex < 8) && (pieceCurrentIndex >= 0 && pieceCurrentIndex < 8))
+                    || ((newIndex >= 8 && newIndex < 16) && (pieceCurrentIndex >= 8 && pieceCurrentIndex < 16))
+                    || ((newIndex >= 16 && newIndex < 24) && (pieceCurrentIndex >= 16 && pieceCurrentIndex < 24))
+                    || ((newIndex >= 24 && newIndex < 32) && (pieceCurrentIndex >= 24 && pieceCurrentIndex < 32))
+                    || ((newIndex >= 32 && newIndex < 40) && (pieceCurrentIndex >= 32 && pieceCurrentIndex < 40))
+                    || ((newIndex >= 40 && newIndex < 48) && (pieceCurrentIndex >= 40 && pieceCurrentIndex < 48))
+                    || ((newIndex >= 48 && newIndex < 56) && (pieceCurrentIndex >= 48 && pieceCurrentIndex < 56))
+                    || ((newIndex >= 56 && newIndex < 64) && (pieceCurrentIndex >= 56 && pieceCurrentIndex < 64))) {
+                        
+                        let notAllEmpty = false;
+
+                        for (let i = pieceCurrentIndex + 1; i < newIndex; i += 1) {
+                            if ((gridCopy[i] != "|||") && (newIndex - pieceCurrentIndex != 1)) {
+                                notAllEmpty = true;
+                            }
+                        }
+
+                        if (notAllEmpty == false) {
+                            if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                            }
+
+                            else {
+                                gridCopy[pieceCurrentIndex] = "|||";
+                                gridCopy[newIndex] = pieceString;
+                            }
+                        }
+                    }
+                }
+
+                // Moving left and capturing
+                else if (pieceCurrentIndex - newIndex == 1 || pieceCurrentIndex - newIndex == 2
+                    || pieceCurrentIndex - newIndex == 3 || pieceCurrentIndex - newIndex == 4 
+                    || pieceCurrentIndex - newIndex == 5 || pieceCurrentIndex - newIndex == 6 
+                    || pieceCurrentIndex - newIndex == 7) {
+                    
+                    if (((newIndex >= 0 && newIndex < 8) && (pieceCurrentIndex >= 0 && pieceCurrentIndex < 8))
+                    || ((newIndex >= 8 && newIndex < 16) && (pieceCurrentIndex >= 8 && pieceCurrentIndex < 16))
+                    || ((newIndex >= 16 && newIndex < 24) && (pieceCurrentIndex >= 16 && pieceCurrentIndex < 24))
+                    || ((newIndex >= 24 && newIndex < 32) && (pieceCurrentIndex >= 24 && pieceCurrentIndex < 32))
+                    || ((newIndex >= 32 && newIndex < 40) && (pieceCurrentIndex >= 32 && pieceCurrentIndex < 40))
+                    || ((newIndex >= 40 && newIndex < 48) && (pieceCurrentIndex >= 40 && pieceCurrentIndex < 48))
+                    || ((newIndex >= 48 && newIndex < 56) && (pieceCurrentIndex >= 48 && pieceCurrentIndex < 56))
+                    || ((newIndex >= 56 && newIndex < 64) && (pieceCurrentIndex >= 56 && pieceCurrentIndex < 64))) {
+                        
+                        let notAllEmpty = false;
+
+                        for (let i = pieceCurrentIndex - 1; i > newIndex; i -= 1) {
+                            if ((gridCopy[i] != "|||") && pieceCurrentIndex - newIndex != 1) {
+                                notAllEmpty = true;
+                            }
+                        }
+
+                        if (notAllEmpty == false) {
+                            if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                            }
+
+                            else {
+                                gridCopy[pieceCurrentIndex] = "|||";
+                                gridCopy[newIndex] = pieceString;
+                            }
+                        }
+                    }
+                }
+
+                // Moving up and to the right
+                if (pieceCurrentIndex - newIndex == 7 || pieceCurrentIndex - newIndex == 14
+                    || pieceCurrentIndex - newIndex == 21 || pieceCurrentIndex - newIndex == 28 
+                    || pieceCurrentIndex - newIndex == 35 || pieceCurrentIndex - newIndex == 42 
+                    || pieceCurrentIndex - newIndex == 49) {
+
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex - 7; i > newIndex; i -= 7) {
+                        if ((gridCopy[i] != "|||") && pieceCurrentIndex - newIndex != 7) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 7 && newIndex < i) || (i == 15 && newIndex < i) 
+                            || (i == 23 && newIndex < i) || (i == 31 && newIndex < i) 
+                            || (i == 39 && newIndex < i) || (i == 47 && newIndex < i) 
+                            || (i == 55 && newIndex < i)) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }      
+                }
+
+                // Moving up and to the left
+                else if (pieceCurrentIndex - newIndex == 9 || pieceCurrentIndex - newIndex == 18
+                    || pieceCurrentIndex - newIndex == 27 || pieceCurrentIndex - newIndex == 36 
+                    || pieceCurrentIndex - newIndex == 45 || pieceCurrentIndex - newIndex == 54 
+                    || pieceCurrentIndex - newIndex == 63) {
+                    
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex - 9; i > newIndex; i -= 9) {
+                        if ((gridCopy[i] != "|||") && pieceCurrentIndex - newIndex != 9) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 8 && newIndex < i) || (i == 16 && newIndex < i) 
+                            || (i == 24 && newIndex < i) || (i == 32 && newIndex < i) 
+                            || (i == 40 && newIndex < i) || (i == 48 && newIndex < i) ) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }     
+                }
+
+                // Moving down and to the right
+                else if (newIndex - pieceCurrentIndex == 9 || newIndex - pieceCurrentIndex == 18
+                    || newIndex - pieceCurrentIndex == 27 || newIndex - pieceCurrentIndex == 36 
+                    || newIndex - pieceCurrentIndex == 45 || newIndex - pieceCurrentIndex == 54 
+                    || newIndex - pieceCurrentIndex == 63) {
+                    
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex + 9; i < newIndex; i += 9) {
+                        if ((gridCopy[i] != "|||") && newIndex - pieceCurrentIndex != 9) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 15 && newIndex > i) || (i == 23 && newIndex > i) 
+                            || (i == 31 && newIndex > i) || (i == 39 && newIndex > i) 
+                            || (i == 47 && newIndex > i) || (i == 55 && newIndex > i)) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }     
+                }
+
+                // Moving down and to the left
+                else if (newIndex - pieceCurrentIndex == 7 || newIndex - pieceCurrentIndex == 14
+                    || newIndex - pieceCurrentIndex == 21 || newIndex - pieceCurrentIndex == 28 
+                    || newIndex - pieceCurrentIndex == 35 || newIndex - pieceCurrentIndex == 42 
+                    || newIndex - pieceCurrentIndex == 49) {
+                    
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex + 7; i < newIndex; i += 7) {
+                        if ((gridCopy[i] != "|||") && newIndex - pieceCurrentIndex != 7) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 8 && newIndex > i) || (i == 16 && newIndex > i) 
+                            || (i == 24 && newIndex > i) || (i == 32 && newIndex > i) 
+                            || (i == 40 && newIndex > i) || (i == 48 && newIndex > i) ) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }   
+                }
+
+                /*
+                // Check if enemy king is in check upwards
+                for (let i = newIndex - 8; i >= 0; i -= 8) {
+                    if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (gridCopy[i].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+                }
+
+                // Check if enemy king is in check downwards
+                for (let i = newIndex + 8; i <= 63; i += 8) {
+                    if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (gridCopy[i].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+                }
+
+                // Check if enemy king is in check right
+                if (newIndex >= 0 && newIndex < 8) {
+                    for (let i = newIndex + 1; i < 8; i++) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 8 && newIndex < 16) {
+                    for (let i = newIndex + 1; i < 16; i++) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 16 && newIndex < 24) {
+                    for (let i = newIndex + 1; i < 24; i++) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 24 && newIndex < 32) {
+                    for (let i = newIndex + 1; i < 32; i++) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 32 && newIndex < 40) {
+                    for (let i = newIndex + 1; i < 40; i++) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 40 && newIndex < 48) {
+                    for (let i = newIndex + 1; i < 48; i++) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 48 && newIndex < 56) {
+                    for (let i = newIndex + 1; i < 56; i++) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 56 && newIndex < 64) {
+                    for (let i = newIndex + 1; i < 64; i++) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                // Check if enemy king is in check left
+                if (newIndex >= 0 && newIndex < 8) {
+                    for (let i = newIndex - 1; i >= 0; i--) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 8 && newIndex < 16) {
+                    for (let i = newIndex - 1; i >= 8; i--) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 16 && newIndex < 24) {
+                    for (let i = newIndex - 1; i >= 16; i--) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 24 && newIndex < 32) {
+                    for (let i = newIndex - 1; i >= 24; i--) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 32 && newIndex < 40) {
+                    for (let i = newIndex - 1; i >= 32; i--) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 40 && newIndex < 48) {
+                    for (let i = newIndex - 1; i >= 40; i--) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 48 && newIndex < 56) {
+                    for (let i = newIndex - 1; i >= 48; i--) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                else if (newIndex >= 56 && newIndex < 64) {
+                    for (let i = newIndex - 1; i >= 56; i--) {
+                        if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[i].startsWith("WK")) {
+                            enemyPlayer.inCheck = true;
+                            break;
+                        }
+                    }
+                }
+
+                // Check if enemy king is in check up and to the right
+                for (let i = newIndex - 7; i >= 0; i -= 7) {
+                    if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (gridCopy[i].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+
+                    if (i == 7 || i == 15 || i == 23 || i == 31 || i == 39 || i == 47 || i == 55) {
+                        break;
+                    }
+                }
+
+                // Check if enemy king is in check up and to the left
+                for (let i = newIndex - 9; i >= 0; i -= 9) {
+                    if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (gridCopy[i].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+
+                    if (i == 0 || i == 8 || i == 16 || i == 24 || i == 32 || i == 40 || i == 48) {
+                        break;
+                    }
+                }
+
+                // Check if enemy king is in check down and to the right
+                for (let i = newIndex + 9; i <= 63; i += 9) {
+                    if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (gridCopy[i].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+
+                    if (i == 15 || i == 23 || i == 31 || i == 39 || i == 47 || i == 55 || i == 63) {
+                        break;
+                    }
+                }
+
+                // Check if enemy king is in check down and to the left
+                for (let i = newIndex + 7; i <= 63; i += 7) {
+                    if (gridCopy[i].startsWith("WK") == false && gridCopy[i].startsWith("|||") == false) {
+                        break;
+                    }
+
+                    else if (gridCopy[i].startsWith("WK")) {
+                        enemyPlayer.inCheck = true;
+                        break;
+                    }
+
+                    if (i == 8 || i == 16 || i == 24 || i == 32 || i == 40 || i == 48 || i == 56) {
+                        break;
+                    }
+                } */
+            }
+        }
+
+        else if (piece.name == "K") {
+
+            if (piece.color == "W") {
+
+                // Moving up and capturing
+                if (pieceCurrentIndex - newIndex == 8) {
+
+                    let notAllEmpty = false;
+
+                    for (let i = pieceCurrentIndex - 8; i > newIndex; i -= 8) {
+                        if ((gridCopy[i] != "|||") && pieceCurrentIndex - newIndex != 8) {
+                            notAllEmpty = true;
+                        }
+                    }
+
+                    if (notAllEmpty == false) {
+                        if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }
+                }
+
+                // Moving down and capturing
+                else if (newIndex - pieceCurrentIndex == 8) {
+                        
+                    let notAllEmpty = false;
+
+                    for (let i = pieceCurrentIndex + 8; i < newIndex; i += 8) {
+                        if ((gridCopy[i] != "|||") && (newIndex - pieceCurrentIndex != 8)) {
+                            notAllEmpty = true;
+                        }
+                    }
+
+                    if (notAllEmpty == false) {
+                        if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }
+                }
+
+                // Moving right and capturing
+                else if (newIndex - pieceCurrentIndex == 1) {
+
+                    if (((newIndex >= 0 && newIndex < 8) && (pieceCurrentIndex >= 0 && pieceCurrentIndex < 8))
+                    || ((newIndex >= 8 && newIndex < 16) && (pieceCurrentIndex >= 8 && pieceCurrentIndex < 16))
+                    || ((newIndex >= 16 && newIndex < 24) && (pieceCurrentIndex >= 16 && pieceCurrentIndex < 24))
+                    || ((newIndex >= 24 && newIndex < 32) && (pieceCurrentIndex >= 24 && pieceCurrentIndex < 32))
+                    || ((newIndex >= 32 && newIndex < 40) && (pieceCurrentIndex >= 32 && pieceCurrentIndex < 40))
+                    || ((newIndex >= 40 && newIndex < 48) && (pieceCurrentIndex >= 40 && pieceCurrentIndex < 48))
+                    || ((newIndex >= 48 && newIndex < 56) && (pieceCurrentIndex >= 48 && pieceCurrentIndex < 56))
+                    || ((newIndex >= 56 && newIndex < 64) && (pieceCurrentIndex >= 56 && pieceCurrentIndex < 64))) {
+                        
+                        let notAllEmpty = false;
+
+                        for (let i = pieceCurrentIndex + 1; i < newIndex; i += 1) {
+                            if ((gridCopy[i] != "|||") && (newIndex - pieceCurrentIndex != 1)) {
+                                notAllEmpty = true;
+                            }
+                        }
+
+                        if (notAllEmpty == false) {
+                            if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                            }
+
+                            else {
+                                gridCopy[pieceCurrentIndex] = "|||";
+                                gridCopy[newIndex] = pieceString;
+                            }
+                        }
+                    }
+                }
+
+                // Moving left and capturing
+                else if (pieceCurrentIndex - newIndex == 1) {
+                    
+                    if (((newIndex >= 0 && newIndex < 8) && (pieceCurrentIndex >= 0 && pieceCurrentIndex < 8))
+                    || ((newIndex >= 8 && newIndex < 16) && (pieceCurrentIndex >= 8 && pieceCurrentIndex < 16))
+                    || ((newIndex >= 16 && newIndex < 24) && (pieceCurrentIndex >= 16 && pieceCurrentIndex < 24))
+                    || ((newIndex >= 24 && newIndex < 32) && (pieceCurrentIndex >= 24 && pieceCurrentIndex < 32))
+                    || ((newIndex >= 32 && newIndex < 40) && (pieceCurrentIndex >= 32 && pieceCurrentIndex < 40))
+                    || ((newIndex >= 40 && newIndex < 48) && (pieceCurrentIndex >= 40 && pieceCurrentIndex < 48))
+                    || ((newIndex >= 48 && newIndex < 56) && (pieceCurrentIndex >= 48 && pieceCurrentIndex < 56))
+                    || ((newIndex >= 56 && newIndex < 64) && (pieceCurrentIndex >= 56 && pieceCurrentIndex < 64))) {
+                        
+                        let notAllEmpty = false;
+
+                        for (let i = pieceCurrentIndex - 1; i > newIndex; i -= 1) {
+                            if ((gridCopy[i] != "|||") && pieceCurrentIndex - newIndex != 1) {
+                                notAllEmpty = true;
+                            }
+                        }
+
+                        if (notAllEmpty == false) {
+                            if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                            }
+
+                            else {
+                                gridCopy[pieceCurrentIndex] = "|||";
+                                gridCopy[newIndex] = pieceString;
+                            }
+                        }
+                    }
+                }
+
+                // Moving up and to the right
+                if (pieceCurrentIndex - newIndex == 7) {
+
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex - 7; i > newIndex; i -= 7) {
+                        if ((gridCopy[i] != "|||") && pieceCurrentIndex - newIndex != 7) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 7 && newIndex < i) || (i == 15 && newIndex < i) 
+                            || (i == 23 && newIndex < i) || (i == 31 && newIndex < i) 
+                            || (i == 39 && newIndex < i) || (i == 47 && newIndex < i) 
+                            || (i == 55 && newIndex < i)) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }      
+                }
+
+                // Moving up and to the left
+                else if (pieceCurrentIndex - newIndex == 9) {
+                    
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex - 9; i > newIndex; i -= 9) {
+                        if ((gridCopy[i] != "|||") && pieceCurrentIndex - newIndex != 9) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 8 && newIndex < i) || (i == 16 && newIndex < i) 
+                            || (i == 24 && newIndex < i) || (i == 32 && newIndex < i) 
+                            || (i == 40 && newIndex < i) || (i == 48 && newIndex < i) ) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }     
+                }
+
+                // Moving down and to the right
+                else if (newIndex - pieceCurrentIndex == 9) {
+                    
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex + 9; i < newIndex; i += 9) {
+                        if ((gridCopy[i] != "|||") && newIndex - pieceCurrentIndex != 9) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 15 && newIndex > i) || (i == 23 && newIndex > i) 
+                            || (i == 31 && newIndex > i) || (i == 39 && newIndex > i) 
+                            || (i == 47 && newIndex > i) || (i == 55 && newIndex > i)) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }     
+                }
+
+                // Moving down and to the left
+                else if (newIndex - pieceCurrentIndex == 7) {
+                    
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex + 7; i < newIndex; i += 7) {
+                        if ((gridCopy[i] != "|||") && newIndex - pieceCurrentIndex != 7) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 8 && newIndex > i) || (i == 16 && newIndex > i) 
+                            || (i == 24 && newIndex > i) || (i == 32 && newIndex > i) 
+                            || (i == 40 && newIndex > i) || (i == 48 && newIndex > i) ) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (gridCopy[newIndex].startsWith("W") || gridCopy[newIndex] == "BK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }   
+                }
+            }
+
+            else if (piece.color == "B") {
+
+                // Moving up and capturing
+                if (pieceCurrentIndex - newIndex == 8) {
+
+                    let notAllEmpty = false;
+
+                    for (let i = pieceCurrentIndex - 8; i > newIndex; i -= 8) {
+                        if ((gridCopy[i] != "|||") && pieceCurrentIndex - newIndex != 8) {
+                            notAllEmpty = true;
+                        }
+                    }
+
+                    if (notAllEmpty == false) {
+                        if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }
+                }
+
+                // Moving down and capturing
+                else if (newIndex - pieceCurrentIndex == 8) {
+                        
+                    let notAllEmpty = false;
+
+                    for (let i = pieceCurrentIndex + 8; i < newIndex; i += 8) {
+                        if ((gridCopy[i] != "|||") && (newIndex - pieceCurrentIndex != 8)) {
+                            notAllEmpty = true;
+                        }
+                    }
+
+                    if (notAllEmpty == false) {
+                        if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }
+                }
+
+                // Moving right and capturing
+                else if (newIndex - pieceCurrentIndex == 1) {
+
+                    if (((newIndex >= 0 && newIndex < 8) && (pieceCurrentIndex >= 0 && pieceCurrentIndex < 8))
+                    || ((newIndex >= 8 && newIndex < 16) && (pieceCurrentIndex >= 8 && pieceCurrentIndex < 16))
+                    || ((newIndex >= 16 && newIndex < 24) && (pieceCurrentIndex >= 16 && pieceCurrentIndex < 24))
+                    || ((newIndex >= 24 && newIndex < 32) && (pieceCurrentIndex >= 24 && pieceCurrentIndex < 32))
+                    || ((newIndex >= 32 && newIndex < 40) && (pieceCurrentIndex >= 32 && pieceCurrentIndex < 40))
+                    || ((newIndex >= 40 && newIndex < 48) && (pieceCurrentIndex >= 40 && pieceCurrentIndex < 48))
+                    || ((newIndex >= 48 && newIndex < 56) && (pieceCurrentIndex >= 48 && pieceCurrentIndex < 56))
+                    || ((newIndex >= 56 && newIndex < 64) && (pieceCurrentIndex >= 56 && pieceCurrentIndex < 64))) {
+                        
+                        let notAllEmpty = false;
+
+                        for (let i = pieceCurrentIndex + 1; i < newIndex; i += 1) {
+                            if ((gridCopy[i] != "|||") && (newIndex - pieceCurrentIndex != 1)) {
+                                notAllEmpty = true;
+                            }
+                        }
+
+                        if (notAllEmpty == false) {
+                            if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                            }
+
+                            else {
+                                gridCopy[pieceCurrentIndex] = "|||";
+                                gridCopy[newIndex] = pieceString;
+                            }
+                        }
+                    }
+                }
+
+                // Moving left and capturing
+                else if (pieceCurrentIndex - newIndex == 1) {
+                    
+                    if (((newIndex >= 0 && newIndex < 8) && (pieceCurrentIndex >= 0 && pieceCurrentIndex < 8))
+                    || ((newIndex >= 8 && newIndex < 16) && (pieceCurrentIndex >= 8 && pieceCurrentIndex < 16))
+                    || ((newIndex >= 16 && newIndex < 24) && (pieceCurrentIndex >= 16 && pieceCurrentIndex < 24))
+                    || ((newIndex >= 24 && newIndex < 32) && (pieceCurrentIndex >= 24 && pieceCurrentIndex < 32))
+                    || ((newIndex >= 32 && newIndex < 40) && (pieceCurrentIndex >= 32 && pieceCurrentIndex < 40))
+                    || ((newIndex >= 40 && newIndex < 48) && (pieceCurrentIndex >= 40 && pieceCurrentIndex < 48))
+                    || ((newIndex >= 48 && newIndex < 56) && (pieceCurrentIndex >= 48 && pieceCurrentIndex < 56))
+                    || ((newIndex >= 56 && newIndex < 64) && (pieceCurrentIndex >= 56 && pieceCurrentIndex < 64))) {
+                        
+                        let notAllEmpty = false;
+
+                        for (let i = pieceCurrentIndex - 1; i > newIndex; i -= 1) {
+                            if ((gridCopy[i] != "|||") && pieceCurrentIndex - newIndex != 1) {
+                                notAllEmpty = true;
+                            }
+                        }
+
+                        if (notAllEmpty == false) {
+                            if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                            }
+
+                            else {
+                                gridCopy[pieceCurrentIndex] = "|||";
+                                gridCopy[newIndex] = pieceString;
+                            }
+                        }
+                    }
+                }
+
+                // Moving up and to the right
+                if (pieceCurrentIndex - newIndex == 7) {
+
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex - 7; i > newIndex; i -= 7) {
+                        if ((gridCopy[i] != "|||") && pieceCurrentIndex - newIndex != 7) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 7 && newIndex < i) || (i == 15 && newIndex < i) 
+                            || (i == 23 && newIndex < i) || (i == 31 && newIndex < i) 
+                            || (i == 39 && newIndex < i) || (i == 47 && newIndex < i) 
+                            || (i == 55 && newIndex < i)) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }      
+                }
+
+                // Moving up and to the left
+                else if (pieceCurrentIndex - newIndex == 9) {
+                    
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex - 9; i > newIndex; i -= 9) {
+                        if ((gridCopy[i] != "|||") && pieceCurrentIndex - newIndex != 9) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 8 && newIndex < i) || (i == 16 && newIndex < i) 
+                            || (i == 24 && newIndex < i) || (i == 32 && newIndex < i) 
+                            || (i == 40 && newIndex < i) || (i == 48 && newIndex < i) ) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }     
+                }
+
+                // Moving down and to the right
+                else if (newIndex - pieceCurrentIndex == 9) {
+                    
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex + 9; i < newIndex; i += 9) {
+                        if ((gridCopy[i] != "|||") && newIndex - pieceCurrentIndex != 9) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 15 && newIndex > i) || (i == 23 && newIndex > i) 
+                            || (i == 31 && newIndex > i) || (i == 39 && newIndex > i) 
+                            || (i == 47 && newIndex > i) || (i == 55 && newIndex > i)) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }     
+                }
+
+                // Moving down and to the left
+                else if (newIndex - pieceCurrentIndex == 7) {
+                    
+                    let notAllEmpty = false;
+                    let hitEdge = false;
+
+                    for (let i = pieceCurrentIndex + 7; i < newIndex; i += 7) {
+                        if ((gridCopy[i] != "|||") && newIndex - pieceCurrentIndex != 7) {
+                            notAllEmpty = true;
+                        }
+
+                        if ((i == 8 && newIndex > i) || (i == 16 && newIndex > i) 
+                            || (i == 24 && newIndex > i) || (i == 32 && newIndex > i) 
+                            || (i == 40 && newIndex > i) || (i == 48 && newIndex > i) ) {
+
+                            hitEdge = true;
+                            break;
+                        }
+                    }
+
+                    if (notAllEmpty == false && hitEdge == false) {
+                        if (gridCopy[newIndex].startsWith("B") || gridCopy[newIndex] == "WK") { // Can not land on same color pieces and opposing king
+
+                        }
+
+                        else {
+                            gridCopy[pieceCurrentIndex] = "|||";
+                            gridCopy[newIndex] = pieceString;
+                        }
+                    }   
+                } 
+            }
+        }
+
+        if (player == "White") {
+
+        }
+
+        else if (player == "Black") {
+            for (let i = 0; i < 64; i++) {
+                if (gridCopy[i].startsWith("WP")) {
+
+                    // Check if king is in check
+                    if (((i - 7 >= 0 && i - 7 < 8) && (i >= 8 && i < 16))
+                    || ((i - 7 >= 8 && i - 7 < 16) && (i >= 16 && i < 24))
+                    || ((i - 7 >= 16 && i - 7 < 24) && (i >= 24 && i < 32))
+                    || ((i - 7 >= 24 && i - 7 < 32) && (i >= 32 && i < 40))
+                    || ((i - 7 >= 32 && i - 7 < 40) && (i >= 40 && i < 48))
+                    || ((i - 7 >= 40 && i - 7 < 48) && (i >= 48 && i < 56))
+                    || ((i - 7 >= 48 && i - 7 < 56) && (i >= 56 && i < 64))) {
+                        if (gridCopy[i - 7].startsWith("BK")) {
+                            return true;
+                        }
+                    }
+
+                    else if (((i - 9 >= 0 && i - 9 < 8) && (i >= 8 && i < 16))
+                    || ((i - 9 >= 8 && i - 9 < 16) && (i >= 16 && i < 24))
+                    || ((i - 9 >= 16 && i - 9 < 24) && (i >= 24 && i < 32))
+                    || ((i - 9 >= 24 && i - 9 < 32) && (i >= 32 && i < 40))
+                    || ((i - 9 >= 32 && i - 9 < 40) && (i >= 40 && i < 48))
+                    || ((i - 9 >= 40 && i - 9 < 48) && (i >= 48 && i < 56))
+                    || ((i - 9 >= 48 && i - 9 < 56) && (i >= 56 && i < 64))) {
+                        if (gridCopy[i - 9].startsWith("BK")) {
+                            return true;
+                        }
+                    } 
+                }
+
+                else if (gridCopy[i].startsWith("WR")) {
+
+                    // Check if enemy king is in check upwards
+                    for (let j = i - 8; j >= 0; j -= 8) {
+                        if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[j].startsWith("BK")) {
+                            return true;
+                        }
+                    }
+
+                    // Check if enemy king is in check downwards
+                    for (let j = i + 8; j <= 63; j += 8) {
+                        if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[j].startsWith("BK")) {
+                            return true;
+                        }
+                    }
+
+                    // Check if enemy king is in check right
+                    if (i >= 0 && i < 8) {
+                        for (let j = i + 1; j < 8; j++) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    else if (i >= 8 && i < 16) {
+                        for (let j = i + 1; j < 16; j++) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    else if (i >= 16 && i < 24) {
+                        for (let j = i + 1; j < 24; j++) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    else if (i >= 24 && i < 32) {
+                        for (let j = i + 1; j < 32; j++) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    else if (i >= 32 && i < 40) {
+                        for (let j = i + 1; j < 40; j++) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    else if (i >= 40 && i < 48) {
+                        for (let j = i + 1; j < 48; j++) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    else if (i >= 48 && i < 56) {
+                        for (let j = i + 1; j < 56; j++) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    else if (i >= 56 && i < 64) {
+                        for (let j = i + 1; j < 64; j++) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    // Check if enemy king is in check left
+                    if (i >= 0 && i < 8) {
+                        for (let j = i - 1; j >= 0; j--) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    else if (i >= 8 && i < 16) {
+                        for (let j = i - 1; j >= 8; j--) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    else if (i >= 16 && i < 24) {
+                        for (let j = i - 1; j >= 16; j--) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    else if (i >= 24 && i < 32) {
+                        for (let j = i - 1; j >= 24; j--) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    else if (i >= 32 && i < 40) {
+                        for (let j = i - 1; j >= 32; j--) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    else if (i >= 40 && i < 48) {
+                        for (let j = i - 1; j >= 40; j--) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    else if (i >= 48 && i < 56) {
+                        for (let j = i - 1; j >= 48; j--) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    else if (i >= 56 && i < 64) {
+                        for (let j = i - 1; j >= 56; j--) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+
+                else if (gridCopy[i].startsWith("WB")) {
+    
+                    // Check if enemy king is in check up and to the right
+                    for (let j = i - 7; j >= 0; j -= 7) {
+                        if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[j].startsWith("BK")) {
+                            return true;
+                        }
+
+                        if (j == 7 || j == 15 || j == 23 || j == 31 || j == 39 || j == 47 || j == 55) {
+                            break;
+                        }
+                    }
+
+                    // Check if enemy king is in check up and to the left
+                    for (let j = i - 9; j >= 0; j -= 9) {
+                        if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[j].startsWith("BK")) {
+                            return true;
+                        }
+
+
+                        if (j == 0 || j == 8 || j == 16 || j == 24 || j == 32 || j == 40 || j == 48) {
+                            break;
+                        }
+                    }
+
+                    // Check if enemy king is in check down and to the right
+                    for (let j = i + 9; j <= 63; j += 9) {
+                        if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[j].startsWith("BK")) {
+                            return true;
+                        }
+
+                        if (j == 15 || j == 23 || j == 31 || j == 39 || j == 47 || j == 55 || j == 63) {
+                            break;
+                        }
+                    }
+
+                    // Check if enemy king is in check down and to the left
+                    for (let j = i + 7; j <= 63; j += 7) {
+                        if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[j].startsWith("BK")) {
+                            return true;
+                        }
+
+                        if (j == 8 || j == 16 || j == 24 || j == 32 || j == 40 || j == 48 || j == 56) {
+                            break;
+                        }
+                    }
+                }
+
+                else if (gridCopy[i].startsWith("WN")) {
+                    
+                    // Check if enemy king is in check
+                    if (gridCopy[i - 15] != undefined) {
+                        if (gridCopy[i - 15].startsWith("BK")) {
+                            return true;
+                        }
+                    }
+
+                    else if (gridCopy[i - 6] != undefined) {
+                        if (gridCopy[i - 6].startsWith("BK")) {
+                            return true;
+                        }
+                    }
+
+                    else if (gridCopy[i - 17] != undefined) {
+                        if (gridCopy[i - 17].startsWith("BK")) {
+                            return true;
+                        }
+                    }
+
+                    else if (gridCopy[i - 10] != undefined) {
+                        if (gridCopy[i - 10].startsWith("BK")) {
+                            return true;
+                        }
+                    }
+
+                    else if (gridCopy[i + 17] != undefined) {
+                        if (gridCopy[i + 17].startsWith("BK")) {
+                            return true;
+                        }
+                    }
+
+                    else if (gridCopy[i + 10] != undefined) {
+                        if (gridCopy[i + 10].startsWith("BK")) {
+                            return true;
+                        }
+                    }
+
+                    else if (gridCopy[i + 6] != undefined) {
+                        if (gridCopy[i + 6].startsWith("BK")) {
+                            return true;
+                        }
+                    }
+
+                    else if (gridCopy[i + 15] != undefined) {
+                        if (gridCopy[i + 15].startsWith("BK")) {
+                            return true;
+                        }
+                    } 
+                }
+
+                else if (gridCopy[i].startsWith("WQ")) {
+
+                    // Check if enemy king is in check upwards
+                    for (let j = i - 8; j >= 0; j -= 8) {
+                        if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[j].startsWith("BK")) {
+                            return true;
+                        }
+                    }
+
+                    // Check if enemy king is in check downwards
+                    for (let j = i + 8; j <= 63; j += 8) {
+                        if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[j].startsWith("BK")) {
+                            return true;
+                        }
+                    }
+
+                    // Check if enemy king is in check right
+                    if (i >= 0 && i < 8) {
+                        for (let j = i + 1; j < 8; j++) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    else if (i >= 8 && i < 16) {
+                        for (let j = i + 1; j < 16; j++) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    else if (i >= 16 && i < 24) {
+                        for (let j = i + 1; j < 24; j++) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    else if (i >= 24 && i < 32) {
+                        for (let j = i + 1; j < 32; j++) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    else if (i >= 32 && i < 40) {
+                        for (let j = i + 1; j < 40; j++) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    else if (i >= 40 && i < 48) {
+                        for (let j = i + 1; j < 48; j++) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    else if (i >= 48 && i < 56) {
+                        for (let j = i + 1; j < 56; j++) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    else if (i >= 56 && i < 64) {
+                        for (let j = i + 1; j < 64; j++) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    // Check if enemy king is in check left
+                    if (i >= 0 && i < 8) {
+                        for (let j = i - 1; j >= 0; j--) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    else if (i >= 8 && i < 16) {
+                        for (let j = i - 1; j >= 8; j--) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    else if (i >= 16 && i < 24) {
+                        for (let j = i - 1; j >= 16; j--) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    else if (i >= 24 && i < 32) {
+                        for (let j = i - 1; j >= 24; j--) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    else if (i >= 32 && i < 40) {
+                        for (let j = i - 1; j >= 32; j--) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    else if (i >= 40 && i < 48) {
+                        for (let j = i - 1; j >= 40; j--) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    else if (i >= 48 && i < 56) {
+                        for (let j = i - 1; j >= 48; j--) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    else if (i >= 56 && i < 64) {
+                        for (let j = i - 1; j >= 56; j--) {
+                            if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                                break;
+                            }
+
+                            else if (gridCopy[j].startsWith("BK")) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    // Check if enemy king is in check up and to the right
+                    for (let j = i - 7; j >= 0; j -= 7) {
+                        if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[j].startsWith("BK")) {
+                            return true;
+                        }
+
+                        if (j == 7 || j == 15 || j == 23 || j == 31 || j == 39 || j == 47 || j == 55) {
+                            break;
+                        }
+                    }
+
+                    // Check if enemy king is in check up and to the left
+                    for (let j = i - 9; j >= 0; j -= 9) {
+                        if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[j].startsWith("BK")) {
+                            return true;
+                        }
+
+
+                        if (j == 0 || j == 8 || j == 16 || j == 24 || j == 32 || j == 40 || j == 48) {
+                            break;
+                        }
+                    }
+
+                    // Check if enemy king is in check down and to the right
+                    for (let j = i + 9; j <= 63; j += 9) {
+                        if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[j].startsWith("BK")) {
+                            return true;
+                        }
+
+                        if (j == 15 || j == 23 || j == 31 || j == 39 || j == 47 || j == 55 || j == 63) {
+                            break;
+                        }
+                    }
+
+                    // Check if enemy king is in check down and to the left
+                    for (let j = i + 7; j <= 63; j += 7) {
+                        if (gridCopy[j].startsWith("BK") == false && gridCopy[j].startsWith("|||") == false) {
+                            break;
+                        }
+
+                        else if (gridCopy[j].startsWith("BK")) {
+                            return true;
+                        }
+
+                        if (j == 8 || j == 16 || j == 24 || j == 32 || j == 40 || j == 48 || j == 56) {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
