@@ -1688,7 +1688,7 @@ describe('Player', () => {
         player2.move(gameboard.grid, queenB, 39, player1);
         
         expect(player1.inCheck).toBe(true);
-    })
+    }) 
 
     test('move function works when a player moves king or other pieces to get out of check', () => {
         const gameboard = new Gameboard();
