@@ -1708,8 +1708,6 @@ describe('Player', () => {
 
         player1.move(gameboard.grid, queenW, 31, player2);
         player2.move(gameboard.grid, pawnB2, 22, player1);
-
-        gameboard.printGrid();
         
         expect(player2.inCheck).toBe(false);
     })
@@ -1732,6 +1730,8 @@ describe('Player', () => {
 
         player1.move(gameboard.grid, queenW, 31, player2);
         player2.move(gameboard.grid, kingB, 13, player1);
+
+        gameboard.printGrid();
 
         expect(player2.inCheck).toBe(true);
         expect(gameboard.grid[13]).toBe("|||");

@@ -3034,8 +3034,19 @@ class Player {
                             }
 
                             else {
-                                grid[pieceCurrentIndex] = "|||";
-                                grid[newIndex] = pieceString;
+                                for (let j = 0; j < 64; j++) {
+                                    if (grid[j].startsWith("BK")) {
+                                        if (newIndex == j + 8) {
+
+                                        }
+
+                                        else {
+                                            grid[pieceCurrentIndex] = "|||";
+                                            grid[newIndex] = pieceString;
+                                        }
+
+                                    }
+                                }
                             }
                         }
                     }
@@ -3057,8 +3068,19 @@ class Player {
                             }
 
                             else {
-                                grid[pieceCurrentIndex] = "|||";
-                                grid[newIndex] = pieceString;
+                                for (let j = 0; j < 64; j++) {
+                                    if (grid[j].startsWith("BK")) {
+                                        if (newIndex == j - 8) {
+
+                                        }
+
+                                        else {
+                                            grid[pieceCurrentIndex] = "|||";
+                                            grid[newIndex] = pieceString;
+                                        }
+
+                                    }
+                                }
                             }
                         }
                     }
@@ -3089,8 +3111,33 @@ class Player {
                                 }
 
                                 else {
-                                    grid[pieceCurrentIndex] = "|||";
-                                    grid[newIndex] = pieceString;
+                                    let nextToEnemyKing = false;
+
+                                    for (let j = 0; j < 64; j++) {
+                                        if (grid[j].startsWith("BK")) {
+                                            if (((newIndex >= 0 && newIndex < 8) && (j >= 0 && j < 8))
+                                            || ((newIndex >= 8 && newIndex < 16) && (j >= 8 && j < 16))
+                                            || ((newIndex >= 16 && newIndex < 24) && (j >= 16 && j < 24))
+                                            || ((newIndex >= 24 && newIndex < 32) && (j >= 24 && j < 32))
+                                            || ((newIndex >= 32 && newIndex < 40) && (j >= 32 && j < 40))
+                                            || ((newIndex >= 40 && newIndex < 48) && (j >= 40 && j < 48))
+                                            || ((newIndex >= 48 && newIndex < 56) && (j >= 48 && j < 56))
+                                            || ((newIndex >= 56 && newIndex < 64) && (j >= 56 && j < 64))) {
+                                                if (newIndex == j - 1) {
+                                                    nextToEnemyKing = true;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    if (nextToEnemyKing == true) {
+
+                                    }
+
+                                    else {
+                                        grid[pieceCurrentIndex] = "|||";
+                                        grid[newIndex] = pieceString;
+                                    }
                                 }
                             }
                         }
@@ -3122,8 +3169,33 @@ class Player {
                                 }
 
                                 else {
-                                    grid[pieceCurrentIndex] = "|||";
-                                    grid[newIndex] = pieceString;
+                                    let nextToEnemyKing = false;
+                                    
+                                    for (let j = 0; j < 64; j++) {
+                                        if (grid[j].startsWith("BK")) {
+                                            if (((newIndex >= 0 && newIndex < 8) && (j >= 0 && j < 8))
+                                            || ((newIndex >= 8 && newIndex < 16) && (j >= 8 && j < 16))
+                                            || ((newIndex >= 16 && newIndex < 24) && (j >= 16 && j < 24))
+                                            || ((newIndex >= 24 && newIndex < 32) && (j >= 24 && j < 32))
+                                            || ((newIndex >= 32 && newIndex < 40) && (j >= 32 && j < 40))
+                                            || ((newIndex >= 40 && newIndex < 48) && (j >= 40 && j < 48))
+                                            || ((newIndex >= 48 && newIndex < 56) && (j >= 48 && j < 56))
+                                            || ((newIndex >= 56 && newIndex < 64) && (j >= 56 && j < 64))) {
+                                                if (newIndex == j + 1) {
+                                                    nextToEnemyKing = true;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    if (nextToEnemyKing == true) {
+
+                                    }
+
+                                    else {
+                                        grid[pieceCurrentIndex] = "|||";
+                                        grid[newIndex] = pieceString;
+                                    }
                                 }
                             }
                         }
@@ -3156,8 +3228,28 @@ class Player {
                             }
 
                             else {
-                                grid[pieceCurrentIndex] = "|||";
-                                grid[newIndex] = pieceString;
+                                let nextToEnemyKing = false;
+
+                                for (let j = 0; j < 64; j++) {
+                                    if (grid[j].startsWith("BK")) {
+                                        if (newIndex != 7 || newIndex != 15 || newIndex != 23 
+                                        || newIndex != 31 || newIndex != 39 || newIndex != 47
+                                        || newIndex != 55) {
+                                            if (newIndex == j + 7) {
+                                                nextToEnemyKing = true;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (nextToEnemyKing == true) {
+
+                                }
+
+                                else {
+                                    grid[pieceCurrentIndex] = "|||";
+                                    grid[newIndex] = pieceString;
+                                }
                             }
                         }      
                     }
@@ -3188,8 +3280,27 @@ class Player {
                             }
 
                             else {
-                                grid[pieceCurrentIndex] = "|||";
-                                grid[newIndex] = pieceString;
+                                let nextToEnemyKing = false;
+
+                                for (let j = 0; j < 64; j++) {
+                                    if (grid[j].startsWith("BK")) {
+                                        if (newIndex != 8 || newIndex != 16 || newIndex != 24 
+                                        || newIndex != 32 || newIndex != 40 || newIndex != 48) {
+                                            if (newIndex == j + 9) {
+                                                nextToEnemyKing = true;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (nextToEnemyKing == true) {
+
+                                }
+
+                                else {
+                                    grid[pieceCurrentIndex] = "|||";
+                                    grid[newIndex] = pieceString;
+                                }
                             }
                         }     
                     }
@@ -3220,8 +3331,27 @@ class Player {
                             }
 
                             else {
-                                grid[pieceCurrentIndex] = "|||";
-                                grid[newIndex] = pieceString;
+                                let nextToEnemyKing = false;
+
+                                for (let j = 0; j < 64; j++) {
+                                    if (grid[j].startsWith("BK")) {
+                                        if (newIndex != 15 || newIndex != 23 || newIndex != 31 
+                                        || newIndex != 39 || newIndex != 47 || newIndex != 55) {
+                                            if (newIndex == j - 9) {
+                                                nextToEnemyKing = true;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (nextToEnemyKing == true) {
+
+                                }
+
+                                else {
+                                    grid[pieceCurrentIndex] = "|||";
+                                    grid[newIndex] = pieceString;
+                                }
                             }
                         }     
                     }
@@ -3252,8 +3382,27 @@ class Player {
                             }
 
                             else {
-                                grid[pieceCurrentIndex] = "|||";
-                                grid[newIndex] = pieceString;
+                                let nextToEnemyKing = false;
+
+                                for (let j = 0; j < 64; j++) {
+                                    if (grid[j].startsWith("BK")) {
+                                        if (newIndex != 8 || newIndex != 16 || newIndex != 24 
+                                        || newIndex != 32 || newIndex != 40 || newIndex != 48) {
+                                            if (newIndex == j - 7) {
+                                                nextToEnemyKing = true;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (nextToEnemyKing == true) {
+
+                                }
+
+                                else {
+                                    grid[pieceCurrentIndex] = "|||";
+                                    grid[newIndex] = pieceString;
+                                }
                             }
                         }   
                     }
@@ -3278,8 +3427,19 @@ class Player {
                             }
 
                             else {
-                                grid[pieceCurrentIndex] = "|||";
-                                grid[newIndex] = pieceString;
+                                for (let j = 0; j < 64; j++) {
+                                    if (grid[j].startsWith("WK")) {
+                                        if (newIndex == j + 8) {
+
+                                        }
+
+                                        else {
+                                            grid[pieceCurrentIndex] = "|||";
+                                            grid[newIndex] = pieceString;
+                                        }
+
+                                    }
+                                }
                             }
                         }
                     }
@@ -3301,8 +3461,19 @@ class Player {
                             }
 
                             else {
-                                grid[pieceCurrentIndex] = "|||";
-                                grid[newIndex] = pieceString;
+                                for (let j = 0; j < 64; j++) {
+                                    if (grid[j].startsWith("WK")) {
+                                        if (newIndex == j - 8) {
+
+                                        }
+
+                                        else {
+                                            grid[pieceCurrentIndex] = "|||";
+                                            grid[newIndex] = pieceString;
+                                        }
+
+                                    }
+                                }
                             }
                         }
                     }
@@ -3333,8 +3504,33 @@ class Player {
                                 }
 
                                 else {
-                                    grid[pieceCurrentIndex] = "|||";
-                                    grid[newIndex] = pieceString;
+                                    let nextToEnemyKing = false;
+
+                                    for (let j = 0; j < 64; j++) {
+                                        if (grid[j].startsWith("WK")) {
+                                            if (((newIndex >= 0 && newIndex < 8) && (j >= 0 && j < 8))
+                                            || ((newIndex >= 8 && newIndex < 16) && (j >= 8 && j < 16))
+                                            || ((newIndex >= 16 && newIndex < 24) && (j >= 16 && j < 24))
+                                            || ((newIndex >= 24 && newIndex < 32) && (j >= 24 && j < 32))
+                                            || ((newIndex >= 32 && newIndex < 40) && (j >= 32 && j < 40))
+                                            || ((newIndex >= 40 && newIndex < 48) && (j >= 40 && j < 48))
+                                            || ((newIndex >= 48 && newIndex < 56) && (j >= 48 && j < 56))
+                                            || ((newIndex >= 56 && newIndex < 64) && (j >= 56 && j < 64))) {
+                                                if (newIndex == j - 1) {
+                                                    nextToEnemyKing = true;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    if (nextToEnemyKing == true) {
+
+                                    }
+
+                                    else {
+                                        grid[pieceCurrentIndex] = "|||";
+                                        grid[newIndex] = pieceString;
+                                    }
                                 }
                             }
                         }
@@ -3366,8 +3562,33 @@ class Player {
                                 }
 
                                 else {
-                                    grid[pieceCurrentIndex] = "|||";
-                                    grid[newIndex] = pieceString;
+                                    let nextToEnemyKing = false;
+                                    
+                                    for (let j = 0; j < 64; j++) {
+                                        if (grid[j].startsWith("WK")) {
+                                            if (((newIndex >= 0 && newIndex < 8) && (j >= 0 && j < 8))
+                                            || ((newIndex >= 8 && newIndex < 16) && (j >= 8 && j < 16))
+                                            || ((newIndex >= 16 && newIndex < 24) && (j >= 16 && j < 24))
+                                            || ((newIndex >= 24 && newIndex < 32) && (j >= 24 && j < 32))
+                                            || ((newIndex >= 32 && newIndex < 40) && (j >= 32 && j < 40))
+                                            || ((newIndex >= 40 && newIndex < 48) && (j >= 40 && j < 48))
+                                            || ((newIndex >= 48 && newIndex < 56) && (j >= 48 && j < 56))
+                                            || ((newIndex >= 56 && newIndex < 64) && (j >= 56 && j < 64))) {
+                                                if (newIndex == j + 1) {
+                                                    nextToEnemyKing = true;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    if (nextToEnemyKing == true) {
+
+                                    }
+
+                                    else {
+                                        grid[pieceCurrentIndex] = "|||";
+                                        grid[newIndex] = pieceString;
+                                    }
                                 }
                             }
                         }
@@ -3400,8 +3621,28 @@ class Player {
                             }
 
                             else {
-                                grid[pieceCurrentIndex] = "|||";
-                                grid[newIndex] = pieceString;
+                                let nextToEnemyKing = false;
+
+                                for (let j = 0; j < 64; j++) {
+                                    if (grid[j].startsWith("WK")) {
+                                        if (newIndex != 7 || newIndex != 15 || newIndex != 23 
+                                        || newIndex != 31 || newIndex != 39 || newIndex != 47
+                                        || newIndex != 55) {
+                                            if (newIndex == j + 7) {
+                                                nextToEnemyKing = true;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (nextToEnemyKing == true) {
+
+                                }
+
+                                else {
+                                    grid[pieceCurrentIndex] = "|||";
+                                    grid[newIndex] = pieceString;
+                                }
                             }
                         }      
                     }
@@ -3432,8 +3673,27 @@ class Player {
                             }
 
                             else {
-                                grid[pieceCurrentIndex] = "|||";
-                                grid[newIndex] = pieceString;
+                                let nextToEnemyKing = false;
+
+                                for (let j = 0; j < 64; j++) {
+                                    if (grid[j].startsWith("WK")) {
+                                        if (newIndex != 8 || newIndex != 16 || newIndex != 24 
+                                        || newIndex != 32 || newIndex != 40 || newIndex != 48) {
+                                            if (newIndex == j + 9) {
+                                                nextToEnemyKing = true;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (nextToEnemyKing == true) {
+
+                                }
+
+                                else {
+                                    grid[pieceCurrentIndex] = "|||";
+                                    grid[newIndex] = pieceString;
+                                }
                             }
                         }     
                     }
@@ -3464,8 +3724,27 @@ class Player {
                             }
 
                             else {
-                                grid[pieceCurrentIndex] = "|||";
-                                grid[newIndex] = pieceString;
+                                let nextToEnemyKing = false;
+
+                                for (let j = 0; j < 64; j++) {
+                                    if (grid[j].startsWith("WK")) {
+                                        if (newIndex != 15 || newIndex != 23 || newIndex != 31 
+                                        || newIndex != 39 || newIndex != 47 || newIndex != 55) {
+                                            if (newIndex == j - 9) {
+                                                nextToEnemyKing = true;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (nextToEnemyKing == true) {
+
+                                }
+
+                                else {
+                                    grid[pieceCurrentIndex] = "|||";
+                                    grid[newIndex] = pieceString;
+                                }
                             }
                         }     
                     }
@@ -3496,8 +3775,27 @@ class Player {
                             }
 
                             else {
-                                grid[pieceCurrentIndex] = "|||";
-                                grid[newIndex] = pieceString;
+                                let nextToEnemyKing = false;
+
+                                for (let j = 0; j < 64; j++) {
+                                    if (grid[j].startsWith("WK")) {
+                                        if (newIndex != 8 || newIndex != 16 || newIndex != 24 
+                                        || newIndex != 32 || newIndex != 40 || newIndex != 48) {
+                                            if (newIndex == j - 7) {
+                                                nextToEnemyKing = true;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (nextToEnemyKing == true) {
+
+                                }
+
+                                else {
+                                    grid[pieceCurrentIndex] = "|||";
+                                    grid[newIndex] = pieceString;
+                                }
                             }
                         }   
                     } 
@@ -6389,8 +6687,19 @@ class Player {
                         }
 
                         else {
-                            gridCopy[pieceCurrentIndex] = "|||";
-                            gridCopy[newIndex] = pieceString;
+                            for (let j = 0; j < 64; j++) {
+                                if (gridCopy[j].startsWith("BK")) {
+                                    if (newIndex == j + 8) {
+
+                                    }
+
+                                    else {
+                                        gridCopy[pieceCurrentIndex] = "|||";
+                                        gridCopy[newIndex] = pieceString;
+                                    }
+
+                                }
+                            }
                         }
                     }
                 }
@@ -6412,8 +6721,19 @@ class Player {
                         }
 
                         else {
-                            gridCopy[pieceCurrentIndex] = "|||";
-                            gridCopy[newIndex] = pieceString;
+                            for (let j = 0; j < 64; j++) {
+                                if (gridCopy[j].startsWith("BK")) {
+                                    if (newIndex == j - 8) {
+
+                                    }
+
+                                    else {
+                                        gridCopy[pieceCurrentIndex] = "|||";
+                                        gridCopy[newIndex] = pieceString;
+                                    }
+
+                                }
+                            }
                         }
                     }
                 }
@@ -6444,8 +6764,33 @@ class Player {
                             }
 
                             else {
-                                gridCopy[pieceCurrentIndex] = "|||";
-                                gridCopy[newIndex] = pieceString;
+                                let nextToEnemyKing = false;
+
+                                for (let j = 0; j < 64; j++) {
+                                    if (gridCopy[j].startsWith("BK")) {
+                                        if (((newIndex >= 0 && newIndex < 8) && (j >= 0 && j < 8))
+                                        || ((newIndex >= 8 && newIndex < 16) && (j >= 8 && j < 16))
+                                        || ((newIndex >= 16 && newIndex < 24) && (j >= 16 && j < 24))
+                                        || ((newIndex >= 24 && newIndex < 32) && (j >= 24 && j < 32))
+                                        || ((newIndex >= 32 && newIndex < 40) && (j >= 32 && j < 40))
+                                        || ((newIndex >= 40 && newIndex < 48) && (j >= 40 && j < 48))
+                                        || ((newIndex >= 48 && newIndex < 56) && (j >= 48 && j < 56))
+                                        || ((newIndex >= 56 && newIndex < 64) && (j >= 56 && j < 64))) {
+                                            if (newIndex == j - 1) {
+                                                nextToEnemyKing = true;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (nextToEnemyKing == true) {
+
+                                }
+
+                                else {
+                                    gridCopy[pieceCurrentIndex] = "|||";
+                                    gridCopy[newIndex] = pieceString;
+                                }
                             }
                         }
                     }
@@ -6477,8 +6822,33 @@ class Player {
                             }
 
                             else {
-                                gridCopy[pieceCurrentIndex] = "|||";
-                                gridCopy[newIndex] = pieceString;
+                                let nextToEnemyKing = false;
+                                
+                                for (let j = 0; j < 64; j++) {
+                                    if (gridCopy[j].startsWith("BK")) {
+                                        if (((newIndex >= 0 && newIndex < 8) && (j >= 0 && j < 8))
+                                        || ((newIndex >= 8 && newIndex < 16) && (j >= 8 && j < 16))
+                                        || ((newIndex >= 16 && newIndex < 24) && (j >= 16 && j < 24))
+                                        || ((newIndex >= 24 && newIndex < 32) && (j >= 24 && j < 32))
+                                        || ((newIndex >= 32 && newIndex < 40) && (j >= 32 && j < 40))
+                                        || ((newIndex >= 40 && newIndex < 48) && (j >= 40 && j < 48))
+                                        || ((newIndex >= 48 && newIndex < 56) && (j >= 48 && j < 56))
+                                        || ((newIndex >= 56 && newIndex < 64) && (j >= 56 && j < 64))) {
+                                            if (newIndex == j + 1) {
+                                                nextToEnemyKing = true;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (nextToEnemyKing == true) {
+
+                                }
+
+                                else {
+                                    gridCopy[pieceCurrentIndex] = "|||";
+                                    gridCopy[newIndex] = pieceString;
+                                }
                             }
                         }
                     }
@@ -6511,8 +6881,28 @@ class Player {
                         }
 
                         else {
-                            gridCopy[pieceCurrentIndex] = "|||";
-                            gridCopy[newIndex] = pieceString;
+                            let nextToEnemyKing = false;
+
+                            for (let j = 0; j < 64; j++) {
+                                if (gridCopy[j].startsWith("BK")) {
+                                    if (newIndex != 7 || newIndex != 15 || newIndex != 23 
+                                    || newIndex != 31 || newIndex != 39 || newIndex != 47
+                                    || newIndex != 55) {
+                                        if (newIndex == j + 7) {
+                                            nextToEnemyKing = true;
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (nextToEnemyKing == true) {
+
+                            }
+
+                            else {
+                                gridCopy[pieceCurrentIndex] = "|||";
+                                gridCopy[newIndex] = pieceString;
+                            }
                         }
                     }      
                 }
@@ -6543,8 +6933,27 @@ class Player {
                         }
 
                         else {
-                            gridCopy[pieceCurrentIndex] = "|||";
-                            gridCopy[newIndex] = pieceString;
+                            let nextToEnemyKing = false;
+
+                            for (let j = 0; j < 64; j++) {
+                                if (gridCopy[j].startsWith("BK")) {
+                                    if (newIndex != 8 || newIndex != 16 || newIndex != 24 
+                                    || newIndex != 32 || newIndex != 40 || newIndex != 48) {
+                                        if (newIndex == j + 9) {
+                                            nextToEnemyKing = true;
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (nextToEnemyKing == true) {
+
+                            }
+
+                            else {
+                                gridCopy[pieceCurrentIndex] = "|||";
+                                gridCopy[newIndex] = pieceString;
+                            }
                         }
                     }     
                 }
@@ -6575,8 +6984,27 @@ class Player {
                         }
 
                         else {
-                            gridCopy[pieceCurrentIndex] = "|||";
-                            gridCopy[newIndex] = pieceString;
+                            let nextToEnemyKing = false;
+
+                            for (let j = 0; j < 64; j++) {
+                                if (gridCopy[j].startsWith("BK")) {
+                                    if (newIndex != 15 || newIndex != 23 || newIndex != 31 
+                                    || newIndex != 39 || newIndex != 47 || newIndex != 55) {
+                                        if (newIndex == j - 9) {
+                                            nextToEnemyKing = true;
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (nextToEnemyKing == true) {
+
+                            }
+
+                            else {
+                                gridCopy[pieceCurrentIndex] = "|||";
+                                gridCopy[newIndex] = pieceString;
+                            }
                         }
                     }     
                 }
@@ -6607,8 +7035,27 @@ class Player {
                         }
 
                         else {
-                            gridCopy[pieceCurrentIndex] = "|||";
-                            gridCopy[newIndex] = pieceString;
+                            let nextToEnemyKing = false;
+
+                            for (let j = 0; j < 64; j++) {
+                                if (gridCopy[j].startsWith("BK")) {
+                                    if (newIndex != 8 || newIndex != 16 || newIndex != 24 
+                                    || newIndex != 32 || newIndex != 40 || newIndex != 48) {
+                                        if (newIndex == j - 7) {
+                                            nextToEnemyKing = true;
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (nextToEnemyKing == true) {
+
+                            }
+
+                            else {
+                                gridCopy[pieceCurrentIndex] = "|||";
+                                gridCopy[newIndex] = pieceString;
+                            }
                         }
                     }   
                 }
@@ -6633,8 +7080,19 @@ class Player {
                         }
 
                         else {
-                            gridCopy[pieceCurrentIndex] = "|||";
-                            gridCopy[newIndex] = pieceString;
+                            for (let j = 0; j < 64; j++) {
+                                if (gridCopy[j].startsWith("WK")) {
+                                    if (newIndex == j + 8) {
+
+                                    }
+
+                                    else {
+                                        gridCopy[pieceCurrentIndex] = "|||";
+                                        gridCopy[newIndex] = pieceString;
+                                    }
+
+                                }
+                            }
                         }
                     }
                 }
@@ -6656,8 +7114,19 @@ class Player {
                         }
 
                         else {
-                            gridCopy[pieceCurrentIndex] = "|||";
-                            gridCopy[newIndex] = pieceString;
+                            for (let j = 0; j < 64; j++) {
+                                if (gridCopy[j].startsWith("WK")) {
+                                    if (newIndex == j - 8) {
+
+                                    }
+
+                                    else {
+                                        gridCopy[pieceCurrentIndex] = "|||";
+                                        gridCopy[newIndex] = pieceString;
+                                    }
+
+                                }
+                            }
                         }
                     }
                 }
@@ -6688,8 +7157,33 @@ class Player {
                             }
 
                             else {
-                                gridCopy[pieceCurrentIndex] = "|||";
-                                gridCopy[newIndex] = pieceString;
+                                let nextToEnemyKing = false;
+
+                                for (let j = 0; j < 64; j++) {
+                                    if (gridCopy[j].startsWith("WK")) {
+                                        if (((newIndex >= 0 && newIndex < 8) && (j >= 0 && j < 8))
+                                        || ((newIndex >= 8 && newIndex < 16) && (j >= 8 && j < 16))
+                                        || ((newIndex >= 16 && newIndex < 24) && (j >= 16 && j < 24))
+                                        || ((newIndex >= 24 && newIndex < 32) && (j >= 24 && j < 32))
+                                        || ((newIndex >= 32 && newIndex < 40) && (j >= 32 && j < 40))
+                                        || ((newIndex >= 40 && newIndex < 48) && (j >= 40 && j < 48))
+                                        || ((newIndex >= 48 && newIndex < 56) && (j >= 48 && j < 56))
+                                        || ((newIndex >= 56 && newIndex < 64) && (j >= 56 && j < 64))) {
+                                            if (newIndex == j - 1) {
+                                                nextToEnemyKing = true;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (nextToEnemyKing == true) {
+
+                                }
+
+                                else {
+                                    gridCopy[pieceCurrentIndex] = "|||";
+                                    gridCopy[newIndex] = pieceString;
+                                }
                             }
                         }
                     }
@@ -6721,8 +7215,33 @@ class Player {
                             }
 
                             else {
-                                gridCopy[pieceCurrentIndex] = "|||";
-                                gridCopy[newIndex] = pieceString;
+                                let nextToEnemyKing = false;
+                                
+                                for (let j = 0; j < 64; j++) {
+                                    if (gridCopy[j].startsWith("WK")) {
+                                        if (((newIndex >= 0 && newIndex < 8) && (j >= 0 && j < 8))
+                                        || ((newIndex >= 8 && newIndex < 16) && (j >= 8 && j < 16))
+                                        || ((newIndex >= 16 && newIndex < 24) && (j >= 16 && j < 24))
+                                        || ((newIndex >= 24 && newIndex < 32) && (j >= 24 && j < 32))
+                                        || ((newIndex >= 32 && newIndex < 40) && (j >= 32 && j < 40))
+                                        || ((newIndex >= 40 && newIndex < 48) && (j >= 40 && j < 48))
+                                        || ((newIndex >= 48 && newIndex < 56) && (j >= 48 && j < 56))
+                                        || ((newIndex >= 56 && newIndex < 64) && (j >= 56 && j < 64))) {
+                                            if (newIndex == j + 1) {
+                                                nextToEnemyKing = true;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (nextToEnemyKing == true) {
+
+                                }
+
+                                else {
+                                    gridCopy[pieceCurrentIndex] = "|||";
+                                    gridCopy[newIndex] = pieceString;
+                                }
                             }
                         }
                     }
@@ -6755,8 +7274,28 @@ class Player {
                         }
 
                         else {
-                            gridCopy[pieceCurrentIndex] = "|||";
-                            gridCopy[newIndex] = pieceString;
+                            let nextToEnemyKing = false;
+
+                            for (let j = 0; j < 64; j++) {
+                                if (gridCopy[j].startsWith("WK")) {
+                                    if (newIndex != 7 || newIndex != 15 || newIndex != 23 
+                                    || newIndex != 31 || newIndex != 39 || newIndex != 47
+                                    || newIndex != 55) {
+                                        if (newIndex == j + 7) {
+                                            nextToEnemyKing = true;
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (nextToEnemyKing == true) {
+
+                            }
+
+                            else {
+                                gridCopy[pieceCurrentIndex] = "|||";
+                                gridCopy[newIndex] = pieceString;
+                            }
                         }
                     }      
                 }
@@ -6787,8 +7326,27 @@ class Player {
                         }
 
                         else {
-                            gridCopy[pieceCurrentIndex] = "|||";
-                            gridCopy[newIndex] = pieceString;
+                            let nextToEnemyKing = false;
+
+                            for (let j = 0; j < 64; j++) {
+                                if (gridCopy[j].startsWith("WK")) {
+                                    if (newIndex != 8 || newIndex != 16 || newIndex != 24 
+                                    || newIndex != 32 || newIndex != 40 || newIndex != 48) {
+                                        if (newIndex == j + 9) {
+                                            nextToEnemyKing = true;
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (nextToEnemyKing == true) {
+
+                            }
+
+                            else {
+                                gridCopy[pieceCurrentIndex] = "|||";
+                                gridCopy[newIndex] = pieceString;
+                            }
                         }
                     }     
                 }
@@ -6819,8 +7377,27 @@ class Player {
                         }
 
                         else {
-                            gridCopy[pieceCurrentIndex] = "|||";
-                            gridCopy[newIndex] = pieceString;
+                            let nextToEnemyKing = false;
+
+                            for (let j = 0; j < 64; j++) {
+                                if (gridCopy[j].startsWith("WK")) {
+                                    if (newIndex != 15 || newIndex != 23 || newIndex != 31 
+                                    || newIndex != 39 || newIndex != 47 || newIndex != 55) {
+                                        if (newIndex == j - 9) {
+                                            nextToEnemyKing = true;
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (nextToEnemyKing == true) {
+
+                            }
+
+                            else {
+                                gridCopy[pieceCurrentIndex] = "|||";
+                                gridCopy[newIndex] = pieceString;
+                            }
                         }
                     }     
                 }
@@ -6851,8 +7428,27 @@ class Player {
                         }
 
                         else {
-                            gridCopy[pieceCurrentIndex] = "|||";
-                            gridCopy[newIndex] = pieceString;
+                            let nextToEnemyKing = false;
+
+                            for (let j = 0; j < 64; j++) {
+                                if (gridCopy[j].startsWith("WK")) {
+                                    if (newIndex != 8 || newIndex != 16 || newIndex != 24 
+                                    || newIndex != 32 || newIndex != 40 || newIndex != 48) {
+                                        if (newIndex == j - 7) {
+                                            nextToEnemyKing = true;
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (nextToEnemyKing == true) {
+
+                            }
+
+                            else {
+                                gridCopy[pieceCurrentIndex] = "|||";
+                                gridCopy[newIndex] = pieceString;
+                            }
                         }
                     }   
                 } 
