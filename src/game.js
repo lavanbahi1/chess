@@ -1,4 +1,5 @@
 import "./style.css";
-import { displayGameboard } from "./dom";
+import { displayGameboard, chooseOpponent } from "./dom";
 
 displayGameboard();
+chooseOpponent();

@@ -2,9 +2,6 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }
 
 .startcontainer {
@@ -24,11 +21,42 @@ body {
     height: 25px;
 }
 
+.refreshcontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    display: none;
+}
+
+.newgamebutton {
+    width: 200px;
+    height: 25px;
+    margin-bottom: 25px;
+}
+
+.continuebutton {
+    width: 200px;
+    height: 25px;
+}
+
 .choosecolorcontainer {
     display: flex;
     flex-direction: column;
     align-items: center;
     display: none;
+}
+
+.choosecolorbackbuttoncontainer {
+    width: 100vw;
+}
+
+.choosecolorbackbutton {
+    width: 100px;
+    height: 100px;
+    background-image: url("arrow-left-bold-outline.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 .choosecolortitle {
@@ -39,11 +67,13 @@ body {
     width: 50px;
     height: 50px;
     margin-bottom: 50px;
+    background-color: white;
 }
 
 .chooseblack {
     width: 50px;
     height: 50px;
+    background-color: black;
 }
 
 .gamecontainer {
@@ -54,11 +84,11 @@ body {
     display: none;
 }
 
-.backbuttoncontainer {
+.gamebackbuttoncontainer {
 
 }
 
-.backbutton {
+.gamebackbutton {
     width: 100px;
     height: 100px;
     background-image: url("arrow-left-bold-outline.png");
