@@ -130,6 +130,10 @@ body {
     background-color: rgb(182,116,58);
 }
 
+.boardsquarechosen {
+    border: solid red;
+}
+
 .optionscontainer {
     display: flex;
     justify-content: space-around;

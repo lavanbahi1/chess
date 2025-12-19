@@ -1,9 +1,10 @@
 const board = document.querySelector(".board");
 
-function displayGameboard() {
+function displayGameboard(gameboard) {
     for (let i = 0; i < 8; i++) {
         const boardSquare = document.createElement("div");
         boardSquare.classList.add(`boardsquare${i}`);
+        boardSquare.classList.add('boardsquare');
 
         if (i % 2 == 0) {
             boardSquare.classList.add(`boardsquarewhite`);
@@ -19,6 +20,7 @@ function displayGameboard() {
     for (let i = 8; i < 16; i++) {
         const boardSquare = document.createElement("div");
         boardSquare.classList.add(`boardsquare${i}`);
+        boardSquare.classList.add('boardsquare');
 
         if (i % 2 == 0) {
             boardSquare.classList.add(`boardsquareblack`);
@@ -34,6 +36,7 @@ function displayGameboard() {
     for (let i = 16; i < 24; i++) {
         const boardSquare = document.createElement("div");
         boardSquare.classList.add(`boardsquare${i}`);
+        boardSquare.classList.add('boardsquare');
 
         if (i % 2 == 0) {
             boardSquare.classList.add(`boardsquarewhite`);
@@ -49,6 +52,7 @@ function displayGameboard() {
     for (let i = 24; i < 32; i++) {
         const boardSquare = document.createElement("div");
         boardSquare.classList.add(`boardsquare${i}`);
+        boardSquare.classList.add('boardsquare');
 
         if (i % 2 == 0) {
             boardSquare.classList.add(`boardsquareblack`);
@@ -64,6 +68,7 @@ function displayGameboard() {
     for (let i = 32; i < 40; i++) {
         const boardSquare = document.createElement("div");
         boardSquare.classList.add(`boardsquare${i}`);
+        boardSquare.classList.add('boardsquare');
 
         if (i % 2 == 0) {
             boardSquare.classList.add(`boardsquarewhite`);
@@ -79,6 +84,7 @@ function displayGameboard() {
     for (let i = 40; i < 48; i++) {
         const boardSquare = document.createElement("div");
         boardSquare.classList.add(`boardsquare${i}`);
+        boardSquare.classList.add('boardsquare');
 
         if (i % 2 == 0) {
             boardSquare.classList.add(`boardsquareblack`);
@@ -94,6 +100,7 @@ function displayGameboard() {
     for (let i = 48; i < 56; i++) {
         const boardSquare = document.createElement("div");
         boardSquare.classList.add(`boardsquare${i}`);
+        boardSquare.classList.add('boardsquare');
 
         if (i % 2 == 0) {
             boardSquare.classList.add(`boardsquarewhite`);
@@ -109,6 +116,7 @@ function displayGameboard() {
     for (let i = 56; i < 64; i++) {
         const boardSquare = document.createElement("div");
         boardSquare.classList.add(`boardsquare${i}`);
+        boardSquare.classList.add('boardsquare');
 
         if (i % 2 == 0) {
             boardSquare.classList.add(`boardsquareblack`);
@@ -119,6 +127,27 @@ function displayGameboard() {
         }
 
         board.appendChild(boardSquare);
+    }
+
+    renderGameboard(gameboard);
+}
+
+function renderGameboard(gameboard) {
+    for (let i = 0; i < gameboard.grid.length; i++) {
+        if (gameboard.grid[i] != "|||") {
+            const boardSquare = document.querySelector(`.boardsquare${i}`);
+            boardSquare.textContent = gameboard.grid[i];
+            boardSquare.style.fontSize = "10px";
+            boardSquare.style.textAlign = "center";
+            if (gameboard.grid[i].startsWith("W")) {
+                boardSquare.classList.add('boardsquarewhitepiece');
+            }
+
+            else if (gameboard.grid[i].startsWith("B")) {
+                boardSquare.classList.add('boardsquareblackpiece');
+            }
+            boardSquare.classList.add('boardsquarepiece');
+        }
     }
 }
 
@@ -141,23 +170,6 @@ function chooseOpponent() {
 
     battlePlayerButton.addEventListener("click", clickBattleButton);
     battleComputerButton.addEventListener("click", clickBattleButton);
-}
-
-function continueButton() {
-    const continueButton = document.querySelector(".continuebutton");
-    const gameContainer = document.querySelector(".gamecontainer");
-    const refreshContainer = document.querySelector(".refreshcontainer");
-
-    function clickContinueButton() {
-        refreshContainer.style.display = "none";
-        gameContainer.style.display = "flex";
-
-        continueButton.removeEventListener("click", clickContinueButton)
-
-        gameBackButton();
-    }
-
-    continueButton.addEventListener("click", clickContinueButton);
 }
 
 function chooseColorBackButton() {
@@ -190,6 +202,7 @@ function chooseColor() {
         chooseColorWhiteButton.removeEventListener("click", clickWhiteButton);
         chooseColorBlackButton.removeEventListener("click", clickBlackButton);
 
+        movePiece("Player 1");
         gameBackButton();
     }
 
@@ -200,11 +213,47 @@ function chooseColor() {
         chooseColorWhiteButton.removeEventListener("click", clickWhiteButton);
         chooseColorBlackButton.removeEventListener("click", clickBlackButton);
 
+        movePiece("Player 1");
         gameBackButton();
     }
 
     chooseColorWhiteButton.addEventListener("click", clickWhiteButton);
     chooseColorBlackButton.addEventListener("click", clickBlackButton);
+}
+
+function continueButton() {
+    const continueButton = document.querySelector(".continuebutton");
+    const gameContainer = document.querySelector(".gamecontainer");
+    const refreshContainer = document.querySelector(".refreshcontainer");
+
+    function clickContinueButton() {
+        refreshContainer.style.display = "none";
+        gameContainer.style.display = "flex";
+
+        continueButton.removeEventListener("click", clickContinueButton);
+
+        movePiece("Player 1");
+        gameBackButton();
+    }
+
+    continueButton.addEventListener("click", clickContinueButton);
+}
+
+function newGameButton() {
+    const newGameButton = document.querySelector(".newgamebutton");
+    const startContainer = document.querySelector(".startcontainer");
+    const refreshContainer = document.querySelector(".refreshcontainer");
+
+    function clickNewGameButton() {
+        refreshContainer.style.display = "none";
+        startContainer.style.display = "flex";
+
+        newGameButton.removeEventListener("click", clickNewGameButton);
+
+        chooseOpponent();
+    }
+
+    newGameButton.addEventListener("click", clickNewGameButton);
 }
 
 function gameBackButton() {
@@ -219,9 +268,33 @@ function gameBackButton() {
         gameBackButton.removeEventListener("click", clickBackButton);
 
         continueButton();
+        newGameButton();
     }
 
     gameBackButton.addEventListener("click", clickBackButton);
+}
+
+function movePiece(playertype) {
+
+    if (playertype == "Player 1") {
+        const whitePieceSquares = document.querySelectorAll(".boardsquarewhitepiece");
+        const boardSquares = document.querySelectorAll(".boardsquare");
+        let curSquare = null;
+
+        function clickPiece(e) {
+            if (e.target.classList.contains("boardsquarewhitepiece")) {
+                curSquare = e.target;
+                boardSquares.forEach(boardSquare => {
+                    boardSquare.classList.remove("boardsquarechosen");
+                })
+                e.target.classList.add("boardsquarechosen");
+            }
+        }
+
+        boardSquares.forEach(boardSquare => {
+            boardSquare.addEventListener("click", clickPiece);
+        })
+    }
 }
 
 export { displayGameboard, chooseOpponent };
