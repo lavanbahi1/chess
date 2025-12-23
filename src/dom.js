@@ -344,6 +344,8 @@ function movePiece(currentplayer, player, otherPlayer, gameboard) {
                     boardSquares.forEach(boardSquare => {
                         boardSquare.removeEventListener("click", clickPiece);
                     })
+
+                    movePiece(currentplayer, player, otherPlayer, gameboard);
                 }
             }
         }
@@ -351,6 +353,59 @@ function movePiece(currentplayer, player, otherPlayer, gameboard) {
         boardSquares.forEach(boardSquare => {
             boardSquare.addEventListener("click", clickPiece);
         })
+    }
+
+    else if (player.currentTurn == false) {
+        const boardSquares = document.querySelectorAll(".boardsquare");
+
+        function clickPiece(e) {
+
+            //Choose piece
+            if (e.target.classList.contains("boardsquareblackpiece")) {
+                curSquare = e.target;
+                boardSquares.forEach(boardSquare => {
+                    boardSquare.classList.remove("boardsquarechosen");
+                })
+                e.target.classList.add("boardsquarechosen");
+            }
+
+            //Moving piece
+            else if (!e.target.classList.contains("boardsquareblackpiece") && !e.target.classList.contains("boardsquarechosen") && curSquare != null) {
+                let chosenPiece = new Piece(curSquare.textContent[0], curSquare.textContent[1], Number(curSquare.textContent[2]));
+                let classes = e.target.classList;
+                let newIndex = null;
+                for (let i = 0; i < classes.length; i++) {
+                    if (classes[i].startsWith("a")) {
+                        newIndex = Number(classes[i].slice(1));
+                    }
+                }
+                renderGameboard(gameboard, "Clear");
+                otherPlayer.move(gameboard.grid, chosenPiece, newIndex, player);
+                renderGameboard(gameboard);
+                boardSquares.forEach(boardSquare => {
+                    boardSquare.classList.remove("boardsquarechosen");
+                })
+                curSquare = null;
+
+                if (player.currentTurn == true) {
+                    boardSquares.forEach(boardSquare => {
+                        boardSquare.removeEventListener("click", clickPiece);
+                    })
+
+                    movePiece(currentplayer, player, otherPlayer, gameboard);
+                }
+            }
+        }
+
+        boardSquares.forEach(boardSquare => {
+            boardSquare.addEventListener("click", clickPiece);
+        })
+    }
+}
+
+function computerPlayerMovePiece(player, gameboard) {
+    if (player.currentTurn == false) {
+        
     }
 }
 
