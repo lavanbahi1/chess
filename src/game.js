@@ -4,8 +4,8 @@ import { Piece, Gameboard, Player } from "./javascript";
 
 let board = new Gameboard();
 
-let player1 = new Player();
-let player2 = new Player();
+let player1 = new Player("White", true);
+let player2 = new Player("Black", false);
 
 let wPawn1 = new Piece("W", "P", 1);
 let wPawn2 = new Piece("W", "P", 2);
@@ -42,4 +42,4 @@ let bKnight2 = new Piece("B", "N", 2);
 let bBishop2 = new Piece("B", "B", 2);
 
 displayGameboard(board);
-chooseOpponent();
+chooseOpponent("Player 1", player1, player2, board);

@@ -154,9 +154,9 @@ class Gameboard {
 }
 
 class Player {
-    constructor(color) {
+    constructor(color, currentTurn) {
         this.color = color;
-        this.currentTurn = false;
+        this.currentTurn = currentTurn;
         this.enPassant = false;
         this.hasMoved = false;
         this.completedTwoSquaresMove = false;
@@ -195,7 +195,10 @@ class Player {
                             grid[pieceCurrentIndex] = "|||";
                             grid[newIndex] = pieceString;
                             piece.firstTurn = false;
-                            this.hasMoved = true;
+                            this.hasMoved = true;   
+
+                            this.currentTurn = false;
+                            enemyPlayer.currentTurn = true;
                         }
                     }
 
@@ -215,6 +218,9 @@ class Player {
                             piece.firstTurn = false;
                             this.hasMoved = true;
                             this.completedTwoSquaresMove = true;
+
+                            this.currentTurn = false;
+                            enemyPlayer.currentTurn = true;
                         }
                     }
 
@@ -235,7 +241,10 @@ class Player {
                                 grid[newIndex + 8] = "|||"; // Capture enemy pawn
                                 this.enPassant = false;
                                 this.hasMoved = true;
-                                console.log("enPassant by white pawn");                            
+                                console.log("enPassant by white pawn");  
+                                
+                                this.currentTurn = false;
+                                enemyPlayer.currentTurn = true;
                             }
                         }
 
@@ -255,6 +264,9 @@ class Player {
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
                                 this.hasMoved = true;
+
+                                this.currentTurn = false;
+                                enemyPlayer.currentTurn = true;
                             }
                         }
                     }
@@ -322,6 +334,9 @@ class Player {
                             grid[newIndex] = pieceString;
                             piece.firstTurn = false;
                             this.hasMoved = true;
+
+                            this.currentTurn = false;
+                            enemyPlayer.currentTurn = true;
                         }
                     }
 
@@ -340,6 +355,9 @@ class Player {
                             piece.firstTurn = false;
                             this.hasMoved = true;
                             this.completedTwoSquaresMove = true
+
+                            this.currentTurn = false;
+                            enemyPlayer.currentTurn = true;
                         }                    
                     }
 
@@ -359,6 +377,9 @@ class Player {
                                 this.enPassant = false;
                                 this.hasMoved = true;
                                 console.log("enPassant by black pawn");
+
+                                this.currentTurn = false;
+                                enemyPlayer.currentTurn = true;
                             }
                         }
 
@@ -378,6 +399,9 @@ class Player {
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
                                 this.hasMoved = true;
+
+                                this.currentTurn = false;
+                                enemyPlayer.currentTurn = true;
                             }
                         }
                     }
@@ -461,6 +485,9 @@ class Player {
                             else {
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
+
+                                this.currentTurn = false;
+                                enemyPlayer.currentTurn = true;
                             }
                         }
                     }
@@ -487,6 +514,9 @@ class Player {
                             else {
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
+
+                                this.currentTurn = false;
+                                enemyPlayer.currentTurn = true;
                             }
                         }
                     }
@@ -522,6 +552,9 @@ class Player {
                                 else {
                                     grid[pieceCurrentIndex] = "|||";
                                     grid[newIndex] = pieceString;
+
+                                    this.currentTurn = false;
+                                    enemyPlayer.currentTurn = true;
                                 }
                             }
                         }
@@ -558,6 +591,9 @@ class Player {
                                 else {
                                     grid[pieceCurrentIndex] = "|||";
                                     grid[newIndex] = pieceString;
+
+                                    this.currentTurn = false;
+                                    enemyPlayer.currentTurn = true;
                                 }
                             }
                         }
@@ -822,6 +858,9 @@ class Player {
                             else {
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
+
+                                this.currentTurn = false;
+                                enemyPlayer.currentTurn = true;
                             }
                         }
                     }
@@ -848,6 +887,9 @@ class Player {
                             else {
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
+
+                                this.currentTurn = false;
+                                enemyPlayer.currentTurn = true; 
                             }
                         }
                     }
@@ -883,6 +925,9 @@ class Player {
                                 else {
                                     grid[pieceCurrentIndex] = "|||";
                                     grid[newIndex] = pieceString;
+
+                                    this.currentTurn = false;
+                                    enemyPlayer.currentTurn = true;
                                 }
                             }
                         }
@@ -919,6 +964,9 @@ class Player {
                                 else {
                                     grid[pieceCurrentIndex] = "|||";
                                     grid[newIndex] = pieceString;
+
+                                    this.currentTurn = false;
+                                    enemyPlayer.currentTurn = true;
                                 }
                             }
                         }
@@ -1196,6 +1244,9 @@ class Player {
                             else {
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
+
+                                this.currentTurn = false;
+                                enemyPlayer.currentTurn = true;
                             }
                         }      
                     }
@@ -1231,6 +1282,9 @@ class Player {
                             else {
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
+                                
+                                this.currentTurn = false;
+                                enemyPlayer.currentTurn = true;
                             }
                         }     
                     }
@@ -1266,6 +1320,9 @@ class Player {
                             else {
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
+
+                                this.currentTurn = false;
+                                enemyPlayer.currentTurn = true;
                             }
                         }     
                     }
@@ -1301,6 +1358,9 @@ class Player {
                             else {
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
+
+                                this.currentTurn = false;
+                                enemyPlayer.currentTurn = true;
                             }
                         }   
                     }
@@ -1404,6 +1464,9 @@ class Player {
                             else {
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
+
+                                this.currentTurn = false;
+                                enemyPlayer.currentTurn = true;
                             }
                         }   
                     }
@@ -1439,6 +1502,9 @@ class Player {
                             else {
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
+                                
+                                this.currentTurn = false;
+                                enemyPlayer.currentTurn = true;
                             }
                         }    
                     }
@@ -1474,6 +1540,9 @@ class Player {
                             else {
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
+
+                                this.currentTurn = false;
+                                enemyPlayer.currentTurn = true;
                             }
                         }   
                     }
@@ -1509,6 +1578,9 @@ class Player {
                             else {
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
+
+                                this.currentTurn = false;
+                                enemyPlayer.currentTurn = true;
                             }
                         }  
                     }
@@ -1592,6 +1664,9 @@ class Player {
                         else {
                             grid[pieceCurrentIndex] = "|||";
                             grid[newIndex] = pieceString;
+
+                            this.currentTurn = false;
+                            enemyPlayer.currentTurn = true;
                         }
                     }
 
@@ -1604,6 +1679,9 @@ class Player {
                         else {
                             grid[pieceCurrentIndex] = "|||";
                             grid[newIndex] = pieceString;
+
+                            this.currentTurn = false;
+                            enemyPlayer.currentTurn = true;
                         }
                     }
 
@@ -1616,6 +1694,9 @@ class Player {
                         else {
                             grid[pieceCurrentIndex] = "|||";
                             grid[newIndex] = pieceString;
+
+                            this.currentTurn = false;
+                            enemyPlayer.currentTurn = true;
                         }
                     }
 
@@ -1628,6 +1709,9 @@ class Player {
                         else {
                             grid[pieceCurrentIndex] = "|||";
                             grid[newIndex] = pieceString;
+
+                            this.currentTurn = false;
+                            enemyPlayer.currentTurn = true;
                         }
                     }
 
@@ -1640,6 +1724,9 @@ class Player {
                         else {
                             grid[pieceCurrentIndex] = "|||";
                             grid[newIndex] = pieceString;
+
+                            this.currentTurn = false;
+                            enemyPlayer.currentTurn = true;
                         }
                     }
 
@@ -1652,6 +1739,9 @@ class Player {
                         else {
                             grid[pieceCurrentIndex] = "|||";
                             grid[newIndex] = pieceString;
+
+                            this.currentTurn = false;
+                            enemyPlayer.currentTurn = true;
                         }
                     }
 
@@ -1664,6 +1754,9 @@ class Player {
                         else {
                             grid[pieceCurrentIndex] = "|||";
                             grid[newIndex] = pieceString;
+
+                            this.currentTurn = false;
+                            enemyPlayer.currentTurn = true;
                         }
                     }
 
@@ -1676,6 +1769,9 @@ class Player {
                         else {
                             grid[pieceCurrentIndex] = "|||";
                             grid[newIndex] = pieceString;
+
+                            this.currentTurn = false;
+                            enemyPlayer.currentTurn = true;
                         }
                     }
 
@@ -1740,6 +1836,9 @@ class Player {
                         else {
                             grid[pieceCurrentIndex] = "|||";
                             grid[newIndex] = pieceString;
+
+                            this.currentTurn = false;
+                            enemyPlayer.currentTurn = true;
                         }
                     }
 
@@ -1752,6 +1851,9 @@ class Player {
                         else {
                             grid[pieceCurrentIndex] = "|||";
                             grid[newIndex] = pieceString;
+
+                            this.currentTurn = false;
+                            enemyPlayer.currentTurn = true;
                         }
                     }
 
@@ -1764,6 +1866,9 @@ class Player {
                         else {
                             grid[pieceCurrentIndex] = "|||";
                             grid[newIndex] = pieceString;
+
+                            this.currentTurn = false;
+                            enemyPlayer.currentTurn = true;
                         }
                     }
 
@@ -1776,6 +1881,9 @@ class Player {
                         else {
                             grid[pieceCurrentIndex] = "|||";
                             grid[newIndex] = pieceString;
+
+                            this.currentTurn = false;
+                            enemyPlayer.currentTurn = true;
                         }
                     }
 
@@ -1788,6 +1896,9 @@ class Player {
                         else {
                             grid[pieceCurrentIndex] = "|||";
                             grid[newIndex] = pieceString;
+
+                            this.currentTurn = false;
+                            enemyPlayer.currentTurn = true;
                         }
                     }
 
@@ -1800,6 +1911,9 @@ class Player {
                         else {
                             grid[pieceCurrentIndex] = "|||";
                             grid[newIndex] = pieceString;
+
+                            this.currentTurn = false;
+                            enemyPlayer.currentTurn = true;
                         }
                     }
 
@@ -1812,6 +1926,9 @@ class Player {
                         else {
                             grid[pieceCurrentIndex] = "|||";
                             grid[newIndex] = pieceString;
+
+                            this.currentTurn = false;
+                            enemyPlayer.currentTurn = true;
                         }
                     }
 
@@ -1824,6 +1941,9 @@ class Player {
                         else {
                             grid[pieceCurrentIndex] = "|||";
                             grid[newIndex] = pieceString;
+
+                            this.currentTurn = false;
+                            enemyPlayer.currentTurn = true;
                         }
                     }
 
@@ -1904,6 +2024,9 @@ class Player {
                             else {
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
+
+                                this.currentTurn = false;
+                                enemyPlayer.currentTurn = true;
                             }
                         }
                     }
@@ -1930,6 +2053,9 @@ class Player {
                             else {
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
+
+                                this.currentTurn = false;
+                                enemyPlayer.currentTurn = true;
                             }
                         }
                     }
@@ -1965,6 +2091,9 @@ class Player {
                                 else {
                                     grid[pieceCurrentIndex] = "|||";
                                     grid[newIndex] = pieceString;
+
+                                    this.currentTurn = false;
+                                    enemyPlayer.currentTurn = true;
                                 }
                             }
                         }
@@ -2001,6 +2130,9 @@ class Player {
                                 else {
                                     grid[pieceCurrentIndex] = "|||";
                                     grid[newIndex] = pieceString;
+
+                                    this.currentTurn = false;
+                                    enemyPlayer.currentTurn = true;
                                 }
                             }
                         }
@@ -2038,6 +2170,9 @@ class Player {
                             else {
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
+
+                                this.currentTurn = false;
+                                enemyPlayer.currentTurn = true;
                             }
                         }      
                     }
@@ -2073,6 +2208,9 @@ class Player {
                             else {
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
+
+                                this.currentTurn = false;
+                                enemyPlayer.currentTurn = true;
                             }
                         }     
                     }
@@ -2108,6 +2246,9 @@ class Player {
                             else {
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
+
+                                this.currentTurn = false;
+                                enemyPlayer.currentTurn = true;
                             }
                         }     
                     }
@@ -2143,6 +2284,9 @@ class Player {
                             else {
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
+
+                                this.currentTurn = false;
+                                enemyPlayer.currentTurn = true;
                             }
                         }   
                     }
@@ -2470,6 +2614,9 @@ class Player {
                             else {
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
+
+                                this.currentTurn = false;
+                                enemyPlayer.currentTurn = true;
                             }
                         }
                     }
@@ -2496,6 +2643,9 @@ class Player {
                             else {
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
+
+                                this.currentTurn = false;
+                                enemyPlayer.currentTurn = true;
                             }
                         }
                     }
@@ -2531,6 +2681,9 @@ class Player {
                                 else {
                                     grid[pieceCurrentIndex] = "|||";
                                     grid[newIndex] = pieceString;
+
+                                    this.currentTurn = false;
+                                    enemyPlayer.currentTurn = true;
                                 }
                             }
                         }
@@ -2567,6 +2720,9 @@ class Player {
                                 else {
                                     grid[pieceCurrentIndex] = "|||";
                                     grid[newIndex] = pieceString;
+
+                                    this.currentTurn = false;
+                                    enemyPlayer.currentTurn = true;
                                 }
                             }
                         }
@@ -2604,6 +2760,9 @@ class Player {
                             else {
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
+
+                                this.currentTurn = false;
+                                enemyPlayer.currentTurn = true;
                             }
                         }      
                     }
@@ -2639,6 +2798,9 @@ class Player {
                             else {
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
+
+                                this.currentTurn = false;
+                                enemyPlayer.currentTurn = true;
                             }
                         }     
                     }
@@ -2674,6 +2836,9 @@ class Player {
                             else {
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
+
+                                this.currentTurn = false;
+                                enemyPlayer.currentTurn = true;
                             }
                         }     
                     }
@@ -2709,6 +2874,9 @@ class Player {
                             else {
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
+
+                                this.currentTurn = false;
+                                enemyPlayer.currentTurn = true;
                             }
                         }   
                     }
@@ -3043,6 +3211,9 @@ class Player {
                                         else {
                                             grid[pieceCurrentIndex] = "|||";
                                             grid[newIndex] = pieceString;
+
+                                            this.currentTurn = false;
+                                            enemyPlayer.currentTurn = true;
                                         }
 
                                     }
@@ -3077,6 +3248,9 @@ class Player {
                                         else {
                                             grid[pieceCurrentIndex] = "|||";
                                             grid[newIndex] = pieceString;
+
+                                            this.currentTurn = false;
+                                            enemyPlayer.currentTurn = true;
                                         }
 
                                     }
@@ -3137,6 +3311,9 @@ class Player {
                                     else {
                                         grid[pieceCurrentIndex] = "|||";
                                         grid[newIndex] = pieceString;
+
+                                        this.currentTurn = false;
+                                        enemyPlayer.currentTurn = true;
                                     }
                                 }
                             }
@@ -3195,6 +3372,9 @@ class Player {
                                     else {
                                         grid[pieceCurrentIndex] = "|||";
                                         grid[newIndex] = pieceString;
+
+                                        this.currentTurn = false;
+                                        enemyPlayer.currentTurn = true;
                                     }
                                 }
                             }
@@ -3249,6 +3429,9 @@ class Player {
                                 else {
                                     grid[pieceCurrentIndex] = "|||";
                                     grid[newIndex] = pieceString;
+
+                                    this.currentTurn = false;
+                                    enemyPlayer.currentTurn = true;
                                 }
                             }
                         }      
@@ -3300,6 +3483,9 @@ class Player {
                                 else {
                                     grid[pieceCurrentIndex] = "|||";
                                     grid[newIndex] = pieceString;
+
+                                    this.currentTurn = false;
+                                    enemyPlayer.currentTurn = true;
                                 }
                             }
                         }     
@@ -3351,6 +3537,9 @@ class Player {
                                 else {
                                     grid[pieceCurrentIndex] = "|||";
                                     grid[newIndex] = pieceString;
+
+                                    this.currentTurn = false;
+                                    enemyPlayer.currentTurn = true;
                                 }
                             }
                         }     
@@ -3402,6 +3591,9 @@ class Player {
                                 else {
                                     grid[pieceCurrentIndex] = "|||";
                                     grid[newIndex] = pieceString;
+
+                                    this.currentTurn = false;
+                                    enemyPlayer.currentTurn = true;
                                 }
                             }
                         }   
@@ -3436,6 +3628,9 @@ class Player {
                                         else {
                                             grid[pieceCurrentIndex] = "|||";
                                             grid[newIndex] = pieceString;
+
+                                            this.currentTurn = false;
+                                            enemyPlayer.currentTurn = true;
                                         }
 
                                     }
@@ -3470,6 +3665,9 @@ class Player {
                                         else {
                                             grid[pieceCurrentIndex] = "|||";
                                             grid[newIndex] = pieceString;
+
+                                            this.currentTurn = false;
+                                            enemyPlayer.currentTurn = true;
                                         }
 
                                     }
@@ -3530,6 +3728,9 @@ class Player {
                                     else {
                                         grid[pieceCurrentIndex] = "|||";
                                         grid[newIndex] = pieceString;
+
+                                        this.currentTurn = false;
+                                        enemyPlayer.currentTurn = true;
                                     }
                                 }
                             }
@@ -3588,6 +3789,9 @@ class Player {
                                     else {
                                         grid[pieceCurrentIndex] = "|||";
                                         grid[newIndex] = pieceString;
+
+                                        this.currentTurn = false;
+                                        enemyPlayer.currentTurn = true;
                                     }
                                 }
                             }
@@ -3642,6 +3846,9 @@ class Player {
                                 else {
                                     grid[pieceCurrentIndex] = "|||";
                                     grid[newIndex] = pieceString;
+
+                                    this.currentTurn = false;
+                                    enemyPlayer.currentTurn = true;
                                 }
                             }
                         }      
@@ -3693,6 +3900,9 @@ class Player {
                                 else {
                                     grid[pieceCurrentIndex] = "|||";
                                     grid[newIndex] = pieceString;
+
+                                    this.currentTurn = false;
+                                    enemyPlayer.currentTurn = true;
                                 }
                             }
                         }     
@@ -3744,6 +3954,9 @@ class Player {
                                 else {
                                     grid[pieceCurrentIndex] = "|||";
                                     grid[newIndex] = pieceString;
+                                    
+                                    this.currentTurn = false;
+                                    enemyPlayer.currentTurn = true;
                                 }
                             }
                         }     
@@ -3795,18 +4008,15 @@ class Player {
                                 else {
                                     grid[pieceCurrentIndex] = "|||";
                                     grid[newIndex] = pieceString;
+
+                                    this.currentTurn = false;
+                                    enemyPlayer.currentTurn = true;
                                 }
                             }
                         }   
                     } 
                 }
             }
-        }
-
-
-        if (this.currentTurn == true) {
-            this.currentTurn = false;
-            enemyPlayer.currentTurn = true;
         }
 
         //console.log(grid);
