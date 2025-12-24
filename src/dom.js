@@ -4,6 +4,76 @@ const board = document.querySelector(".board");
 
 let curSquare = null;
 
+let wPawn1 = new Piece("W", "P", 1);
+let wPawn2 = new Piece("W", "P", 2);
+let wPawn3 = new Piece("W", "P", 3);
+let wPawn4 = new Piece("W", "P", 4);
+let wPawn5 = new Piece("W", "P", 5);
+let wPawn6 = new Piece("W", "P", 6);
+let wPawn7 = new Piece("W", "P", 7);
+let wPawn8 = new Piece("W", "P", 8);
+let wRook1 = new Piece("W", "R", 1);
+let wKnight1 = new Piece("W", "N", 1);
+let wBishop1 = new Piece("W", "B", 1);
+let wQueen = new Piece("W", "Q");
+let wKing = new Piece("W", "K");
+let wRook2 = new Piece("W", "R", 2);
+let wKnight2 = new Piece("W", "N", 2);
+let wBishop2 = new Piece("W", "B", 2);
+
+let bPawn1 = new Piece("B", "P", 1);
+let bPawn2 = new Piece("B", "P", 2);
+let bPawn3 = new Piece("B", "P", 3);
+let bPawn4 = new Piece("B", "P", 4);
+let bPawn5 = new Piece("B", "P", 5);
+let bPawn6 = new Piece("B", "P", 6);
+let bPawn7 = new Piece("B", "P", 7);
+let bPawn8 = new Piece("B", "P", 8);
+let bRook1 = new Piece("B", "R", 1);
+let bKnight1 = new Piece("B", "N", 1);
+let bBishop1 = new Piece("B", "B", 1);
+let bQueen = new Piece("B", "Q");
+let bKing = new Piece("B", "K");
+let bRook2 = new Piece("B", "R", 2);
+let bKnight2 = new Piece("B", "N", 2);
+let bBishop2 = new Piece("B", "B", 2);
+
+let pieceArray = [];
+
+pieceArray.push(wPawn1);
+pieceArray.push(wPawn2);
+pieceArray.push(wPawn3);
+pieceArray.push(wPawn4);
+pieceArray.push(wPawn5);
+pieceArray.push(wPawn6);
+pieceArray.push(wPawn7);
+pieceArray.push(wPawn8);
+pieceArray.push(wRook1);
+pieceArray.push(wKnight1);
+pieceArray.push(wBishop1);
+pieceArray.push(wQueen);
+pieceArray.push(wKing);
+pieceArray.push(wRook2);
+pieceArray.push(wKnight2);
+pieceArray.push(wBishop2);
+
+pieceArray.push(bPawn1);
+pieceArray.push(bPawn2);
+pieceArray.push(bPawn3);
+pieceArray.push(bPawn4);
+pieceArray.push(bPawn5);
+pieceArray.push(bPawn6);
+pieceArray.push(bPawn7);
+pieceArray.push(bPawn8);
+pieceArray.push(bRook1);
+pieceArray.push(bKnight1);
+pieceArray.push(bBishop1);
+pieceArray.push(bQueen);
+pieceArray.push(bKing);
+pieceArray.push(bRook2);
+pieceArray.push(bKnight2);
+pieceArray.push(bBishop2);
+
 function displayGameboard(gameboard) {
     for (let i = 0; i < 8; i++) {
         const boardSquare = document.createElement("div");
@@ -324,7 +394,15 @@ function movePiece(currentplayer, player, otherPlayer, gameboard) {
 
             //Moving piece
             else if (!e.target.classList.contains("boardsquarewhitepiece") && !e.target.classList.contains("boardsquarechosen") && curSquare != null) {
-                let chosenPiece = new Piece(curSquare.textContent[0], curSquare.textContent[1], Number(curSquare.textContent[2]));
+                //let chosenPiece = new Piece(curSquare.textContent[0], curSquare.textContent[1], Number(curSquare.textContent[2]));
+                let chosenPiece;
+                
+                for (let i = 0; i < pieceArray.length; i++) {
+                    if (pieceArray[i].color == curSquare.textContent[0] && pieceArray[i].name == curSquare.textContent[1] && pieceArray[i].num == curSquare.textContent[2]) {
+                        chosenPiece = pieceArray[i];
+                    }
+                }
+
                 let classes = e.target.classList;
                 let newIndex = null;
                 for (let i = 0; i < classes.length; i++) {
@@ -371,7 +449,15 @@ function movePiece(currentplayer, player, otherPlayer, gameboard) {
 
             //Moving piece
             else if (!e.target.classList.contains("boardsquareblackpiece") && !e.target.classList.contains("boardsquarechosen") && curSquare != null) {
-                let chosenPiece = new Piece(curSquare.textContent[0], curSquare.textContent[1], Number(curSquare.textContent[2]));
+                //let chosenPiece = new Piece(curSquare.textContent[0], curSquare.textContent[1], Number(curSquare.textContent[2]));
+                let chosenPiece;
+
+                for (let i = 0; i < pieceArray.length; i++) {
+                    if (pieceArray[i].color == curSquare.textContent[0] && pieceArray[i].name == curSquare.textContent[1] && pieceArray[i].num == curSquare.textContent[2]) {
+                        chosenPiece = pieceArray[i];
+                    }
+                }
+
                 let classes = e.target.classList;
                 let newIndex = null;
                 for (let i = 0; i < classes.length; i++) {
