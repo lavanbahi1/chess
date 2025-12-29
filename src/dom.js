@@ -4,6 +4,8 @@ const board = document.querySelector(".board");
 
 let curSquare = null;
 
+let gameStarted = false;
+
 let wPawn1 = new Piece("W", "P", 1);
 let wPawn2 = new Piece("W", "P", 2);
 let wPawn3 = new Piece("W", "P", 3);
@@ -296,8 +298,11 @@ function chooseColor(currentplayer, player, otherPlayer, gameboard) {
         chooseColorWhiteButton.removeEventListener("click", clickWhiteButton);
         chooseColorBlackButton.removeEventListener("click", clickBlackButton);
 
-        movePiece(currentplayer, player, otherPlayer, gameboard);
-        gameBackButton();
+        if (gameStarted == false) {
+            movePiece(currentplayer, player, otherPlayer, gameboard);
+        }
+
+        gameBackButton(currentplayer, player, otherPlayer, gameboard);
     }
 
     function clickBlackButton() {
@@ -307,8 +312,11 @@ function chooseColor(currentplayer, player, otherPlayer, gameboard) {
         chooseColorWhiteButton.removeEventListener("click", clickWhiteButton);
         chooseColorBlackButton.removeEventListener("click", clickBlackButton);
 
-        movePiece(currentplayer, player, otherPlayer, gameboard);
-        gameBackButton();
+        if (gameStarted == false) {
+            movePiece(currentplayer, player, otherPlayer, gameboard);
+        }
+
+        gameBackButton(currentplayer, player, otherPlayer, gameboard);
     }
 
     chooseColorWhiteButton.addEventListener("click", clickWhiteButton);
@@ -326,7 +334,10 @@ function continueButton(currentplayer, player, otherPlayer, gameboard) {
 
         continueButton.removeEventListener("click", clickContinueButton);
 
-        movePiece(currentplayer, player, otherPlayer, gameboard);
+        if (gameStarted == false) {
+            movePiece(currentplayer, player, otherPlayer, gameboard);
+        }
+        
         gameBackButton(currentplayer, player, otherPlayer, gameboard);
     }
 
@@ -364,9 +375,13 @@ function gameBackButton(currentplayer, player, otherPlayer, gameboard) {
 
         curSquare = null;
 
+        gameStarted = true;
+
         boardSquares.forEach(boardSquare => {
             boardSquare.classList.remove("boardsquarechosen");
         })
+
+        gameBackButton.removeEventListener("click", clickBackButton);
 
         continueButton(currentplayer, player, otherPlayer, gameboard);
         newGameButton(currentplayer, player, otherPlayer, gameboard);

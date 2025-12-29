@@ -194,6 +194,14 @@ class Player {
                         else {
                             grid[pieceCurrentIndex] = "|||";
                             grid[newIndex] = pieceString;
+
+                            if (newIndex == 0 || newIndex == 1 || newIndex == 2 || newIndex == 3 || newIndex == 4 || newIndex == 5 || newIndex == 6 || newIndex == 7) {
+                                piece.name = "Q"
+                                piece.num = this.numOfWhiteQueens[0];
+                                this.numOfWhiteQueens.shift();
+                                grid[newIndex] = "W" + piece.name + piece.num;
+                            }
+                            
                             piece.firstTurn = false;
                             this.hasMoved = true;   
 
@@ -215,6 +223,14 @@ class Player {
                         else {
                             grid[pieceCurrentIndex] = "|||";
                             grid[newIndex] = pieceString;
+
+                            if (newIndex == 0 || newIndex == 1 || newIndex == 2 || newIndex == 3 || newIndex == 4 || newIndex == 5 || newIndex == 6 || newIndex == 7) {
+                                piece.name = "Q"
+                                piece.num = this.numOfWhiteQueens[0];
+                                this.numOfWhiteQueens.shift();
+                                grid[newIndex] = "W" + piece.name + piece.num;
+                            }
+
                             piece.firstTurn = false;
                             this.hasMoved = true;
                             this.completedTwoSquaresMove = true;
@@ -263,6 +279,14 @@ class Player {
 
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
+
+                                if (newIndex == 0 || newIndex == 1 || newIndex == 2 || newIndex == 3 || newIndex == 4 || newIndex == 5 || newIndex == 6 || newIndex == 7) {
+                                    piece.name = "Q"
+                                    piece.num = this.numOfWhiteQueens[0];
+                                    this.numOfWhiteQueens.shift();
+                                    grid[newIndex] = "W" + piece.name + piece.num;
+                                }
+
                                 this.hasMoved = true;
 
                                 this.currentTurn = false;
@@ -311,13 +335,6 @@ class Player {
                         }
                     }
 
-                    if (newIndex == 0 || newIndex == 1 || newIndex == 2 || newIndex == 3 || newIndex == 4 || newIndex == 5 || newIndex == 6 || newIndex == 7) {
-                        piece.name = "Q"
-                        piece.num = this.numOfWhiteQueens[0];
-                        this.numOfWhiteQueens.shift();
-                        grid[newIndex] = "W" + piece.name + piece.num;
-                    }
-
                     this.hasMoved = false;
                     this.completedTwoSquaresMove = false;
                 }
@@ -332,6 +349,14 @@ class Player {
                         else {
                             grid[pieceCurrentIndex] = "|||";
                             grid[newIndex] = pieceString;
+
+                            if (newIndex == 56 || newIndex == 57 || newIndex == 58 || newIndex == 59 || newIndex == 60 || newIndex == 61 || newIndex == 62 || newIndex == 63) {
+                                piece.name = "Q"
+                                piece.num = this.numOfBlackQueens[0];
+                                this.numOfBlackQueens.shift();
+                                grid[newIndex] = "B" + piece.name + piece.num;
+                            }
+
                             piece.firstTurn = false;
                             this.hasMoved = true;
 
@@ -352,6 +377,14 @@ class Player {
                         else {
                             grid[pieceCurrentIndex] = "|||";
                             grid[newIndex] = pieceString;
+
+                            if (newIndex == 56 || newIndex == 57 || newIndex == 58 || newIndex == 59 || newIndex == 60 || newIndex == 61 || newIndex == 62 || newIndex == 63) {
+                                piece.name = "Q"
+                                piece.num = this.numOfBlackQueens[0];
+                                this.numOfBlackQueens.shift();
+                                grid[newIndex] = "B" + piece.name + piece.num;
+                            }
+
                             piece.firstTurn = false;
                             this.hasMoved = true;
                             this.completedTwoSquaresMove = true
@@ -398,6 +431,14 @@ class Player {
                             || ((newIndex >= 56 && newIndex < 64) && (pieceCurrentIndex >= 48 && pieceCurrentIndex < 56))) {                        
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
+
+                                if (newIndex == 56 || newIndex == 57 || newIndex == 58 || newIndex == 59 || newIndex == 60 || newIndex == 61 || newIndex == 62 || newIndex == 63) {
+                                    piece.name = "Q"
+                                    piece.num = this.numOfBlackQueens[0];
+                                    this.numOfBlackQueens.shift();
+                                    grid[newIndex] = "B" + piece.name + piece.num;
+                                }
+
                                 this.hasMoved = true;
 
                                 this.currentTurn = false;
@@ -444,14 +485,6 @@ class Player {
                         if (grid[newIndex + 9].startsWith("WK")) {
                             enemyPlayer.inCheck = true;
                         }
-                    }
-
-
-                    if (newIndex == 0 || newIndex == 1 || newIndex == 2 || newIndex == 3 || newIndex == 4 || newIndex == 5 || newIndex == 6 || newIndex == 7) {
-                        piece.name = "Q"
-                        piece.num = this.numOfBlackQueens[0];
-                        this.numOfBlackQueens.shift();
-                        grid[newIndex] = "B" + piece.name + piece.num;
                     }
 
                     this.hasMoved = false;
