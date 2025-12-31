@@ -258,14 +258,14 @@ function chooseOpponent(currentplayer, player, otherPlayer, gameboard) {
         chooseColorContainer.style.display = "flex";
 
         battlePlayerButton.removeEventListener("click", clickBattleButton);
-        battleComputerButton.removeEventListener("click", clickBattleButton);
+        //battleComputerButton.removeEventListener("click", clickBattleButton);
 
         chooseColorBackButton(currentplayer, player, otherPlayer, gameboard);
         chooseColor(currentplayer, player, otherPlayer, gameboard);
     }
 
     battlePlayerButton.addEventListener("click", clickBattleButton);
-    battleComputerButton.addEventListener("click", clickBattleButton);
+    //battleComputerButton.addEventListener("click", clickBattleButton);
 }
 
 function chooseColorBackButton(currentplayer, player, otherPlayer, gameboard) {
@@ -290,6 +290,7 @@ function chooseColor(currentplayer, player, otherPlayer, gameboard) {
     const chooseColorBlackButton = document.querySelector(".chooseblack");
     const chooseColorContainer = document.querySelector(".choosecolorcontainer");
     const gameContainer = document.querySelector(".gamecontainer");
+    const currentPlayerTitle = document.querySelector(".currentplayertitle");
 
     function clickWhiteButton() {
         chooseColorContainer.style.display = "none";
@@ -306,9 +307,12 @@ function chooseColor(currentplayer, player, otherPlayer, gameboard) {
     function clickBlackButton() {
         chooseColorContainer.style.display = "none";
         gameContainer.style.display = "flex";
+        currentPlayerTitle.textContent = "Player 2's Turn";
 
         chooseColorWhiteButton.removeEventListener("click", clickWhiteButton);
         chooseColorBlackButton.removeEventListener("click", clickBlackButton);
+
+        player.currentTurn = false;
 
         movePiece(currentplayer, player, otherPlayer, gameboard);
       
@@ -467,6 +471,7 @@ function gameBackButton(currentplayer, player, otherPlayer, gameboard) {
 }
 
 function movePiece(currentplayer, player, otherPlayer, gameboard) {
+    const currentPlayerTitle = document.querySelector(".currentplayertitle");
 
     if (player.currentTurn == true) {
         const boardSquares = document.querySelectorAll(".boardsquare");
@@ -512,6 +517,8 @@ function movePiece(currentplayer, player, otherPlayer, gameboard) {
                     boardSquares.forEach(boardSquare => {
                         boardSquare.removeEventListener("click", clickPiece);
                     })
+
+                    currentPlayerTitle.textContent = "Player 2's Turn";
 
                     movePiece(currentplayer, player, otherPlayer, gameboard);
                 }
@@ -567,6 +574,8 @@ function movePiece(currentplayer, player, otherPlayer, gameboard) {
                     boardSquares.forEach(boardSquare => {
                         boardSquare.removeEventListener("click", clickPiece);
                     })
+
+                    currentPlayerTitle.textContent = "Player 1's Turn";
 
                     movePiece(currentplayer, player, otherPlayer, gameboard);
                 }
