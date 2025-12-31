@@ -297,10 +297,8 @@ function chooseColor(currentplayer, player, otherPlayer, gameboard) {
 
         chooseColorWhiteButton.removeEventListener("click", clickWhiteButton);
         chooseColorBlackButton.removeEventListener("click", clickBlackButton);
-
-        if (gameStarted == false) {
-            movePiece(currentplayer, player, otherPlayer, gameboard);
-        }
+        
+        movePiece(currentplayer, player, otherPlayer, gameboard);
 
         gameBackButton(currentplayer, player, otherPlayer, gameboard);
     }
@@ -312,10 +310,8 @@ function chooseColor(currentplayer, player, otherPlayer, gameboard) {
         chooseColorWhiteButton.removeEventListener("click", clickWhiteButton);
         chooseColorBlackButton.removeEventListener("click", clickBlackButton);
 
-        if (gameStarted == false) {
-            movePiece(currentplayer, player, otherPlayer, gameboard);
-        }
-
+        movePiece(currentplayer, player, otherPlayer, gameboard);
+      
         gameBackButton(currentplayer, player, otherPlayer, gameboard);
     }
 
@@ -323,7 +319,7 @@ function chooseColor(currentplayer, player, otherPlayer, gameboard) {
     chooseColorBlackButton.addEventListener("click", clickBlackButton);
 }
 
-function continueButton(currentplayer, player, otherPlayer, gameboard) {
+/*function continueButton(currentplayer, player, otherPlayer, gameboard) {
     const continueButton = document.querySelector(".continuebutton");
     const gameContainer = document.querySelector(".gamecontainer");
     const refreshContainer = document.querySelector(".refreshcontainer");
@@ -337,21 +333,103 @@ function continueButton(currentplayer, player, otherPlayer, gameboard) {
         if (gameStarted == false) {
             movePiece(currentplayer, player, otherPlayer, gameboard);
         }
-        
+
         gameBackButton(currentplayer, player, otherPlayer, gameboard);
     }
 
     continueButton.addEventListener("click", clickContinueButton);
-}
+}*/
 
 function newGameButton(currentplayer, player, otherPlayer, gameboard) {
     const newGameButton = document.querySelector(".newgamebutton");
     const startContainer = document.querySelector(".startcontainer");
     const refreshContainer = document.querySelector(".refreshcontainer");
+    const boardSquares = document.querySelectorAll(".boardsquare");
 
     function clickNewGameButton() {
         refreshContainer.style.display = "none";
         startContainer.style.display = "flex";
+
+        //Remove event listeners 
+        boardSquares.forEach(boardSquare => {
+            boardSquare.remove()
+        })
+
+        gameboard.resetGrid();
+        player.resetPlayer(true);
+        otherPlayer.resetPlayer(false);
+
+        pieceArray.length = 0;
+
+        wPawn1 = new Piece("W", "P", 1);
+        wPawn2 = new Piece("W", "P", 2);
+        wPawn3 = new Piece("W", "P", 3);
+        wPawn4 = new Piece("W", "P", 4);
+        wPawn5 = new Piece("W", "P", 5);
+        wPawn6 = new Piece("W", "P", 6);
+        wPawn7 = new Piece("W", "P", 7);
+        wPawn8 = new Piece("W", "P", 8);
+        wRook1 = new Piece("W", "R", 1);
+        wKnight1 = new Piece("W", "N", 1);
+        wBishop1 = new Piece("W", "B", 1);
+        wQueen = new Piece("W", "Q");
+        wKing = new Piece("W", "K");
+        wRook2 = new Piece("W", "R", 2);
+        wKnight2 = new Piece("W", "N", 2);
+        wBishop2 = new Piece("W", "B", 2);
+
+        bPawn1 = new Piece("B", "P", 1);
+        bPawn2 = new Piece("B", "P", 2);
+        bPawn3 = new Piece("B", "P", 3);
+        bPawn4 = new Piece("B", "P", 4);
+        bPawn5 = new Piece("B", "P", 5);
+        bPawn6 = new Piece("B", "P", 6);
+        bPawn7 = new Piece("B", "P", 7);
+        bPawn8 = new Piece("B", "P", 8);
+        bRook1 = new Piece("B", "R", 1);
+        bKnight1 = new Piece("B", "N", 1);
+        bBishop1 = new Piece("B", "B", 1);
+        bQueen = new Piece("B", "Q");
+        bKing = new Piece("B", "K");
+        bRook2 = new Piece("B", "R", 2);
+        bKnight2 = new Piece("B", "N", 2);
+        bBishop2 = new Piece("B", "B", 2);
+
+        pieceArray.push(wPawn1);
+        pieceArray.push(wPawn2);
+        pieceArray.push(wPawn3);
+        pieceArray.push(wPawn4);
+        pieceArray.push(wPawn5);
+        pieceArray.push(wPawn6);
+        pieceArray.push(wPawn7);
+        pieceArray.push(wPawn8);
+        pieceArray.push(wRook1);
+        pieceArray.push(wKnight1);
+        pieceArray.push(wBishop1);
+        pieceArray.push(wQueen);
+        pieceArray.push(wKing);
+        pieceArray.push(wRook2);
+        pieceArray.push(wKnight2);
+        pieceArray.push(wBishop2);
+
+        pieceArray.push(bPawn1);
+        pieceArray.push(bPawn2);
+        pieceArray.push(bPawn3);
+        pieceArray.push(bPawn4);
+        pieceArray.push(bPawn5);
+        pieceArray.push(bPawn6);
+        pieceArray.push(bPawn7);
+        pieceArray.push(bPawn8);
+        pieceArray.push(bRook1);
+        pieceArray.push(bKnight1);
+        pieceArray.push(bBishop1);
+        pieceArray.push(bQueen);
+        pieceArray.push(bKing);
+        pieceArray.push(bRook2);
+        pieceArray.push(bKnight2);
+        pieceArray.push(bBishop2);
+
+        displayGameboard(gameboard);
 
         newGameButton.removeEventListener("click", clickNewGameButton);
 
@@ -371,8 +449,6 @@ function gameBackButton(currentplayer, player, otherPlayer, gameboard) {
         refreshContainer.style.display = "flex";
         gameContainer.style.display = "none";
 
-        gameBackButton.removeEventListener("click", clickBackButton);
-
         curSquare = null;
 
         gameStarted = true;
@@ -383,7 +459,7 @@ function gameBackButton(currentplayer, player, otherPlayer, gameboard) {
 
         gameBackButton.removeEventListener("click", clickBackButton);
 
-        continueButton(currentplayer, player, otherPlayer, gameboard);
+        //continueButton(currentplayer, player, otherPlayer, gameboard);
         newGameButton(currentplayer, player, otherPlayer, gameboard);
     }
 
@@ -393,7 +469,6 @@ function gameBackButton(currentplayer, player, otherPlayer, gameboard) {
 function movePiece(currentplayer, player, otherPlayer, gameboard) {
 
     if (player.currentTurn == true) {
-        const whitePieceSquares = document.querySelectorAll(".boardsquarewhitepiece");
         const boardSquares = document.querySelectorAll(".boardsquare");
 
         function clickPiece(e) {

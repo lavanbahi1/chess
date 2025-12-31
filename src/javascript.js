@@ -5,6 +5,12 @@ class Piece {
         this.num = num;
         this.firstTurn = true;
     }
+
+    resetPiece(name, num) {
+        this.name = name;
+        this.num = num;
+        this.firstTurn = true;
+    }
 }
 
 class Gameboard {
@@ -151,11 +157,25 @@ class Gameboard {
         console.log(arr);
 
     }
+
+    resetGrid() {
+        this.grid = this.createGrid();
+    }
 }
 
 class Player {
     constructor(color, currentTurn) {
         this.color = color;
+        this.currentTurn = currentTurn;
+        this.enPassant = false;
+        this.hasMoved = false;
+        this.completedTwoSquaresMove = false;
+        this.numOfWhiteQueens = [2, 3, 4, 5, 6, 7, 8, 9];
+        this.numOfBlackQueens = [2, 3, 4, 5, 6, 7, 8, 9];
+        this.inCheck = false;
+    }
+
+    resetPlayer(currentTurn) {
         this.currentTurn = currentTurn;
         this.enPassant = false;
         this.hasMoved = false;
