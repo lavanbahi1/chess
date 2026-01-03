@@ -303,6 +303,7 @@ function chooseColor(currentplayer, player, otherPlayer, gameboard) {
         movePiece(currentplayer, player, otherPlayer, gameboard);
         gameBackButton(currentplayer, player, otherPlayer, gameboard);
         declareDraw(player);
+        declareCheckmate(player);
     }
 
     function clickBlackButton() {
@@ -318,6 +319,7 @@ function chooseColor(currentplayer, player, otherPlayer, gameboard) {
         movePiece(currentplayer, player, otherPlayer, gameboard);
         gameBackButton(currentplayer, player, otherPlayer, gameboard);
         declareDraw(player);
+        declareCheckmate(player);
     }
 
     chooseColorWhiteButton.addEventListener("click", clickWhiteButton);
@@ -609,39 +611,57 @@ function declareDraw(player) {
     const boardSquares = document.querySelectorAll(".boardsquare");
     const board = document.querySelector(".board");
 
-    if (player.currentTurn == true) {
-        function clickDraw() {
+    function clickDraw() {
+        if (player.currentTurn == true) {
             currentPlayerTitle.textContent = "Draw declared by Player 1. Press the back button to start a new game";
-            drawButton.removeEventListener("click", clickDraw);
-
-            boardSquares.forEach(boardSquare => {
-                boardSquare.remove()
-            })
-
-            board.style.display = "none";
-            drawButton.style.display = "none";
-            checkmateButton.style.display = "none";
         }
 
-        drawButton.addEventListener("click", clickDraw);
-    }
-
-    else if (player.currentTurn == false) {
-        function clickDraw() {
+        else if (player.currentTurn == false) {
             currentPlayerTitle.textContent = "Draw declared by Player 2. Press the back button to start a new game";
-            drawButton.removeEventListener("click", clickDraw);
-
-            boardSquares.forEach(boardSquare => {
-                boardSquare.remove()
-            })
-
-            board.style.display = "none";
-            drawButton.style.display = "none";
-            checkmateButton.style.display = "none";
         }
 
-        drawButton.addEventListener("click", clickDraw);
+        drawButton.removeEventListener("click", clickDraw);
+
+        boardSquares.forEach(boardSquare => {
+            boardSquare.remove()
+        })
+
+        board.style.display = "none";
+        drawButton.style.display = "none";
+        checkmateButton.style.display = "none";
     }
+
+    drawButton.addEventListener("click", clickDraw);
+}
+
+function declareCheckmate(player) {
+    const currentPlayerTitle = document.querySelector(".currentplayertitle");
+    const drawButton = document.querySelector(".drawbutton");
+    const checkmateButton = document.querySelector(".checkmatebutton");
+    const boardSquares = document.querySelectorAll(".boardsquare");
+    const board = document.querySelector(".board");
+
+    function clickCheckmate() {
+        if (player.currentTurn == true) {
+            currentPlayerTitle.textContent = "Checkmate on Player 1. Player 2 wins! Press the back button to start a new game";
+        }
+
+        else if (player.currentTurn == false) {
+            currentPlayerTitle.textContent = "Checkmate on Player 2. Player 1 wins! Press the back button to start a new game";
+        }
+
+        checkmateButton.removeEventListener("click", clickCheckmate);
+
+        boardSquares.forEach(boardSquare => {
+            boardSquare.remove()
+        })
+
+        board.style.display = "none";
+        drawButton.style.display = "none";
+        checkmateButton.style.display = "none";
+    }
+
+    checkmateButton.addEventListener("click", clickCheckmate);
 }
 
 export { displayGameboard, chooseOpponent };
