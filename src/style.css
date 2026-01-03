@@ -84,10 +84,6 @@ body {
     display: none;
 }
 
-.gamebackbuttoncontainer {
-
-}
-
 .gamebackbutton {
     width: 100px;
     height: 100px;
@@ -137,6 +133,7 @@ body {
 .optionscontainer {
     display: flex;
     justify-content: space-around;
+    padding-bottom: 10px;
 }
 
 .resignbutton, .drawbutton, .checkmatebutton, .undobutton {

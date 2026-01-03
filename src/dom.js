@@ -295,13 +295,14 @@ function chooseColor(currentplayer, player, otherPlayer, gameboard) {
     function clickWhiteButton() {
         chooseColorContainer.style.display = "none";
         gameContainer.style.display = "flex";
+        currentPlayerTitle.textContent = "Player 1's Turn";
 
         chooseColorWhiteButton.removeEventListener("click", clickWhiteButton);
         chooseColorBlackButton.removeEventListener("click", clickBlackButton);
         
         movePiece(currentplayer, player, otherPlayer, gameboard);
-
         gameBackButton(currentplayer, player, otherPlayer, gameboard);
+        declareDraw(player);
     }
 
     function clickBlackButton() {
@@ -315,8 +316,8 @@ function chooseColor(currentplayer, player, otherPlayer, gameboard) {
         player.currentTurn = false;
 
         movePiece(currentplayer, player, otherPlayer, gameboard);
-      
         gameBackButton(currentplayer, player, otherPlayer, gameboard);
+        declareDraw(player);
     }
 
     chooseColorWhiteButton.addEventListener("click", clickWhiteButton);
@@ -448,6 +449,9 @@ function gameBackButton(currentplayer, player, otherPlayer, gameboard) {
     const refreshContainer = document.querySelector(".refreshcontainer");
     const gameContainer = document.querySelector(".gamecontainer");
     const boardSquares = document.querySelectorAll(".boardsquare");
+    const drawButton = document.querySelector(".drawbutton");
+    const checkmateButton = document.querySelector(".checkmatebutton");
+    const board = document.querySelector(".board");
 
     function clickBackButton() {
         refreshContainer.style.display = "flex";
@@ -461,6 +465,10 @@ function gameBackButton(currentplayer, player, otherPlayer, gameboard) {
             boardSquare.classList.remove("boardsquarechosen");
         })
 
+        board.style.display = "grid";
+        drawButton.style.display = "block";
+        checkmateButton.style.display = "block";
+    
         gameBackButton.removeEventListener("click", clickBackButton);
 
         //continueButton(currentplayer, player, otherPlayer, gameboard);
@@ -591,6 +599,48 @@ function movePiece(currentplayer, player, otherPlayer, gameboard) {
 function computerPlayerMovePiece(player, gameboard) {
     if (player.currentTurn == false) {
         
+    }
+}
+
+function declareDraw(player) {
+    const currentPlayerTitle = document.querySelector(".currentplayertitle");
+    const drawButton = document.querySelector(".drawbutton");
+    const checkmateButton = document.querySelector(".checkmatebutton");
+    const boardSquares = document.querySelectorAll(".boardsquare");
+    const board = document.querySelector(".board");
+
+    if (player.currentTurn == true) {
+        function clickDraw() {
+            currentPlayerTitle.textContent = "Draw declared by Player 1. Press the back button to start a new game";
+            drawButton.removeEventListener("click", clickDraw);
+
+            boardSquares.forEach(boardSquare => {
+                boardSquare.remove()
+            })
+
+            board.style.display = "none";
+            drawButton.style.display = "none";
+            checkmateButton.style.display = "none";
+        }
+
+        drawButton.addEventListener("click", clickDraw);
+    }
+
+    else if (player.currentTurn == false) {
+        function clickDraw() {
+            currentPlayerTitle.textContent = "Draw declared by Player 2. Press the back button to start a new game";
+            drawButton.removeEventListener("click", clickDraw);
+
+            boardSquares.forEach(boardSquare => {
+                boardSquare.remove()
+            })
+
+            board.style.display = "none";
+            drawButton.style.display = "none";
+            checkmateButton.style.display = "none";
+        }
+
+        drawButton.addEventListener("click", clickDraw);
     }
 }
 
