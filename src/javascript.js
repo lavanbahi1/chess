@@ -215,12 +215,12 @@ class Player {
                             grid[pieceCurrentIndex] = "|||";
                             grid[newIndex] = pieceString;
 
-                            if (newIndex == 0 || newIndex == 1 || newIndex == 2 || newIndex == 3 || newIndex == 4 || newIndex == 5 || newIndex == 6 || newIndex == 7) {
+                            /*if (newIndex == 0 || newIndex == 1 || newIndex == 2 || newIndex == 3 || newIndex == 4 || newIndex == 5 || newIndex == 6 || newIndex == 7) {
                                 piece.name = "Q"
                                 piece.num = this.numOfWhiteQueens[0];
                                 this.numOfWhiteQueens.shift();
                                 grid[newIndex] = "W" + piece.name + piece.num;
-                            }
+                            }*/
                             
                             piece.firstTurn = false;
                             this.hasMoved = true;   
@@ -244,12 +244,12 @@ class Player {
                             grid[pieceCurrentIndex] = "|||";
                             grid[newIndex] = pieceString;
 
-                            if (newIndex == 0 || newIndex == 1 || newIndex == 2 || newIndex == 3 || newIndex == 4 || newIndex == 5 || newIndex == 6 || newIndex == 7) {
+                            /*if (newIndex == 0 || newIndex == 1 || newIndex == 2 || newIndex == 3 || newIndex == 4 || newIndex == 5 || newIndex == 6 || newIndex == 7) {
                                 piece.name = "Q"
                                 piece.num = this.numOfWhiteQueens[0];
                                 this.numOfWhiteQueens.shift();
                                 grid[newIndex] = "W" + piece.name + piece.num;
-                            }
+                            }*/
 
                             piece.firstTurn = false;
                             this.hasMoved = true;
@@ -300,12 +300,12 @@ class Player {
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
 
-                                if (newIndex == 0 || newIndex == 1 || newIndex == 2 || newIndex == 3 || newIndex == 4 || newIndex == 5 || newIndex == 6 || newIndex == 7) {
+                                /*if (newIndex == 0 || newIndex == 1 || newIndex == 2 || newIndex == 3 || newIndex == 4 || newIndex == 5 || newIndex == 6 || newIndex == 7) {
                                     piece.name = "Q"
                                     piece.num = this.numOfWhiteQueens[0];
                                     this.numOfWhiteQueens.shift();
                                     grid[newIndex] = "W" + piece.name + piece.num;
-                                }
+                                }*/
 
                                 this.hasMoved = true;
 
@@ -370,12 +370,12 @@ class Player {
                             grid[pieceCurrentIndex] = "|||";
                             grid[newIndex] = pieceString;
 
-                            if (newIndex == 56 || newIndex == 57 || newIndex == 58 || newIndex == 59 || newIndex == 60 || newIndex == 61 || newIndex == 62 || newIndex == 63) {
+                            /*if (newIndex == 56 || newIndex == 57 || newIndex == 58 || newIndex == 59 || newIndex == 60 || newIndex == 61 || newIndex == 62 || newIndex == 63) {
                                 piece.name = "Q"
                                 piece.num = this.numOfBlackQueens[0];
                                 this.numOfBlackQueens.shift();
                                 grid[newIndex] = "B" + piece.name + piece.num;
-                            }
+                            }*/
 
                             piece.firstTurn = false;
                             this.hasMoved = true;
@@ -398,12 +398,12 @@ class Player {
                             grid[pieceCurrentIndex] = "|||";
                             grid[newIndex] = pieceString;
 
-                            if (newIndex == 56 || newIndex == 57 || newIndex == 58 || newIndex == 59 || newIndex == 60 || newIndex == 61 || newIndex == 62 || newIndex == 63) {
+                            /*if (newIndex == 56 || newIndex == 57 || newIndex == 58 || newIndex == 59 || newIndex == 60 || newIndex == 61 || newIndex == 62 || newIndex == 63) {
                                 piece.name = "Q"
                                 piece.num = this.numOfBlackQueens[0];
                                 this.numOfBlackQueens.shift();
                                 grid[newIndex] = "B" + piece.name + piece.num;
-                            }
+                            }*/
 
                             piece.firstTurn = false;
                             this.hasMoved = true;
@@ -452,12 +452,12 @@ class Player {
                                 grid[pieceCurrentIndex] = "|||";
                                 grid[newIndex] = pieceString;
 
-                                if (newIndex == 56 || newIndex == 57 || newIndex == 58 || newIndex == 59 || newIndex == 60 || newIndex == 61 || newIndex == 62 || newIndex == 63) {
+                                /*if (newIndex == 56 || newIndex == 57 || newIndex == 58 || newIndex == 59 || newIndex == 60 || newIndex == 61 || newIndex == 62 || newIndex == 63) {
                                     piece.name = "Q"
                                     piece.num = this.numOfBlackQueens[0];
                                     this.numOfBlackQueens.shift();
                                     grid[newIndex] = "B" + piece.name + piece.num;
-                                }
+                                }*/
 
                                 this.hasMoved = true;
 

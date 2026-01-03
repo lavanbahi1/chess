@@ -120,14 +120,96 @@ body {
 
 .boardsquarewhite {
     background-color: rgb(244,220,160);
+    transition: background-color 0.5s;
+}
+
+.boardsquarewhite:hover {
+    background-color: rgb(255, 183, 0);
 }
 
 .boardsquareblack {
     background-color: rgb(182,116,58);
+    transition: background-color 0.5s;
+}
+
+.boardsquareblack:hover {
+    background-color: rgb(185, 88, 0);
 }
 
 .boardsquarechosen {
     border: solid red;
+}
+
+.boardsquarewhitepawn {
+    background-image: url("chess-pawn-white.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.boardsquarewhiterook {
+    background-image: url("chess-rook-white.png");
+    background-repeat: no-repeat;
+    background-size: cover;    
+}
+
+.boardsquarewhiteknight {
+    background-image: url("chess-knight-white.png");
+    background-repeat: no-repeat;
+    background-size: cover;    
+}
+
+.boardsquarewhitebishop {
+    background-image: url("chess-bishop-white.png");
+    background-repeat: no-repeat;
+    background-size: cover;    
+}
+
+.boardsquarewhitequeen {
+    background-image: url("chess-queen-white.png");
+    background-repeat: no-repeat;
+    background-size: cover;    
+}
+
+.boardsquarewhiteking {
+    background-image: url("chess-king-white.png");
+    background-repeat: no-repeat;
+    background-size: cover;    
+}
+
+.boardsquareblackpawn {
+    background-image: url("chess-pawn.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.boardsquareblackrook {
+    background-image: url("chess-rook.png");
+    background-repeat: no-repeat;
+    background-size: cover;    
+}
+
+.boardsquareblackknight {
+    background-image: url("chess-knight.png");
+    background-repeat: no-repeat;
+    background-size: cover;    
+}
+
+.boardsquareblackbishop {
+    background-image: url("chess-bishop.png");
+    background-repeat: no-repeat;
+    background-size: cover;    
+}
+
+.boardsquareblackqueen {
+    background-image: url("chess-queen.png");
+    background-repeat: no-repeat;
+    background-size: cover;    
+}
+
+.boardsquareblackking {
+    background-image: url("chess-king.png");
+    background-repeat: no-repeat;
+    background-size: cover;    
 }
 
 .optionscontainer {

@@ -222,6 +222,55 @@ function renderGameboard(gameboard, option) {
                 else if (gameboard.grid[i].startsWith("B")) {
                     boardSquare.classList.remove('boardsquareblackpiece');
                 }
+
+                if (gameboard.grid[i].startsWith("WP")) {
+                    boardSquare.classList.remove('boardsquarewhitepawn');
+                }
+
+                if (gameboard.grid[i].startsWith("WR")) {
+                    boardSquare.classList.remove('boardsquarewhiterook');
+                }
+
+                if (gameboard.grid[i].startsWith("WN")) {
+                    boardSquare.classList.remove('boardsquarewhiteknight');
+                }
+
+                if (gameboard.grid[i].startsWith("WB")) {
+                    boardSquare.classList.remove('boardsquarewhitebishop');
+                }
+
+                if (gameboard.grid[i].startsWith("WQ")) {
+                    boardSquare.classList.remove('boardsquarewhitequeen');
+                }
+
+                if (gameboard.grid[i].startsWith("WK")) {
+                    boardSquare.classList.remove('boardsquarewhiteking');
+                }
+
+                if (gameboard.grid[i].startsWith("BP")) {
+                    boardSquare.classList.remove('boardsquareblackpawn');
+                }
+
+                if (gameboard.grid[i].startsWith("BR")) {
+                    boardSquare.classList.remove('boardsquareblackrook');
+                }
+
+                if (gameboard.grid[i].startsWith("BN")) {
+                    boardSquare.classList.remove('boardsquareblackknight');
+                }
+
+                if (gameboard.grid[i].startsWith("BB")) {
+                    boardSquare.classList.remove('boardsquareblackbishop');
+                }
+
+                if (gameboard.grid[i].startsWith("BQ")) {
+                    boardSquare.classList.remove('boardsquareblackqueen');
+                }
+
+                if (gameboard.grid[i].startsWith("BK")) {
+                    boardSquare.classList.remove('boardsquareblackking');
+                }
+
                 boardSquare.classList.remove('boardsquarepiece');
             }
         }
@@ -232,7 +281,7 @@ function renderGameboard(gameboard, option) {
             if (gameboard.grid[i] != "|||") {
                 const boardSquare = document.querySelector(`.a${i}`);
                 boardSquare.textContent = gameboard.grid[i];
-                boardSquare.style.fontSize = "10px";
+                boardSquare.style.fontSize = "0px";
                 boardSquare.style.textAlign = "center";
                 if (gameboard.grid[i].startsWith("W")) {
                     boardSquare.classList.add('boardsquarewhitepiece');
@@ -241,6 +290,55 @@ function renderGameboard(gameboard, option) {
                 else if (gameboard.grid[i].startsWith("B")) {
                     boardSquare.classList.add('boardsquareblackpiece');
                 }
+
+                if (gameboard.grid[i].startsWith("WP")) {
+                    boardSquare.classList.add('boardsquarewhitepawn');
+                }
+
+                if (gameboard.grid[i].startsWith("WR")) {
+                    boardSquare.classList.add('boardsquarewhiterook');
+                }
+
+                if (gameboard.grid[i].startsWith("WN")) {
+                    boardSquare.classList.add('boardsquarewhiteknight');
+                }
+
+                if (gameboard.grid[i].startsWith("WB")) {
+                    boardSquare.classList.add('boardsquarewhitebishop');
+                }
+
+                if (gameboard.grid[i].startsWith("WQ")) {
+                    boardSquare.classList.add('boardsquarewhitequeen');
+                }
+
+                if (gameboard.grid[i].startsWith("WK")) {
+                    boardSquare.classList.add('boardsquarewhiteking');
+                }
+
+                if (gameboard.grid[i].startsWith("BP")) {
+                    boardSquare.classList.add('boardsquareblackpawn');
+                }
+
+                if (gameboard.grid[i].startsWith("BR")) {
+                    boardSquare.classList.add('boardsquareblackrook');
+                }
+
+                if (gameboard.grid[i].startsWith("BN")) {
+                    boardSquare.classList.add('boardsquareblackknight');
+                }
+
+                if (gameboard.grid[i].startsWith("BB")) {
+                    boardSquare.classList.add('boardsquareblackbishop');
+                }
+
+                if (gameboard.grid[i].startsWith("BQ")) {
+                    boardSquare.classList.add('boardsquareblackqueen');
+                }
+
+                if (gameboard.grid[i].startsWith("BK")) {
+                    boardSquare.classList.add('boardsquareblackking');
+                }
+
                 boardSquare.classList.add('boardsquarepiece');
             }
         }
