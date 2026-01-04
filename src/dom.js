@@ -352,8 +352,11 @@ function chooseOpponent(currentplayer, player, otherPlayer, gameboard) {
     const chooseColorContainer = document.querySelector(".choosecolorcontainer");
 
     function clickBattleButton() {
-        startContainer.style.display = "none";
-        chooseColorContainer.style.display = "flex";
+        //startContainer.style.display = "none";
+        //chooseColorContainer.style.display = "flex";
+        startContainer.classList.add("hidden");
+        chooseColorContainer.classList.add("not-hidden");
+        chooseColorContainer.classList.remove("hidden");
 
         battlePlayerButton.removeEventListener("click", clickBattleButton);
         //battleComputerButton.removeEventListener("click", clickBattleButton);
@@ -372,8 +375,10 @@ function chooseColorBackButton(currentplayer, player, otherPlayer, gameboard) {
     const chooseColorContainer = document.querySelector(".choosecolorcontainer");
 
     function clickBackButton() {
-        startContainer.style.display = "flex";
-        chooseColorContainer.style.display = "none";
+        //startContainer.style.display = "flex";
+        //chooseColorContainer.style.display = "none";
+        startContainer.classList.remove("hidden");
+        chooseColorContainer.classList.remove("not-hidden");
 
         chooseColorBackButton.removeEventListener("click", clickBackButton);
 
@@ -391,9 +396,11 @@ function chooseColor(currentplayer, player, otherPlayer, gameboard) {
     const currentPlayerTitle = document.querySelector(".currentplayertitle");
 
     function clickWhiteButton() {
-        chooseColorContainer.style.display = "none";
-        gameContainer.style.display = "flex";
+        //chooseColorContainer.style.display = "none";
+        //gameContainer.style.display = "flex";
         currentPlayerTitle.textContent = "Player 1's Turn";
+        chooseColorContainer.classList.add("hidden");
+        gameContainer.classList.add("not-hidden");
 
         chooseColorWhiteButton.removeEventListener("click", clickWhiteButton);
         chooseColorBlackButton.removeEventListener("click", clickBlackButton);
@@ -405,9 +412,11 @@ function chooseColor(currentplayer, player, otherPlayer, gameboard) {
     }
 
     function clickBlackButton() {
-        chooseColorContainer.style.display = "none";
-        gameContainer.style.display = "flex";
+        //chooseColorContainer.style.display = "none";
+        //gameContainer.style.display = "flex";
         currentPlayerTitle.textContent = "Player 2's Turn";
+        chooseColorContainer.classList.add("hidden");
+        gameContainer.classList.add("not-hidden");
 
         chooseColorWhiteButton.removeEventListener("click", clickWhiteButton);
         chooseColorBlackButton.removeEventListener("click", clickBlackButton);
@@ -451,14 +460,25 @@ function newGameButton(currentplayer, player, otherPlayer, gameboard) {
     const refreshContainer = document.querySelector(".refreshcontainer");
     const boardSquares = document.querySelectorAll(".boardsquare");
 
+    const drawButton = document.querySelector(".drawbutton");
+    const checkmateButton = document.querySelector(".checkmatebutton");
+    const board = document.querySelector(".board");
+
     function clickNewGameButton() {
-        refreshContainer.style.display = "none";
-        startContainer.style.display = "flex";
+        //refreshContainer.style.display = "none";
+        //startContainer.style.display = "flex";
+
+        refreshContainer.classList.add("hidden");
+        startContainer.classList.remove("hidden");
 
         //Remove event listeners 
         boardSquares.forEach(boardSquare => {
             boardSquare.remove()
         })
+
+        board.style.display = "grid";
+        drawButton.style.display = "block";
+        checkmateButton.style.display = "block";
 
         gameboard.resetGrid();
         player.resetPlayer(true);
@@ -554,8 +574,11 @@ function gameBackButton(currentplayer, player, otherPlayer, gameboard) {
     const board = document.querySelector(".board");
 
     function clickBackButton() {
-        refreshContainer.style.display = "flex";
-        gameContainer.style.display = "none";
+        //refreshContainer.style.display = "flex";
+        //gameContainer.style.display = "none";
+        refreshContainer.classList.add("not-hidden");
+        gameContainer.classList.remove("not-hidden");
+        refreshContainer.classList.remove("hidden");
 
         curSquare = null;
 
@@ -564,10 +587,6 @@ function gameBackButton(currentplayer, player, otherPlayer, gameboard) {
         boardSquares.forEach(boardSquare => {
             boardSquare.classList.remove("boardsquarechosen");
         })
-
-        board.style.display = "grid";
-        drawButton.style.display = "block";
-        checkmateButton.style.display = "block";
     
         gameBackButton.removeEventListener("click", clickBackButton);
 

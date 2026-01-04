@@ -2,12 +2,29 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
+    background-image: url("background.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
 }
 
 .startcontainer {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
+    left: 0;
+    transition: left 1s;
+}
+
+.startcontainer.hidden {
+    left: -1920px;
+}
+
+.title {
+    font-size: 80px;
 }
 
 .battleplayerbutton {
@@ -25,7 +42,18 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    display: none;
+    position: absolute;
+    top: 0px;
+    left: -1920px;
+    transition: left 1s;
+}
+
+.refreshcontainer.not-hidden {
+    left: 776.6px;
+}
+
+.refreshcontainer.not-hidden.hidden {
+    left: 1920px;
 }
 
 .newgamebutton {
@@ -43,7 +71,18 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    display: none;
+    position: absolute;
+    top: 0px;
+    right: -1920px;
+    transition: right 1s;
+}
+
+.choosecolorcontainer.not-hidden {
+    right: 0px;
+}
+
+.choosecolorcontainer.not-hidden.hidden {
+    right: 1920px;
 }
 
 .choosecolorbackbuttoncontainer {
@@ -61,6 +100,7 @@ body {
 
 .choosecolortitle {
     text-align: center;
+    font-size: 40px;
 }
 
 .choosewhite {
@@ -81,7 +121,14 @@ body {
     flex-direction: column;
     height: 100vh;
     width: 100vw;
-    display: none;
+    position: absolute;
+    top: 0px;
+    right: -1920px;
+    transition: right 1s;
+}
+
+.gamecontainer.not-hidden {
+    right: 0px;
 }
 
 .gamebackbutton {
@@ -221,4 +268,16 @@ body {
 .resignbutton, .drawbutton, .checkmatebutton, .undobutton {
     height: 50px;
     width: 150px;
+}
+
+.battleplayerbutton, .newgamebutton, .choosecolorbackbutton, .gamebackbutton, .drawbutton, .checkmatebutton {
+    border: solid rgb(244,220,160);
+    border-radius: 5px;
+    background-color: rgb(182,116,58);
+    transition: background-color 0.5s, border-color 0.5s;
+}
+
+.battleplayerbutton:hover, .newgamebutton:hover, .choosecolorbackbutton:hover, .gamebackbutton:hover, .drawbutton:hover, .checkmatebutton:hover {
+    background-color: rgb(185, 88, 0);
+    border-color: rgb(255, 183, 0);;
 }
