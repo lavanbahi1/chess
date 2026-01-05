@@ -39,6 +39,7 @@ body {
 }
 
 .refreshcontainer {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -49,7 +50,7 @@ body {
 }
 
 .refreshcontainer.not-hidden {
-    left: 776.6px;
+    left: 0px;
 }
 
 .refreshcontainer.not-hidden.hidden {
@@ -158,7 +159,7 @@ body {
 
 .board {
     display: grid;
-    width: 25%;
+    width: 30vw;
     aspect-ratio: 1 / 1;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -280,4 +281,11 @@ body {
 .battleplayerbutton:hover, .newgamebutton:hover, .choosecolorbackbutton:hover, .gamebackbutton:hover, .drawbutton:hover, .checkmatebutton:hover {
     background-color: rgb(185, 88, 0);
     border-color: rgb(255, 183, 0);;
+}
+
+@media (max-width: 1230px) {
+    .board {
+        display: grid;
+        width: 50vw;
+    }
 }
