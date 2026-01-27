@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chess</title>
+  <script defer src="main.js"></script></head>
+  <body>
+    <div class="startcontainer">
+      <h1 class="title">Chess App</h1>
+      <button class="battleplayerbutton" type="button">Play against another player</button>
+      <!--<button class="battlecomputerbutton" type="button">Player against the computer</button>-->
+    </div>
+
+    <div class="refreshcontainer">
+      <h1 class="title">Chess App</h1>
+      <button class="newgamebutton" type="button">New game</button>
+      <!--<button class="continuebutton" type="button">Continue</button>-->
+    </div>
+
+    <div class="choosecolorcontainer">
+      <div class="choosecolorbackbuttoncontainer">
+        <button class="choosecolorbackbutton" type="button"></button>
+      </div>
+      <h1 class="choosecolortitle">Choose Player 1's Color</h1>
+      <button class="choosewhite"></button>
+      <button class="chooseblack"></button>
+    </div>
+    
+    <div class="gamecontainer">
+      <div class="gamebackbuttoncontainer">
+        <button class="gamebackbutton" type="button"></button>
+      </div>
+
+      <div class="currentplayercontainer">
+        <p class="currentplayertitle">Player 1's Turn</p>
+      </div>
+
+      <div class="boardcontainer">
+        <div class="board"></div>
+      </div>
+
+      <div class="optionscontainer">
+        <!--<button class="resignbutton" type="button">
+          <img>
+          <p>Resign</p>
+        </button>-->
+        <button class="drawbutton" type="button">
+          <p>Declare draw</p>
+        </button>
+        <button class="checkmatebutton" type="button">
+          <p>Declare checkmate</p>
+        </button>
+        <!--<button class="undobutton" type="button">
+          <img>
+          <p>Undo</p>
+        </button>-->
+      </div>
+    </div>
+  </body>
+</html>
